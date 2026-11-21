@@ -34,4 +34,9 @@ export default {
     cash: "Cash withdrawals. A PostFinance Postomat is free; other banks' ATMs can cost a fee.",
     other: 'Payments we could not sort into a category yet.',
   },
+  groups: {
+    recurring: 'Essentials - recurring',
+    occasional: 'Essentials - non-recurring',
+    cutBack: 'Could cut back',
+  },
 };

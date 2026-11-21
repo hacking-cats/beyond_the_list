@@ -34,4 +34,9 @@ export default {
     cash: 'Bargeldbezüge. Am PostFinance-Postomat ist es gratis, an Automaten anderer Banken kann es etwas kosten.',
     other: 'Zahlungen, die wir noch keiner Kategorie zuordnen konnten.',
   },
+  groups: {
+    recurring: 'Notwendiges - wiederkehrend',
+    occasional: 'Notwendiges - nicht wiederkehrend',
+    cutBack: 'Könntest du reduzieren',
+  },
 };
