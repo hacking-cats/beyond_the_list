@@ -1,0 +1,17 @@
+export default {
+  title: 'Panoramica',
+  overviewH: 'Dove vanno i tuoi soldi',
+  overviewP: 'Media mensile degli ultimi 12 mesi dei tuoi estratti. Più grande è la bolla, più soldi.',
+  totalL: 'Speso al mese',
+  flexL: 'Si può ridurre',
+  ofAll: 'delle tue spese',
+  allL: 'Tutto',
+  onlyFlexL: 'Solo ciò che potresti ridurre',
+  essential: 'Essenziali',
+  flexible: 'Si può ridurre',
+  pickP: 'Tocca una bolla per vedere cos’è e quanto ti costa.',
+  shareL: 'delle tue spese mensili',
+  ideasBtn: 'Vedi idee per risparmiare',
+  essentialNote: 'Una spesa essenziale. Qui non suggeriamo di ridurre.',
+  listH: 'Tutte le categorie',
+};

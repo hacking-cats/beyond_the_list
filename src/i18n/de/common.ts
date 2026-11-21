@@ -11,4 +11,13 @@ export default {
   perMonth: '/ Monat',
   months: 'Monaten',
   comingSoon: 'Bald verfügbar. Diese Seite ist geplant, aber noch nicht gebaut.',
+  langOther: 'Andere Sprache…',
+  langOtherHint: 'Arabisch, Ukrainisch, Tigrinya, Türkisch und mehr',
+  langSearch: 'Sprache suchen',
+  langAutoNote: 'Diese Sprachen sind automatisch übersetzt. Einzelne Wörter können falsch sein.',
+  langRtl: 'von rechts nach links',
+  langSoon: 'bald verfügbar',
+  langNone: 'Keine Sprache gefunden.',
+  close: 'Schliessen',
+  back: 'Zurück',
 };

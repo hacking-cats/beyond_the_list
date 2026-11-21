@@ -1,0 +1,20 @@
+// Categorie di spesa (chiavi da content/categories.json), per tutte le pagine.
+export default {
+  rent: { name: 'Affitto', short: 'Affitto', explain: 'Il tuo affitto mensile. In Svizzera l’affitto si paga di solito in anticipo, all’inizio di ogni mese.' },
+  insurance: { name: 'Cassa malati', short: 'Cassa malati', explain: 'L’assicurazione malattie di base è obbligatoria per chiunque viva in Svizzera e si paga per persona, non tramite il datore di lavoro. Se il tuo reddito è basso, puoi ricevere una riduzione dei premi, ma di solito devi richiederla.' },
+  utilities: { name: 'Elettricità', short: 'Elettricità', explain: 'Un acconto per l’elettricità. L’azienda elettrica fattura una stima durante l’anno e fa il conguaglio alla fine.' },
+  tax: { name: 'Imposte', short: 'Imposte', explain: 'Una rata d’acconto delle imposte. Il cantone chiede pagamenti anticipati durante l’anno; il conguaglio arriva dopo la tua dichiarazione d’imposta.' },
+  transport: { name: 'Trasporti', short: 'Trasporti', explain: 'Trasporti pubblici, benzina, taxi o vignetta autostradale. L’abbonamento metà-prezzo dimezza la maggior parte dei biglietti di treno e bus.' },
+  health: { name: 'Salute', short: 'Salute', explain: 'Costi come occhiali o dentista spesso non sono coperti dall’assicurazione di base. Conserva la ricevuta: spese mediche elevate si possono dedurre dalle imposte.' },
+  other: { name: 'Altro', short: 'Altro', explain: 'Un pagamento che non abbiamo ancora potuto classificare.' },
+  eatingOut: { name: 'Ristorante e pranzo', short: 'Ristorante', explain: 'Pasti in mensa o al ristorante.', tip: 'Portare il pranzo da casa due o tre giorni a settimana riduce questa spesa di circa la metà.', wit: 'Il tuo portapranzo non ti manderà una fattura.' },
+  shop: { name: 'Acquisti online', short: 'Acquisti', explain: 'Un ordine in un negozio online o un pagamento tramite PayPal.', tip: 'Lascia gli articoli nel carrello per 48 ore prima di comprare. Molti non li vorrai più.' },
+  clothes: { name: 'Vestiti', short: 'Vestiti', explain: 'Vestiti o scarpe. Gli articoli restituiti tornano come rimborso (un importo positivo).', tip: 'Tieni una lista dei desideri e compra vestiti una volta al mese invece che ogni volta che qualcosa ti piace.' },
+  holiday: { name: 'Vacanze e viaggi', short: 'Vacanze', explain: 'Voli, hotel e altre spese di viaggio.', tip: 'Prenotare 3 mesi prima e viaggiare in bassa stagione costa spesso un terzo in meno.' },
+  hobbies: { name: 'Hobby, libri ed eventi', short: 'Hobby', explain: 'Libri, sport, eventi e hobby.', tip: 'Fissa un budget mensile per gli hobby. Acquisti grandi come una bici nuova sono più facili come obiettivo di risparmio.' },
+  stream: { name: 'Streaming e app', short: 'Streaming', explain: 'Abbonamenti per film, musica o app. Piccoli importi si sommano in un anno.', tip: 'Tieni un solo servizio e cambia ogni qualche mese.' },
+  phone: { name: 'Abbonamento telefonico', short: 'Telefono', explain: 'Il tuo abbonamento mensile di telefonia mobile.', tip: 'Offerte economiche sulla stessa rete costano spesso 20–35 CHF.' },
+  transfer: { name: 'Fattura della carta di credito', short: 'Fattura carta', explain: 'Hai pagato la fattura della carta di credito dal tuo conto privato. Non è una nuova spesa: gli acquisti sono già elencati sulla carta.' },
+  income: { name: 'Salario', short: 'Salario', explain: 'Il tuo salario, dopo le deduzioni. I contributi AVS (rendita statale) sono già dedotti, e il tuo datore di lavoro paga ancora lo stesso importo. A dicembre molti datori di lavoro pagano anche una 13a mensilità.' },
+  refund: { explain: 'Soldi restituiti da un negozio, per esempio dopo un reso. Riducono le tue spese in quella categoria.' },
+};

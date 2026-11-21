@@ -1,0 +1,15 @@
+export default {
+  title: 'Il mio futuro',
+  ahvEmpH: 'Rendita statale (AVS): pagata con il tuo salario ✓',
+  ahvEmpP: 'I contributi AVS vengono dedotti da ogni busta paga, e il tuo datore di lavoro paga ancora lo stesso importo. Ogni anno di lavoro conta per la tua futura rendita.',
+  p3EmpH: 'Previdenza privata (pilastro 3a): aperta per te',
+  p3EmpP: "Poiché ricevi un salario, puoi versare nel pilastro 3a e dedurlo dal reddito imponibile. Nel 2026 il massimo per i dipendenti con cassa pensione è di CHF 7'258.",
+  ahvH: 'Rendita statale (AVS): coperto ✓',
+  ahvP: "Non ricevi un salario, ma quest’anno sei coperto tramite il tuo partner, perché i suoi contributi superano CHF 1'060. Anche gli anni a casa con figli sotto i 16 anni danno accrediti per compiti educativi per la tua futura rendita.",
+  ahvBtn: 'Richiedi il mio estratto',
+  ahvMore: 'Puoi chiedere gratuitamente alla tua cassa di compensazione un estratto del tuo conto individuale (estratto CI). Mostra se manca qualche anno. Di solito le lacune si possono colmare solo per gli ultimi 5 anni.',
+  p3H: 'Previdenza privata (pilastro 3a): non disponibile',
+  p3P: 'Il pilastro 3a è un risparmio per la pensione esente da imposte, ma solo chi ha un proprio reddito da lavoro può versarvi. È uno dei motivi per cui i genitori che restano a casa spesso vanno in pensione con meno soldi propri.',
+  indH: 'In arrivo: ogni coniuge presenta la propria dichiarazione',
+  indP: 'In marzo 2026 il popolo svizzero ha approvato l’imposizione individuale. Dovrebbe entrare in vigore entro il 2032. Avrai allora la tua dichiarazione d’imposta: conviene capire le tue finanze già adesso.',
+};
