@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addProject, projectsState, removeProject } from './projects';
+import { addProject, goalState, projectsState, removeProject, selectGoal } from './projects';
 
 describe('savings projects', () => {
   it('has the seven preset goals, emergency fund first and selected', () => {
@@ -21,5 +21,11 @@ describe('savings projects', () => {
     removeProject(own.key);
     expect(projectsState.projects).toHaveLength(7);
     expect(projectsState.selected).toBe('emergency');
+  });
+  it('picking a goal starts the amount slider at its preset amount', () => {
+    selectGoal('holiday');
+    expect(goalState.goalFrancs).toBe(1200);
+    selectGoal('emergency');
+    expect(goalState.goalFrancs).toBe(2000);
   });
 });

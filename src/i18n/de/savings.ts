@@ -88,4 +88,6 @@ export default {
   capDoneSave: 'Das spart etwa {save} im Monat. Es ist jetzt Teil deines Sparplans.',
   capProto: 'Prototyp: Auf deiner Karte wird kein echtes Limit gesetzt.',
   capOk: 'OK',
+  planGoal: 'Dein Ziel: {name}, {amount} in {months} Monaten.',
+  changeGoal: 'Ziel ändern',
 };

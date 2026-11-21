@@ -1,5 +1,5 @@
 import { reactive } from 'vue';
-import { demoDefaultGoal, demoGoals, type GoalKey } from '../../shared/demo-data';
+import { demoDefaultGoal, demoGoals, demoSavedRappen, type GoalKey } from '../../shared/demo-data';
 
 /**
  * Savings goals shown on the Savings page: the presets plus projects the user adds.
@@ -30,20 +30,41 @@ export const projectsState = reactive({
   selected: initialGoal,
 });
 
+/**
+ * The goal plan inputs, shared by the goal (set on the Coming up tab) and the savings ideas
+ * (Savings tab), in whole francs as the sliders show them.
+ */
+export const goalState = reactive({
+  goalFrancs: francsOf(initialGoal),
+  savedFrancs: Math.round(demoSavedRappen / 100),
+  months: 12,
+});
+
+function francsOf(key: string): number {
+  const p = projectsState.projects.find((x) => x.key === key);
+  return Math.round((p?.amountRappen ?? 0) / 100);
+}
+
+/** Picks a goal and starts its amount slider at the goal's preset amount. */
+export function selectGoal(key: string): void {
+  projectsState.selected = key;
+  goalState.goalFrancs = francsOf(key);
+}
+
 let counter = 0;
 
 export function addProject(p: { name: string; icon: string; image?: string; amountRappen: number }): SavingsProject {
   counter += 1;
   const project: SavingsProject = { key: `own-${counter}`, preset: false, ...p };
   projectsState.projects.push(project);
-  projectsState.selected = project.key;
+  selectGoal(project.key);
   return project;
 }
 
 export function removeProject(key: string): void {
   const i = projectsState.projects.findIndex((p) => p.key === key && !p.preset);
   if (i >= 0) projectsState.projects.splice(i, 1);
-  if (projectsState.selected === key) projectsState.selected = demoDefaultGoal;
+  if (projectsState.selected === key) selectGoal(demoDefaultGoal);
 }
 
 /** Images over this size are refused, to keep the app fast on older phones. */

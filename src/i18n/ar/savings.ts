@@ -88,4 +88,6 @@ export default {
   capDoneSave: 'هذا يوفّر نحو {save} في الشهر، وأصبح جزءًا من خطة ادخارك.',
   capProto: 'نموذج أولي: لا يُضبط أي حد حقيقي على بطاقتك.',
   capOk: 'حسنًا',
+  planGoal: 'هدفك: {name}، {amount} خلال {months} شهرًا.',
+  changeGoal: 'غيّر الهدف',
 };

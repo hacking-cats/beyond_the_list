@@ -7,7 +7,7 @@
 - **Decisions:** [0002](../../../docs/architecture/decisions/0002-klar-v2-first-app.md)
 
 ## What the user can do
-Set aside money each month for the final tax bill (sliders for amount and months), learn about the 30 November health insurance deadline and the Franchise, and the premium reduction.
+Set the savings goal at the top (`../savings/SavingsGoal.vue`: pick or add a goal, amount, already saved, months; the Savings tab uses the same goal for its plan). Set aside money each month for the final tax bill (sliders for amount and months), learn about the 30 November health insurance deadline and the Franchise, and the premium reduction.
 
 ## How to test
 `npm test` (setAsidePerMonth). Visual: `npm run dev`, open `#/coming-up`.
