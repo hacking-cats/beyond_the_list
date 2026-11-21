@@ -3,18 +3,15 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { enabledFeatures } from '../features/registry';
 import { demoPersonName, latestSummary, monthLabel } from '../shared/statements';
-import { formatChf } from '../shared/money';
+import { displayChf } from '../shared/money';
 import { icon } from '../shared/ui/icons';
+import LanguagePicker from './LanguagePicker.vue';
 
 // One layout for the whole app: header with language switch, greeting and balance, the page,
 // and a bottom tab bar (icons only, each with an accessible name) from the feature registry.
 const { t, locale } = useI18n();
 const route = useRoute();
 const tabs = enabledFeatures();
-const languages = [
-  { code: 'en-US', label: 'EN' },
-  { code: 'de', label: 'DE' },
-] as const;
 
 
 </script>
@@ -23,22 +20,12 @@ const languages = [
   <div class="app">
     <header class="app-header">
       <h1 class="app-header__title">{{ t('common.appName') }}</h1>
-      <div class="lang" role="group" :aria-label="t('common.language')">
-        <button
-          v-for="l in languages"
-          :key="l.code"
-          class="chip"
-          :aria-pressed="locale === l.code"
-          @click="locale = l.code"
-        >
-          {{ l.label }}
-        </button>
-      </div>
+      <LanguagePicker />
     </header>
 
     <section class="summary">
       <p class="summary__hello">{{ t('common.hi') }} {{ demoPersonName }} 👋</p>
-      <p class="summary__balance amount">{{ formatChf(latestSummary.leftRappen) }}</p>
+      <p class="summary__balance amount">{{ displayChf(latestSummary.leftRappen) }}</p>
       <p class="summary__sub">
         {{ t('common.leftIn') }} {{ monthLabel(latestSummary.month, locale) }} {{ t('common.accounts') }}
       </p>
