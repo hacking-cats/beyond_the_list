@@ -4,8 +4,12 @@
  * Transaction contracts are still draft. Once frozen, pages get transactions through
  * useServices() instead of importing this file.
  */
-import accountCsv from '../../data/dummy/jeanine_2025_Account1_2025.csv?raw';
-import cardCsv from '../../data/dummy/jeanine_2025_Account3_2025.csv?raw';
+// Source of truth for the app: Jeanine as a single mother of two on a low wage, whose children
+// use her saved credit card (jeanine_singlemom_2025_*, see data/dummy/README.md). Every screen
+// reads these two files. Other files in data/dummy/ (the original jeanine_2025 sample,
+// andres_2025) are only used by tests.
+import accountCsv from '../../data/dummy/jeanine_singlemom_2025_Account1_2025.csv?raw';
+import cardCsv from '../../data/dummy/jeanine_singlemom_2025_Account3_2025.csv?raw';
 import categoriesJson from '../../content/categories.json';
 import merchantsJson from '../../content/merchants.json';
 import { categorizeAll } from '../engines/categorize/categorize';
@@ -21,16 +25,15 @@ function load(text: string, accountId: string): Transaction[] {
   return toTransactions(rows, accountId, OWN_ACCOUNTS);
 }
 
-/** Each account's own rows, before merging (needed for balances: transfers count on both sides). */
-export const accountTransactions: Transaction[] = [load(accountCsv, 'Account1'), load(cardCsv, 'Account3')].flat();
+const perAccount: Transaction[][] = [load(accountCsv, 'Account1'), load(cardCsv, 'Account3')];
 
-export const transactions: Transaction[] = categorizeAll(
-  mergeAccounts([
-    accountTransactions.filter((t) => t.accountId === 'Account1'),
-    accountTransactions.filter((t) => t.accountId === 'Account3'),
-  ]),
-  merchantsJson,
-);
+/** Each account's own rows, before merging (needed for balances: transfers count on both sides). */
+export const accountTransactions: Transaction[] = perAccount.flat();
+
+/** True when the statements include a credit card account (Account3). */
+export const hasCreditCard = accountTransactions.some((t) => t.accountId === 'Account3');
+
+export const transactions: Transaction[] = categorizeAll(mergeAccounts(perAccount), merchantsJson);
 
 const kinds = new Map((categoriesJson as { key: string; kind: SpendingKind }[]).map((c) => [c.key, c.kind]));
 export const kindOf = (category: string): SpendingKind => kinds.get(category) ?? 'essential';

@@ -9,12 +9,13 @@
 ## What the user can do
 - Pick a goal by icon (house, car, holiday, emergency fund, education, bucket list, children) or add a project of your own with a name and an icon or photo; set amount, already saved and months; see what to save per month.
 - Pick savings ideas from their spending habits (never essentials); the plan shows the monthly amount found, months to the goal at that pace, and what is still missing.
+- Cap the children's game and in-app purchases (App Store, Google Play, PlayStation, Xbox, ...): a toggle with a monthly maximum on a slider (starts at the recommended budget from `content/alternatives.json`); switching it on adds the saving (`savingWithCap`) to the plan and shows a confirmation. Prototype: no real card limit is set.
 
 ## How to test
 `npm test` (goalPlan known answers). Visual: `npm run dev`, open `#/savings`.
 
 ## Known gaps
-- Ideas are computed from the statements (biggest flexible categories, halved); "Already saved" is still a demo value. Own projects are kept in memory only (lost on reload) until the Storage contract exists.
+- Ideas are computed from the statements: first cheaper alternatives found in the user's own payments (`engines/savings/alternatives.ts` with `content/alternatives.json`, e.g. ZVV monthly pass, Lidl instead of Coop, Halbtax), then the biggest flexible categories without an alternative, halved; "Already saved" is still a demo value. Own projects are kept in memory only (lost on reload) until the Storage contract exists.
 
 ## Requirements to fill in
 - [ ] Acceptance criteria (PM).

@@ -73,3 +73,52 @@ describe('mergeAccounts', () => {
     expect(merged[0]!.date >= merged[merged.length - 1]!.date).toBe(true);
   });
 });
+
+describe('andres_2025 (low-income persona, private account only)', () => {
+  const name = 'andres_2025_Account1_2025.csv';
+  const a1 = load(name, 'Account1');
+
+  it('reads without errors', () => {
+    const { rows, errors } = parseCsv(file(name));
+    expect(errors).toEqual([]);
+    expect(rows).toHaveLength(835);
+  });
+  it('has integer Rappen, unique ids and only wage plus cousin top-ups as income', () => {
+    expect(a1.every((t) => Number.isInteger(t.amountRappen))).toBe(true);
+    expect(new Set(a1.map((t) => t.id)).size).toBe(a1.length);
+    const income = mergeAccounts([a1]).filter((t) => t.kind === 'income');
+    expect(income).toHaveLength(15);
+  });
+  it('never goes below zero and ends the year with almost nothing', () => {
+    let balance = 0;
+    let lowest = Infinity;
+    for (const t of [...a1].sort((x, y) => x.date.localeCompare(y.date) || y.amountRappen - x.amountRappen)) {
+      balance += t.amountRappen;
+      lowest = Math.min(lowest, balance);
+    }
+    expect(lowest).toBeGreaterThanOrEqual(0);
+    expect(balance).toBe(10982);
+  });
+});
+
+describe('jeanine_singlemom_2025 (single mother, private account and credit card)', () => {
+  const a1 = load('jeanine_singlemom_2025_Account1_2025.csv', 'Account1');
+  const a3 = load('jeanine_singlemom_2025_Account3_2025.csv', 'Account3');
+
+  it('reads both files without errors', () => {
+    expect(parseCsv(file('jeanine_singlemom_2025_Account1_2025.csv'))).toMatchObject({ errors: [] });
+    expect(parseCsv(file('jeanine_singlemom_2025_Account3_2025.csv'))).toMatchObject({ errors: [] });
+    expect(a1).toHaveLength(411);
+    expect(a3).toHaveLength(260);
+  });
+  it('counts each monthly card payment once, and the salary plus 13th salary as income', () => {
+    const merged = mergeAccounts([a1, a3]);
+    expect(merged.filter((t) => t.kind === 'transfer')).toHaveLength(12);
+    expect(merged.filter((t) => t.kind === 'income')).toHaveLength(13);
+    expect(merged.filter((t) => t.kind === 'refund')).toHaveLength(1);
+  });
+  it('the card payments cover the card purchases up to the last billing day', () => {
+    const card = a3.reduce((s, t) => s + t.amountRappen, 0);
+    expect(card).toBe(-8340); // purchases after 23 December, billed in January
+  });
+});

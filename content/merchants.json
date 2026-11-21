@@ -231,5 +231,242 @@
     ],
     "name": "Online shop",
     "category": "shop"
+  },
+  {
+    "match": [
+      "Coop Zürich",
+      "Coop Oerlikon",
+      "Coop Pronto",
+      "Lidl",
+      "Aldi",
+      "Denner",
+      "Migros",
+      "Coop Bern"
+    ],
+    "name": "Supermarket",
+    "category": "groceries"
+  },
+  {
+    "match": [
+      "Starbucks",
+      "k kiosk"
+    ],
+    "name": "Coffee and snacks",
+    "category": "coffee"
+  },
+  {
+    "match": [
+      "Uber Eats",
+      "Kebab",
+      "Just Eat",
+      "McDonald's"
+    ],
+    "name": "Takeaway and delivery",
+    "category": "eatingOut"
+  },
+  {
+    "match": [
+      "ZVV",
+      "SBB Billett",
+      "SBB CFF FFS"
+    ],
+    "name": "Public transport",
+    "category": "transport"
+  },
+  {
+    "match": [
+      "Swisscom"
+    ],
+    "name": "Swisscom",
+    "category": "phone"
+  },
+  {
+    "match": [
+      "Western Union Geldtransfer"
+    ],
+    "name": "Money sent home",
+    "category": "moneyHome"
+  },
+  {
+    "match": [
+      "Mahngebühr",
+      "Krankenkasse Mahngebühr",
+      "Transfergebühr",
+      "Gebühr Bargeldbezug Fremdautomat",
+      "Kontoführung",
+      "ZVV Busse"
+    ],
+    "name": "Fees and reminders",
+    "category": "fees"
+  },
+  {
+    "match": [
+      "Swisslos"
+    ],
+    "name": "Swisslos",
+    "category": "lottery"
+  },
+  {
+    "match": [
+      "Bargeldbezug Fremdautomat",
+      "Bargeldbezug Postomat"
+    ],
+    "name": "Cash withdrawal",
+    "category": "cash"
+  },
+  {
+    "match": [
+      "Serafe",
+      "WG-Kasse",
+      "Sunrise Internet"
+    ],
+    "name": "Household fees",
+    "category": "household"
+  },
+  {
+    "match": [
+      "Zahnarzt",
+      "Schulzahnklinik",
+      "Kieferorthopädie",
+      "Apotheke"
+    ],
+    "name": "Dentist",
+    "category": "health"
+  },
+  {
+    "match": [
+      "Brockenhaus"
+    ],
+    "name": "Brockenhaus (second-hand)",
+    "category": "clothes"
+  },
+  {
+    "match": [
+      "Handy-Reparatur"
+    ],
+    "name": "Phone repair",
+    "category": "phone"
+  },
+  {
+    "match": [
+      "Migrationsamt"
+    ],
+    "name": "Migration office",
+    "category": "official"
+  },
+  {
+    "match": [
+      "Twint von"
+    ],
+    "name": "Help from family",
+    "category": "familyHelp"
+  },
+  {
+    "match": [
+      "Disney Plus",
+      "Disney+"
+    ],
+    "name": "Disney+",
+    "category": "stream"
+  },
+  {
+    "match": [
+      "Temu",
+      "Klarna"
+    ],
+    "name": "Online shop",
+    "category": "shop"
+  },
+  {
+    "match": [
+      "Tagesschule",
+      "Kita"
+    ],
+    "name": "Childcare",
+    "category": "childcare"
+  },
+  {
+    "match": [
+      "Junioren",
+      "Schwimmkurs",
+      "Schullager",
+      "Schulmaterial",
+      "Sackgeld"
+    ],
+    "name": "Children: school and activities",
+    "category": "kids"
+  },
+  {
+    "match": [
+      "Lebara"
+    ],
+    "name": "Lebara (prepaid)",
+    "category": "phone"
+  },
+  {
+    "match": [
+      "Ochsner Sport"
+    ],
+    "name": "Ochsner Sport",
+    "category": "clothes"
+  },
+  {
+    "match": [
+      "Spielwaren",
+      "Weihnachtsgeschenke",
+      "Geschenk"
+    ],
+    "name": "Gifts",
+    "category": "gifts"
+  },
+  {
+    "match": [
+      "Apple.com/bill",
+      "Roblox",
+      "Nintendo",
+      "Google Play"
+    ],
+    "name": "Games and in-app purchases",
+    "category": "games"
+  },
+  {
+    "match": [
+      "TCS Camping"
+    ],
+    "name": "TCS Camping",
+    "category": "holiday"
+  },
+  {
+    "match": [
+      "YouTube Premium",
+      "Crunchyroll"
+    ],
+    "name": "Video streaming",
+    "category": "stream"
+  },
+  {
+    "match": [
+      "PlayStation Store",
+      "Epic Games"
+    ],
+    "name": "Game stores",
+    "category": "games"
+  },
+  {
+    "match": [
+      "Waschmaschine"
+    ],
+    "name": "Washing machine",
+    "category": "household"
+  },
+  {
+    "match": [
+      "Microsoft*Xbox",
+      "Xbox",
+      "Nintendo eShop",
+      "Steam"
+    ],
+    "name": "Game stores",
+    "category": "games"
   }
 ]

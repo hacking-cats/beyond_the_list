@@ -13,4 +13,10 @@ export default {
   kkMore: 'The Franchise (deductible) is what you pay yourself each year before insurance pays. A higher Franchise means lower monthly premiums but more risk if you get sick.',
   prH: 'You might get a premium reduction',
   prP: 'Households with lower income can get help with health insurance premiums. Each canton has its own rules and application form.',
+  wtH: 'Taxes: taken from your salary',
+  wtP: "Your statements show no tax payments. With a B permit, tax is usually taken directly from your salary (Quellensteuer), so you shouldn't expect a big tax bill. In some cases a tax return is still needed: ask your employer or the cantonal tax office if you are unsure.",
+  serafeH: 'Serafe bill: comes once a year',
+  serafeP: 'Every household pays the Serafe fee for radio and TV. Last year your bill was {amount}. Setting a little aside each month means the bill does not hit a tight month.',
+  serafeL: 'Set aside per month',
+  prYou: 'Last year health insurance cost you {amount}, about {share}% of your income. With an income like yours it is worth asking. Your municipality can tell you which office handles premium reductions in your canton.',
 };

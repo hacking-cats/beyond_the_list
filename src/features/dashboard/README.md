@@ -20,6 +20,9 @@
 - Reads demo data directly instead of `useServices()` (contracts are draft).
 - No suspicious-payment alerts and no AI-editable layout yet.
 
+## Tips
+Tapping a bubble shows the biggest cheaper alternative found in that category (same engine and texts as the Savings page), also for essentials like groceries and transport; otherwise the category's general tip.
+
 ## Requirements to fill in
 - [ ] Acceptance criteria (PM).
 - [ ] Widget list and default layout (design).

@@ -13,4 +13,10 @@ export default {
   kkMore: 'La franchigia è quanto paghi tu ogni anno prima che paghi l’assicurazione. Una franchigia più alta significa premi mensili più bassi, ma più rischio se ti ammali.',
   prH: 'Potresti ricevere una riduzione dei premi',
   prP: 'Le economie domestiche con reddito più basso possono ricevere un aiuto per i premi della cassa malati. Ogni cantone ha le sue regole e il suo modulo di richiesta.',
+  wtH: 'Imposte: trattenute dal salario',
+  wtP: 'I tuoi estratti non mostrano pagamenti di imposte. Con un permesso B l’imposta di solito viene trattenuta direttamente dal salario (imposta alla fonte), quindi non dovresti aspettarti una grossa fattura. In alcuni casi serve comunque una dichiarazione: se hai dubbi, chiedi al datore di lavoro o all’ufficio cantonale delle imposte.',
+  serafeH: 'Fattura Serafe: arriva una volta all’anno',
+  serafeP: 'Ogni economia domestica paga il canone Serafe per radio e TV. L’anno scorso la tua fattura era di {amount}. Mettere da parte un po’ ogni mese evita che la fattura arrivi in un mese difficile.',
+  serafeL: 'Da mettere da parte al mese',
+  prYou: 'L’anno scorso la cassa malati ti è costata {amount}, circa il {share}% del tuo reddito. Con un reddito come il tuo vale la pena chiedere. Il tuo comune può dirti quale ufficio si occupa delle riduzioni dei premi nel tuo cantone.',
 };

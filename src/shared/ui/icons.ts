@@ -55,6 +55,16 @@ import {
   outlinedInfo,
   outlinedOpenInNew,
   outlinedShowChart,
+  outlinedShoppingCart,
+  outlinedCurrencyExchange,
+  outlinedCottage,
+  outlinedBadge,
+  outlinedLocalAtm,
+  outlinedLocalCafe,
+  outlinedCasino,
+  outlinedVolunteerActivism,
+  outlinedSportsEsports,
+  outlinedTaskAlt,
 } from '@quasar/extras/material-icons-outlined';
 
 const icons: Record<string, string> = {
@@ -112,6 +122,16 @@ const icons: Record<string, string> = {
   info: outlinedInfo,
   open_in_new: outlinedOpenInNew,
   show_chart: outlinedShowChart,
+  shopping_cart: outlinedShoppingCart,
+  currency_exchange: outlinedCurrencyExchange,
+  cottage: outlinedCottage,
+  badge: outlinedBadge,
+  local_atm: outlinedLocalAtm,
+  local_cafe: outlinedLocalCafe,
+  casino: outlinedCasino,
+  volunteer_activism: outlinedVolunteerActivism,
+  sports_esports: outlinedSportsEsports,
+  task_alt: outlinedTaskAlt,
 };
 
 export function icon(name: string): string {

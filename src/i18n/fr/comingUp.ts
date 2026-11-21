@@ -13,4 +13,10 @@ export default {
   kkMore: 'La franchise est le montant que vous payez vous-même chaque année avant que l’assurance paie. Une franchise plus élevée signifie des primes mensuelles plus basses, mais plus de risque si vous tombez malade.',
   prH: 'Vous pourriez avoir droit à une réduction de primes',
   prP: 'Les ménages à revenu modeste peuvent recevoir une aide pour les primes d’assurance maladie. Chaque canton a ses propres règles et son propre formulaire de demande.',
+  wtH: 'Impôts : retenus sur votre salaire',
+  wtP: 'Vos relevés ne montrent aucun paiement d’impôts. Avec un permis B, l’impôt est en général retenu directement sur le salaire (impôt à la source), vous ne devriez donc pas recevoir une grosse facture d’impôts. Dans certains cas, une déclaration reste nécessaire : en cas de doute, demandez à votre employeur ou à l’administration fiscale cantonale.',
+  serafeH: 'Facture Serafe : une fois par an',
+  serafeP: 'Chaque ménage paie la redevance Serafe pour la radio et la TV. L’an dernier, votre facture était de {amount}. Mettre un peu de côté chaque mois évite qu’elle tombe sur un mois serré.',
+  serafeL: 'À mettre de côté par mois',
+  prYou: 'L’an dernier, l’assurance maladie vous a coûté {amount}, environ {share} % de votre revenu. Avec un revenu comme le vôtre, cela vaut la peine de demander. Votre commune peut vous dire quel office s’occupe des réductions de primes dans votre canton.',
 };

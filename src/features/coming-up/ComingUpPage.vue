@@ -2,7 +2,8 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { setAsidePerMonth } from '../../engines/savings/goalPlan';
-import { taxPaidLastYear } from '../../shared/statements';
+import { percentOf } from '../../engines/insights/monthly';
+import { incomeLastYear, insuranceLastYear, serafeLastYear, taxPaidLastYear } from '../../shared/statements';
 import { chfToRappen, displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 
@@ -12,12 +13,41 @@ const months = ref(4);
 const perMonth = computed(() => setAsidePerMonth(chfToRappen(taxFrancs.value), months.value));
 const potCreated = ref(false);
 const showFranchise = ref(false);
+// No tax payments in the statements: tax is most likely withheld from the salary (Quellensteuer).
+const paysTaxBills = taxPaidLastYear > 0;
+const serafePerMonth = setAsidePerMonth(serafeLastYear, 12);
+const serafePot = ref(false);
+const insuranceShare = percentOf(insuranceLastYear, incomeLastYear);
 const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 </script>
 
 <template>
   <div>
-    <div class="tone tone--attention">
+    <div v-if="!paysTaxBills" class="worth">
+      <DsIcon name="info" />
+      <div>
+        <p class="worth__title">{{ t('features.comingUp.wtH') }}</p>
+        <p>{{ t('features.comingUp.wtP') }}</p>
+      </div>
+    </div>
+
+    <div v-if="serafeLastYear > 0" class="tone tone--attention">
+      <DsIcon name="attention" />
+      <div class="tone__content">
+        <p class="tone__title">{{ t('features.comingUp.serafeH') }}</p>
+        <p class="tone__body">{{ t('features.comingUp.serafeP', { amount: chf0(serafeLastYear) }) }}</p>
+        <div class="result">
+          <span>{{ t('features.comingUp.serafeL') }}</span>
+          <span class="result__amount">{{ chf0(serafePerMonth) }}</span>
+        </div>
+        <button class="btn btn--primary btn--block" @click="serafePot = true">
+          {{ t('features.comingUp.saveBtn') }}
+        </button>
+        <p class="done" role="status">{{ serafePot ? t('features.comingUp.saved') : '' }}</p>
+      </div>
+    </div>
+
+    <div v-if="paysTaxBills" class="tone tone--attention">
       <DsIcon name="attention" />
       <div class="tone__content">
         <p class="tone__title">{{ t('features.comingUp.taxH') }}</p>
@@ -58,6 +88,9 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
       <div>
         <p class="card__title">{{ t('features.comingUp.prH') }}</p>
         <p>{{ t('features.comingUp.prP') }}</p>
+        <p v-if="insuranceShare > 0">
+          {{ t('features.comingUp.prYou', { amount: chf0(insuranceLastYear), share: insuranceShare }) }}
+        </p>
       </div>
     </div>
   </div>

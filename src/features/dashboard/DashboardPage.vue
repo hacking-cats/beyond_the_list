@@ -3,14 +3,15 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { categoryShares } from '../../engines/insights/categoryShares';
-import { monthlySpending } from '../../shared/statements';
+import { alternativesFor, monthlySpending, shareOfIncome } from '../../shared/statements';
 import { iconOf } from '../../shared/transactions';
 import { displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
 import BubbleChart from './BubbleChart.vue';
 
-const { t } = useI18n();
+const i18n = useI18n();
+const { t } = i18n;
 const router = useRouter();
 
 const onlyFlexible = ref(false);
@@ -24,6 +25,37 @@ function pick(key: string) {
   selected.value = selected.value === key ? null : key;
 }
 const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field}`);
+
+// What the selected bubble means for this person: share of income and category advice
+// (essentials), and the biggest cheaper alternative found in its payments.
+const incomeShare = computed(() => (selectedItem.value ? shareOfIncome(selectedItem.value.amountRappen) : 0));
+const advice = computed(() => {
+  const key = selectedItem.value?.key;
+  if (!key || !i18n.te(`features.dashboard.advice.${key}`)) return '';
+  return t(`features.dashboard.advice.${key}`, { incomeShare: incomeShare.value });
+});
+const flexTip = computed(() => {
+  const key = selectedItem.value?.key;
+  return key && i18n.te(`categories.${key}.tip`) ? cat(key, 'tip') : '';
+});
+function openIdeas() {
+  void router.push({ path: '/savings', query: selected.value ? { cat: selected.value } : {} });
+}
+
+const price = (r: number) => displayChf(r, { decimals: r % 100 === 0 ? 0 : 2 });
+// The biggest cheaper alternative found in this category's payments (same as on the Savings page).
+const selectedAlt = computed(() => (selected.value ? alternativesFor(selected.value)[0] : undefined));
+const altTitle = computed(() => (selectedAlt.value ? t(`features.savings.alt.${selectedAlt.value.key}.title`) : ''));
+const altTip = computed(() => {
+  const a = selectedAlt.value;
+  if (!a) return '';
+  return t(`features.savings.alt.${a.key}.tip`, {
+    count: a.count,
+    now: displayChf(a.nowRappen, { decimals: 0 }),
+    alt: price(a.altRappen),
+    total: displayChf(a.totalRappen, { decimals: 0 }),
+  });
+});
 </script>
 
 <template>
@@ -66,9 +98,16 @@ const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field
           {{ cat(selectedItem.key, 'name') }} · {{ displayChf(selectedItem.amountRappen, { decimals: 0 }) }}
           {{ t('common.perMonth') }}
         </p>
-        <p>{{ selectedItem.percent }}% {{ t('features.dashboard.shareL') }}.</p>
-        <p>{{ cat(selectedItem.key, 'tip') }}</p>
-        <button class="btn btn--secondary" @click="router.push('/savings')">
+        <p>
+          {{ selectedItem.percent }}% {{ t('features.dashboard.shareL') }} · {{ incomeShare }}%
+          {{ t('features.dashboard.incomeShareL') }}.
+        </p>
+        <template v-if="selectedAlt">
+          <p><b>{{ altTitle }}</b></p>
+          <p>{{ altTip }}</p>
+        </template>
+        <p v-else-if="flexTip">{{ flexTip }}</p>
+        <button class="btn btn--secondary" @click="openIdeas">
           {{ t('features.dashboard.ideasBtn') }}
         </button>
       </div>
@@ -79,8 +118,20 @@ const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field
           {{ cat(selectedItem.key, 'name') }} · {{ displayChf(selectedItem.amountRappen, { decimals: 0 }) }}
           {{ t('common.perMonth') }}
         </p>
-        <p>{{ selectedItem.percent }}% {{ t('features.dashboard.shareL') }}.</p>
-        <p>{{ t('features.dashboard.essentialNote') }}</p>
+        <p>
+          {{ selectedItem.percent }}% {{ t('features.dashboard.shareL') }} · {{ incomeShare }}%
+          {{ t('features.dashboard.incomeShareL') }}.
+        </p>
+        <p v-if="advice || selectedAlt">{{ t('features.dashboard.essentialWhy') }}</p>
+        <p v-else>{{ t('features.dashboard.essentialNote') }}</p>
+        <p v-if="advice">{{ advice }}</p>
+        <template v-if="selectedAlt">
+          <p><b>{{ t('features.dashboard.cheaperWay') }}: {{ altTitle }}</b></p>
+          <p>{{ altTip }}</p>
+          <button class="btn btn--secondary" @click="openIdeas">
+            {{ t('features.dashboard.ideasBtn') }}
+          </button>
+        </template>
       </div>
     </div>
     <p v-else class="hint" role="status">{{ t('features.dashboard.pickP') }}</p>

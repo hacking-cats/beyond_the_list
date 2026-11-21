@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { enabledFeatures } from '../features/registry';
-import { balances, balanceSince, dayLabel, demoPersonName, totalBalanceRappen } from '../shared/statements';
+import { balances, balanceSince, dayLabel, demoPersonName, hasCreditCard, totalBalanceRappen } from '../shared/statements';
 import { displayChf } from '../shared/money';
 import { icon } from '../shared/ui/icons';
 import LanguagePicker from './LanguagePicker.vue';
@@ -48,7 +48,9 @@ function closeBuddy() {
       </p>
       <p class="summary__sub">
         {{ t('common.privateAccount') }} <span class="amount">{{ displayChf(balances.privateAccount.balanceRappen) }}</span>
-        · {{ t('common.creditCard') }} <span class="amount">{{ displayChf(balances.creditCard.balanceRappen) }}</span>
+        <template v-if="hasCreditCard">
+          · {{ t('common.creditCard') }} <span class="amount">{{ displayChf(balances.creditCard.balanceRappen) }}</span>
+        </template>
       </p>
     </section>
 

@@ -1,5 +1,5 @@
 import { reactive } from 'vue';
-import { demoGoals, type GoalKey } from '../../shared/demo-data';
+import { demoDefaultGoal, demoGoals, type GoalKey } from '../../shared/demo-data';
 
 /**
  * Savings goals shown on the Savings page: the presets plus projects the user adds.
@@ -23,9 +23,11 @@ const presets: SavingsProject[] = (Object.keys(demoGoals) as GoalKey[]).map((key
   amountRappen: demoGoals[key].amountRappen,
 }));
 
+const initialGoal: string = demoDefaultGoal;
+
 export const projectsState = reactive({
   projects: presets,
-  selected: 'car',
+  selected: initialGoal,
 });
 
 let counter = 0;
@@ -41,7 +43,7 @@ export function addProject(p: { name: string; icon: string; image?: string; amou
 export function removeProject(key: string): void {
   const i = projectsState.projects.findIndex((p) => p.key === key && !p.preset);
   if (i >= 0) projectsState.projects.splice(i, 1);
-  if (projectsState.selected === key) projectsState.selected = 'car';
+  if (projectsState.selected === key) projectsState.selected = demoDefaultGoal;
 }
 
 /** Images over this size are refused, to keep the app fast on older phones. */

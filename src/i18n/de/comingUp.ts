@@ -13,4 +13,10 @@ export default {
   kkMore: 'Die Franchise ist der Betrag, den du pro Jahr selbst zahlst, bevor die Versicherung zahlt. Höhere Franchise = tiefere Prämie, aber mehr Risiko bei Krankheit.',
   prH: 'Vielleicht bekommst du Prämienverbilligung',
   prP: 'Haushalte mit tieferem Einkommen bekommen Hilfe bei den Prämien. Jeder Kanton hat eigene Regeln und Formulare.',
+  wtH: 'Steuern: direkt vom Lohn abgezogen',
+  wtP: 'In deinen Auszügen gibt es keine Steuerzahlungen. Mit Ausweis B wird die Steuer meist direkt vom Lohn abgezogen (Quellensteuer), eine grosse Steuerrechnung ist also nicht zu erwarten. In gewissen Fällen braucht es trotzdem eine Steuererklärung: frag im Zweifel deinen Arbeitgeber oder das kantonale Steueramt.',
+  serafeH: 'Serafe-Rechnung: kommt einmal im Jahr',
+  serafeP: 'Jeder Haushalt bezahlt die Serafe-Abgabe für Radio und TV. Letztes Jahr war deine Rechnung {amount}. Wenn du jeden Monat etwas zurücklegst, trifft dich die Rechnung nicht in einem knappen Monat.',
+  serafeL: 'Pro Monat zurücklegen',
+  prYou: 'Letztes Jahr hat dich die Krankenkasse {amount} gekostet, etwa {share}% deines Einkommens. Bei einem Einkommen wie deinem lohnt es sich nachzufragen. Deine Gemeinde sagt dir, welche Stelle in deinem Kanton für die Prämienverbilligung zuständig ist.',
 };
