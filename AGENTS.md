@@ -12,7 +12,7 @@ Vue 3 + Quasar v2 (Quasar CLI with Vite), `<script setup lang="ts">`, TypeScript
 
 ## Commands
 
-Not available yet (the Quasar app is created in the next issue). Will be: install, dev, test, build.
+`npm install` · `npm run dev` · `npm test` · `npm run typecheck` · `npm run lint` · `npm run build` (set `PUBLIC_PATH=/beyond_the_list/` for the Pages build; the workflow does this).
 
 ## Architecture rules
 

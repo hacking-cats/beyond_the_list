@@ -1,0 +1,42 @@
+{
+  "name": "beyond-the-list",
+  "version": "0.2.0",
+  "description": "Beyond the List: transaction insight for newcomers in Switzerland (hacking-cats)",
+  "productName": "Beyond the List",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "quasar dev",
+    "build": "quasar build",
+    "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "postinstall": "quasar prepare --silent"
+  },
+  "dependencies": {
+    "@quasar/extras": "^2.1.0",
+    "quasar": "^2.35.5",
+    "vue": "^3.5.22",
+    "vue-i18n": "^11.3.0",
+    "vue-router": "^5.0.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@intlify/unplugin-vue-i18n": "^11.0.0",
+    "@quasar/app-vite": "^3.10.4",
+    "@types/node": "^22.19.11",
+    "@vue/eslint-config-typescript": "^14.7.0",
+    "autoprefixer": "^10.4.27",
+    "eslint": "^10.8.0",
+    "eslint-plugin-vue": "^10.8.0",
+    "globals": "^17.4.0",
+    "postcss": "^8.5.8",
+    "typescript": "^6.0.0",
+    "vitest": "^5.1.1",
+    "vue-eslint-parser": "^10.4.0",
+    "vue-tsc": "^3.3.3"
+  },
+  "engines": {
+    "node": ">= 26 || ^24 || ^22.12"
+  }
+}
