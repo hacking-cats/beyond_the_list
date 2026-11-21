@@ -9,6 +9,7 @@ import { chfToRappen, displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
 import { addProject, MAX_IMAGE_BYTES, projectsState, removeProject, type SavingsProject } from './projects';
+import InvestIdeas from '../invest/InvestIdeas.vue';
 
 const i18n = useI18n();
 const { t } = i18n;
@@ -259,5 +260,6 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
     <button class="btn btn--primary btn--block" style="margin-top: var(--sp-lg)" @click="started = true">{{ t('features.savings.startBtn') }}</button>
     <p class="done" role="status">{{ started ? t('features.savings.started') : '' }}</p>
 
+    <InvestIdeas class="section" />
   </div>
 </template>

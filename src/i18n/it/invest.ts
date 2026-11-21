@@ -1,3 +1,21 @@
 export default {
   title: 'Idee di investimento',
+  sectionH: 'Vuoi far crescere i tuoi risparmi?',
+  intro: 'Modi per investire con PostFinance, spiegati in modo semplice. Alcuni iniziano con pochi franchi al mese.',
+  noteTitle: 'Idee, non consulenza.',
+  noteBody: 'Gli investimenti possono perdere valore. Metti da parte prima i soldi per le emergenze e leggi i dettagli su postfinance.ch prima di decidere.',
+  listH: 'Inizia in piccolo con un piano di risparmio',
+  easiestStart: 'L’inizio più facile',
+  fromL: 'Da',
+  feesL: 'Costi',
+  linkBtn: 'Vedi su postfinance.ch',
+  opensSite: 'apre il sito di PostFinance',
+  compareLink: 'Confronta tutti i piani di risparmio su postfinance.ch',
+  checked: 'Dati da postfinance.ch, verificati il 21 novembre 2026. Prezzi e condizioni possono cambiare.',
+  products: {
+    fundSavingPlan: { name: 'Piano di risparmio in fondi', what: 'Scegli tu i fondi e versa regolarmente un importo fisso.', fees: 'commissione d’emissione 0,5–⁠0,75% + deposito 0,15%' },
+    retirement3a: { name: 'Fondi di previdenza (pilastro 3a)', what: 'Risparmiare per la pensione e pagare meno imposte. Solo con un proprio reddito da lavoro.', fees: 'nessun costo di deposito' },
+    etfSavingPlan: { name: 'Piano di risparmio ETF (e-trading)', what: 'Compra ETF automaticamente ogni settimana o ogni mese. Scegli e gestisci tu.', fees: 'CHF 18 al trimestre + 1% per acquisto' },
+    eAssetManagement: { name: 'E-gestione patrimoniale', what: 'Gli esperti di PostFinance investono per te. Per importi più grandi.', fees: '0,75% all’anno' },
+  },
 };

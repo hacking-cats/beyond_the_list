@@ -127,3 +127,29 @@ input[type=range] { width: 100%; min-height: var(--touch); accent-color: var(--p
 .form-actions { display: flex; gap: var(--sp-sm); margin-top: var(--sp-md); }
 .form-actions .btn { flex: 1; }
 .summary__sub .amount { white-space: nowrap; }
+
+/* Investment ideas (src/features/invest/InvestIdeas.vue), shown at the end of Savings */
+.invest__note { display: flex; gap: 10px; margin: var(--sp-sm) 0 var(--sp-lg); padding: var(--sp-md); border-radius: var(--r-md);
+  background: var(--tint-info); font-size: var(--fs-small); line-height: 1.45; }
+.invest__note p { margin: 0; }
+.invest__note .q-icon { flex: none; color: var(--petrol); }
+.invest__list { list-style: none; margin: 0; padding: 0; }
+.invest__card { margin-bottom: var(--sp-md); padding: 14px; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); }
+.invest__top { display: flex; align-items: flex-start; gap: var(--sp-md); }
+.invest__icon { width: 40px; height: 40px; flex: none; display: flex; align-items: center; justify-content: center;
+  border-radius: var(--r-pill); background: var(--tint-info); color: var(--petrol); }
+.invest__name { margin: 0; font-size: var(--fs-body); font-weight: 700; }
+.invest__what { margin: 2px 0 0; font-size: var(--fs-small); line-height: 1.4; color: var(--text-secondary); }
+.invest__tag { display: inline-block; margin-top: 6px; padding: 2px var(--sp-sm); border-radius: var(--r-pill);
+  background: var(--tint-info); color: var(--petrol); font-size: 11px; font-weight: 700; }
+.invest__facts { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 var(--sp-md); padding-inline-start: 52px; }
+.invest__fact { padding: 3px 9px; border-radius: var(--r-pill); background: var(--surface-subtle); color: var(--text-secondary);
+  font-size: var(--fs-caption); font-weight: 600; }
+.invest__fact b { color: var(--text); }
+.invest__link { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: var(--touch);
+  margin-inline-start: 52px; border: 1.5px solid var(--petrol); border-radius: var(--r-pill); color: var(--petrol);
+  font-size: 15px; font-weight: 600; text-decoration: none; }
+.invest__all { display: inline-block; padding-block: 10px; color: var(--petrol); font-weight: 600; }
+.invest__all .q-icon { margin-inline-start: 4px; vertical-align: -3px; }
+.invest__checked { margin: var(--sp-xs) 0 0; color: var(--text-muted); font-size: var(--fs-caption); }
+[dir='rtl'] .invest__link .q-icon, [dir='rtl'] .invest__all .q-icon { transform: scaleX(-1); }
