@@ -1,0 +1,56 @@
+{
+  "color": {
+    "brand": {
+      "yellow": {
+        "value": "#FFCC00",
+        "use": "primary button background only (with text.primary, 11.1:1). Never text, never an icon on white."
+      },
+      "yellowDark": {
+        "value": "#E6B800",
+        "use": "primary button pressed state"
+      },
+      "petrol": {
+        "value": "#005C66",
+        "use": "links, secondary buttons, chips, marker icon, time-jump background (7.7:1 on white)"
+      },
+      "petrolDark": {
+        "value": "#00474F",
+        "use": "pressed states"
+      },
+      "grapefruit": {
+        "value": "#FF5A36",
+        "use": "action-tone border and icon only (3.1:1, non-text). Text uses semantic.urgentText."
+      },
+      "lightBlue": {
+        "value": "#7FD1E8",
+        "use": "decorative only, never text"
+      }
+    },
+    "surface": {
+      "base": "#FFFFFF",
+      "subtle": "#F5F7F8",
+      "inverse": "#0E1A1C",
+      "tintAttention": "#FFF6DB",
+      "tintAction": "#FFEDE8",
+      "tintInfo": "#E8F6FB"
+    },
+    "text": {
+      "primary": "#10201F",
+      "secondary": "#4A5A5C",
+      "muted": "#616F70",
+      "inverse": "#FFFFFF",
+      "disabled": "#8A9798"
+    },
+    "border": {
+      "default": "#D8DEDF",
+      "strong": "#616F70"
+    },
+    "semantic": {
+      "successText": "#1B7F4B",
+      "warningText": "#946219",
+      "errorText": "#C0392B",
+      "infoText": "#266BC7",
+      "urgentText": "#BC4227"
+    }
+  }
+}
