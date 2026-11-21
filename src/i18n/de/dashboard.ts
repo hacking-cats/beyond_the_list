@@ -1,7 +1,7 @@
 export default {
   title: 'Übersicht',
   overviewH: 'Wohin dein Geld geht',
-  overviewP: 'Monatlicher Durchschnitt der letzten 3 Monate. Grössere Blase = mehr Geld.',
+  overviewP: 'Monatlicher Durchschnitt der letzten 12 Monate deiner Auszüge. Grössere Blase = mehr Geld.',
   totalL: 'Ausgaben pro Monat',
   flexL: 'Könntest du reduzieren',
   ofAll: 'deiner Ausgaben',
@@ -14,19 +14,4 @@ export default {
   ideasBtn: 'Sparideen ansehen',
   essentialNote: 'Notwendig. Hier schlagen wir nicht vor zu sparen.',
   listH: 'Alle Kategorien',
-  cats: {
-    rent: { name: 'Miete', short: 'Miete' },
-    groceries: { name: 'Lebensmittel', short: 'Essen' },
-    insurance: { name: 'Krankenkasse', short: 'Krankenkasse' },
-    holiday: { name: 'Ferien und Ausflüge', short: 'Ferien', tip: '3 Monate im Voraus buchen und ausserhalb der Saison reisen spart oft einen Drittel.' },
-    kids: { name: 'Kinder und Schule', short: 'Kinder' },
-    takeaway: { name: 'Take-away und Lieferdienste', short: 'Take-away', tip: 'Zwei Abende mehr pro Woche selbst kochen halbiert diesen Betrag.' },
-    shop: { name: 'Online-Shopping', short: 'Shopping', tip: 'Dinge 48 Stunden im Warenkorb lassen, bevor du kaufst.' },
-    transport: { name: 'Verkehr', short: 'Verkehr' },
-    fun: { name: 'Freizeit und Ausgang', short: 'Ausgang', tip: 'Ein bezahlter Ausflug pro Woche; viele Museen und Parks sind an manchen Tagen gratis.' },
-    phone: { name: 'Handy-Abos', short: 'Handy', tip: 'Günstige Abos im gleichen Netz kosten oft 20–35 CHF.' },
-    health: { name: 'Arzt und Apotheke', short: 'Arzt' },
-    coffee: { name: 'Kaffee zum Mitnehmen', short: 'Kaffee', tip: 'An den meisten Tagen die Thermosflasche von zu Hause.' },
-    stream: { name: 'Streaming', short: 'Streaming', tip: 'Einen Dienst behalten und alle paar Monate wechseln.' },
-  },
 };

@@ -1,7 +1,7 @@
 # Feature: Coming up
 
 - **Route:** `/coming-up`
-- **Status:** fake (demo data from `src/shared/demo-data.ts`)
+- **Status:** real (dummy CSVs in `data/dummy/`, via `src/shared/statements.ts`; decision 0004)
 - **Services used (via useServices()):** none yet
 - **Engines used:** savings (`setAsidePerMonth`)
 - **Decisions:** [0002](../../../docs/architecture/decisions/0002-klar-v2-first-app.md)
@@ -14,3 +14,4 @@ Set aside money each month for the final tax bill (sliders for amount and months
 
 ## Known gaps
 - The savings pot is not stored; texts are general, not per canton.
+- The expected final tax bill starts at the tax paid in the newest year of the statements.

@@ -1,7 +1,7 @@
 # Feature: Savings
 
 - **Route:** `/savings`
-- **Status:** fake (demo data from `src/shared/demo-data.ts`)
+- **Status:** real (dummy CSVs in `data/dummy/`, via `src/shared/statements.ts`; decision 0004)
 - **Services used (via useServices()):** none yet; planned: transactions, assistant
 - **Engines used:** savings (`goalPlan`)
 - **Decisions:** [0002](../../../docs/architecture/decisions/0002-klar-v2-first-app.md)
@@ -14,7 +14,7 @@
 `npm test` (goalPlan known answers). Visual: `npm run dev`, open `#/savings`.
 
 ## Known gaps
-- Ideas are fixed demo data, not computed from transactions. Own projects are kept in memory only (lost on reload) until the Storage contract exists.
+- Ideas are computed from the statements (biggest flexible categories, halved); "Already saved" is still a demo value. Own projects are kept in memory only (lost on reload) until the Storage contract exists.
 
 ## Requirements to fill in
 - [ ] Acceptance criteria (PM).

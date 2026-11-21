@@ -8,9 +8,11 @@ import invest from './invest';
 import dataGenerator from './dataGenerator';
 import comingUp from './comingUp';
 import myFuture from './myFuture';
+import categories from './categories';
 
 export default {
   common,
+  categories,
   features: {
     dashboard,
     movements,

@@ -1,1 +1,86 @@
-[]
+[
+  {
+    "key": "rent",
+    "icon": "home",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "insurance",
+    "icon": "health_and_safety",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "utilities",
+    "icon": "bolt",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "tax",
+    "icon": "account_balance",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "transport",
+    "icon": "train",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "health",
+    "icon": "visibility",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "other",
+    "icon": "help_outline",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "eatingOut",
+    "icon": "restaurant",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  },
+  {
+    "key": "shop",
+    "icon": "shopping_bag",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  },
+  {
+    "key": "clothes",
+    "icon": "checkroom",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  },
+  {
+    "key": "holiday",
+    "icon": "flight",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  },
+  {
+    "key": "hobbies",
+    "icon": "pedal_bike",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  },
+  {
+    "key": "stream",
+    "icon": "live_tv",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  },
+  {
+    "key": "phone",
+    "icon": "smartphone",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  }
+]

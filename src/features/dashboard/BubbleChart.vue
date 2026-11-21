@@ -26,13 +26,13 @@ const packing = computed(() => packCircles(props.items.map((i) => i.amountRappen
 const bubbles = computed(() =>
   packing.value.circles.map((c) => {
     const item = props.items[c.index]!;
-    const short = t(`features.dashboard.cats.${item.key}.short`);
+    const short = t(`categories.${item.key}.short`);
     const big = c.r >= 55;
     const fits = c.r >= 26 && Math.max(short.length * (big ? 8 : 7), 56) <= 2 * c.r - 12;
     return { ...c, item, short, fits, big, francs: Math.round(item.amountRappen / 100) };
   }),
 );
-const name = (key: string) => t(`features.dashboard.cats.${key}.name`);
+const name = (key: string) => t(`categories.${key}.name`);
 function onKey(e: KeyboardEvent, key: string) {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();

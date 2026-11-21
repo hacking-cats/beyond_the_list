@@ -1,0 +1,20 @@
+// Ausgabenkategorien (Schlüssel aus content/categories.json), für alle Seiten.
+export default {
+  rent: { name: 'Miete', short: 'Miete', explain: 'Deine monatliche Miete. In der Schweiz zahlt man die Miete meist im Voraus, am Anfang des Monats.' },
+  insurance: { name: 'Krankenkasse', short: 'Krankenkasse', explain: 'Die Grundversicherung ist für alle in der Schweiz obligatorisch und wird pro Person bezahlt, nicht über den Arbeitgeber. Bei tiefem Einkommen gibt es eventuell Prämienverbilligung – meist muss man sie beantragen.' },
+  utilities: { name: 'Strom', short: 'Strom', explain: 'Eine Akontozahlung für Strom. Das Energiewerk verrechnet während des Jahres eine Schätzung und rechnet am Ende den echten Verbrauch ab.' },
+  tax: { name: 'Steuern', short: 'Steuern', explain: 'Eine Steuerrate. Der Kanton verlangt während des Jahres Vorauszahlungen; die definitive Rechnung kommt nach der Steuererklärung.' },
+  transport: { name: 'Verkehr', short: 'Verkehr', explain: 'ÖV, Benzin, Taxi oder die Autobahnvignette. Mit dem Halbtax kosten die meisten Zug- und Busbillette nur die Hälfte.' },
+  health: { name: 'Gesundheit', short: 'Gesundheit', explain: 'Kosten wie Brille oder Zahnarzt zahlt die Grundversicherung oft nicht. Beleg aufbewahren: hohe Krankheitskosten kann man von den Steuern abziehen.' },
+  other: { name: 'Anderes', short: 'Anderes', explain: 'Eine Zahlung, die wir noch keiner Kategorie zuordnen konnten.' },
+  eatingOut: { name: 'Auswärts essen', short: 'Essen', explain: 'Essen in der Kantine oder im Restaurant.', tip: 'Zwei- oder dreimal pro Woche Mittagessen von zu Hause mitnehmen halbiert diesen Betrag ungefähr.', wit: 'Deine Lunchbox schickt dir keine Rechnung.' },
+  shop: { name: 'Online-Shopping', short: 'Shopping', explain: 'Eine Bestellung in einem Online-Shop oder eine Zahlung über PayPal.', tip: 'Lass Dinge 48 Stunden im Warenkorb. Vieles willst du danach nicht mehr.' },
+  clothes: { name: 'Kleider', short: 'Kleider', explain: 'Kleider oder Schuhe. Zurückgeschickte Artikel kommen als Rückerstattung zurück (Plusbetrag).', tip: 'Führe eine Wunschliste und kaufe Kleider einmal im Monat statt spontan.' },
+  holiday: { name: 'Ferien und Reisen', short: 'Ferien', explain: 'Flüge, Hotels und andere Reisekosten.', tip: '3 Monate im Voraus buchen und ausserhalb der Saison reisen spart oft einen Drittel.' },
+  hobbies: { name: 'Hobbys, Bücher und Anlässe', short: 'Hobbys', explain: 'Bücher, Sport, Anlässe und Hobbys.', tip: 'Setz dir ein Hobby-Budget pro Monat. Grosse Anschaffungen wie ein Velo plant man besser als Sparziel.' },
+  stream: { name: 'Streaming und Apps', short: 'Streaming', explain: 'Abos für Filme, Musik oder Apps. Kleine Beträge summieren sich über das Jahr.', tip: 'Einen Dienst behalten und alle paar Monate wechseln.' },
+  phone: { name: 'Handy-Abo', short: 'Handy', explain: 'Dein monatliches Handy-Abo.', tip: 'Günstige Abos im gleichen Netz kosten oft 20–35 CHF.' },
+  transfer: { name: 'Kreditkartenrechnung', short: 'Karte', explain: 'Du hast die Kreditkartenrechnung vom Privatkonto bezahlt. Das sind keine neuen Ausgaben: Die Einkäufe stehen schon auf der Karte.' },
+  income: { name: 'Lohn', short: 'Lohn', explain: 'Dein Lohn nach Abzügen. AHV-Beiträge sind schon abgezogen, und dein Arbeitgeber zahlt nochmals gleich viel. Im Dezember zahlen viele Arbeitgeber zusätzlich einen 13. Monatslohn.' },
+  refund: { explain: 'Geld zurück von einem Shop, zum Beispiel nach einer Rücksendung. Es senkt deine Ausgaben in dieser Kategorie.' },
+};
