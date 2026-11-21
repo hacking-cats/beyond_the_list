@@ -11,5 +11,6 @@ Pure functions that compute every number in the app: plain data in, plain data o
 | savings | Savings rate, spending cuts, cheaper alternatives | savings, report | [savings/SPEC.md](savings/SPEC.md) |
 | invest | Match surplus and goals to products in `content/invest-products.json` | invest, report | [invest/SPEC.md](invest/SPEC.md) |
 | report | Collect the facts for the written monthly report | assistant | [report/SPEC.md](report/SPEC.md) |
+| advice | Sample appointment times for the advice-booking prototype | savings | [advice/SPEC.md](advice/SPEC.md) |
 
 Template: [`docs/templates/engine-spec.md`](../../docs/templates/engine-spec.md).

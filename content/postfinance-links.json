@@ -4,5 +4,15 @@
     "de": "https://www.postfinance.ch/de/privat/anlegen/loesungen/sparplan/anlageloesungen-sparplan.html",
     "fr": "https://www.postfinance.ch/fr/particuliers/placements/solutions/plan-epargne/solutions-placement-plan-epargne.html",
     "it": "https://www.postfinance.ch/it/privati/investimenti/soluzioni/piano-risparmio/soluzioni-investimento-piano-risparmio.html"
+  },
+  "personalAdvice": {
+    "en": "https://www.postfinance.ch/en/support/personal-advice/private-customers.html",
+    "de": "https://www.postfinance.ch/de/support/persoenliche-beratung/privatkunden.html",
+    "fr": "https://www.postfinance.ch/fr/assistance/conseil-personnalise/clientele-privee.html",
+    "it": "https://www.postfinance.ch/it/assistenza/consulenza-personalizzata/clienti-privati.html"
+  },
+  "advicePhone": {
+    "display": "+41 58 448 14 14",
+    "tel": "+41584481414"
   }
 }
