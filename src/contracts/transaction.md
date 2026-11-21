@@ -55,7 +55,7 @@ One CSV per account and year, 15 columns, every amount positive.
 6. The balance of an account is its **opening balance plus the sum of its settled rows** (`amountRappen`) from the opening date up to the day shown:
    - It is computed per account, from that account's own rows, so a transfer between our accounts counts on both sides (minus on the private account, plus on the card) and cancels out in a total over all accounts.
    - Pending rows are left out of the balance and may be shown separately as "pending".
-   - The opening balance comes from the source. When it is unknown (the challenge CSVs have none), it is `0` on the first day of the data, and the app says so ("since 1 January 2025"), never presenting it as the bank's balance.
+   - The opening balance comes from the source. When it is unknown (the challenge CSVs have none), it is `0` on the first day of the data. The header shows this computed balance without a "since <date>" note (decision 0006); the start date stays available (`sinceDate`) for any place that explains how the balance is calculated, such as the AI's answers.
    - A credit card balance below zero is the amount still owed on the card.
 
 ## Fake behaviour
