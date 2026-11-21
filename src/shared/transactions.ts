@@ -4,10 +4,11 @@
  * Transaction contracts are still draft. Once frozen, pages get transactions through
  * useServices() instead of importing this file.
  */
-// Demo persona: Andrés, a made-up low-income migrant in Zurich (see data/dummy/README.md).
-// He has only a private account. To show Jeanine instead, load jeanine_2025_Account1_2025.csv
-// as Account1 and jeanine_2025_Account3_2025.csv as Account3, and set demoPersonName.
-import accountCsv from '../../data/dummy/andres_2025_Account1_2025.csv?raw';
+// Demo persona: Jeanine as a single mother of two on a low wage (see data/dummy/README.md),
+// with a private account and a credit card. Other personas in data/dummy/: the original
+// jeanine_2025 files and andres_2025 (private account only).
+import accountCsv from '../../data/dummy/jeanine_singlemom_2025_Account1_2025.csv?raw';
+import cardCsv from '../../data/dummy/jeanine_singlemom_2025_Account3_2025.csv?raw';
 import categoriesJson from '../../content/categories.json';
 import merchantsJson from '../../content/merchants.json';
 import { categorizeAll } from '../engines/categorize/categorize';
@@ -23,7 +24,7 @@ function load(text: string, accountId: string): Transaction[] {
   return toTransactions(rows, accountId, OWN_ACCOUNTS);
 }
 
-const perAccount: Transaction[][] = [load(accountCsv, 'Account1')];
+const perAccount: Transaction[][] = [load(accountCsv, 'Account1'), load(cardCsv, 'Account3')];
 
 /** Each account's own rows, before merging (needed for balances: transfers count on both sides). */
 export const accountTransactions: Transaction[] = perAccount.flat();
@@ -41,4 +42,4 @@ const categoryIcons = new Map((categoriesJson as { key: string; icon: string }[]
 export const iconOf = (category: string): string => categoryIcons.get(category) ?? 'help_outline';
 
 /** Name of the person in the demo data (from the file names). */
-export const demoPersonName = 'Andrés';
+export const demoPersonName = 'Jeanine';

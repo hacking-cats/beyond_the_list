@@ -6,22 +6,29 @@
 
 export type GoalKey = 'house' | 'car' | 'holiday' | 'emergency' | 'education' | 'bucket' | 'children';
 
-/** Preset goals: Material icon name and suggested amount when the user picks one. */
+/**
+ * Preset goals: Material icon name and suggested amount when the user picks one.
+ * Sized for the demo persona (single parent on a low wage): an emergency fund first,
+ * then small family goals; the order is the order of the buttons.
+ */
 export const demoGoals: Record<GoalKey, { icon: string; amountRappen: number }> = {
-  house: { icon: 'home', amountRappen: 4000000 },
-  car: { icon: 'directions_car', amountRappen: 1500000 },
-  holiday: { icon: 'flight', amountRappen: 300000 },
-  emergency: { icon: 'umbrella', amountRappen: 1000000 },
-  education: { icon: 'school', amountRappen: 2000000 },
-  bucket: { icon: 'checklist', amountRappen: 800000 },
-  children: { icon: 'child_care', amountRappen: 3000000 },
+  emergency: { icon: 'umbrella', amountRappen: 200000 },
+  children: { icon: 'child_care', amountRappen: 100000 },
+  holiday: { icon: 'flight', amountRappen: 120000 },
+  education: { icon: 'school', amountRappen: 150000 },
+  bucket: { icon: 'checklist', amountRappen: 50000 },
+  car: { icon: 'directions_car', amountRappen: 600000 },
+  house: { icon: 'home', amountRappen: 2000000 },
 };
 
-/** Suggested amount for a project the user adds. */
-export const demoNewProjectRappen = 500000;
+/** The goal selected when the Savings page opens. */
+export const demoDefaultGoal: GoalKey = 'emergency';
 
-/** Starting value of "Already saved" (the statements have no savings account). */
-export const demoSavedRappen = 120000;
+/** Suggested amount for a project the user adds. */
+export const demoNewProjectRappen = 100000;
+
+/** Starting value of "Already saved": nothing (the statements have no savings account). */
+export const demoSavedRappen = 0;
 
 /** Icons the user can pick for a project of their own. */
 export const projectIcons = [

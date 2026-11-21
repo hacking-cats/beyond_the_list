@@ -26,4 +26,8 @@ export default {
   fees: { name: 'Fees and reminders', short: 'Fees', explain: 'Bank fees, transfer fees and reminder fees (Mahngebühren) for bills paid late.', tip: 'Most fees can be avoided: pay bills right after payday and use free ATMs.' },
   lottery: { name: 'Lottery', short: 'Lottery', explain: 'Lottery tickets, for example Swisslos EuroMillions.', tip: 'Put the same amount aside instead. That money you keep for sure.' },
   familyHelp: { name: 'Help from family', short: 'Family help', explain: 'Money a relative or friend sent you. If you need help like this often, free debt and budget advice (Schuldenberatung) can help you plan.' },
+  childcare: { name: 'Childcare', short: 'Childcare', explain: 'Fees for the day school (Tagesschule) or daycare. In many places the fee depends on your income.' },
+  kids: { name: 'Children: school and activities', short: 'Children', explain: 'School camps, materials, clubs, courses and pocket money.' },
+  gifts: { name: 'Gifts and birthdays', short: 'Gifts', explain: 'Presents for birthdays and Christmas.', tip: 'Agree on a gift budget per child before December and spread the shopping over the year.' },
+  games: { name: 'Games and in-app purchases', short: 'Games', explain: 'Purchases inside games and apps, for example Roblox, and game stores like the Nintendo eShop.', tip: 'Set a monthly limit for in-app purchases on the children\'s devices.' },
 };

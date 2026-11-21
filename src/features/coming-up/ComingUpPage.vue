@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { setAsidePerMonth } from '../../engines/savings/goalPlan';
+import { percentOf } from '../../engines/insights/monthly';
 import { incomeLastYear, insuranceLastYear, serafeLastYear, taxPaidLastYear } from '../../shared/statements';
 import { chfToRappen, formatChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
@@ -16,7 +17,7 @@ const showFranchise = ref(false);
 const paysTaxBills = taxPaidLastYear > 0;
 const serafePerMonth = setAsidePerMonth(serafeLastYear, 12);
 const serafePot = ref(false);
-const insuranceShare = incomeLastYear > 0 ? Math.round((insuranceLastYear * 100) / incomeLastYear) : 0;
+const insuranceShare = percentOf(insuranceLastYear, incomeLastYear);
 const chf0 = (r: number) => formatChf(r, { decimals: 0 });
 </script>
 

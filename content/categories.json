@@ -136,5 +136,29 @@
     "icon": "volunteer_activism",
     "color": "#005C66",
     "kind": "essential"
+  },
+  {
+    "key": "childcare",
+    "icon": "child_care",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "kids",
+    "icon": "school",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "gifts",
+    "icon": "card_giftcard",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  },
+  {
+    "key": "games",
+    "icon": "sports_esports",
+    "color": "#FF5A36",
+    "kind": "flexible"
   }
 ]

@@ -3,7 +3,7 @@
  * Pages read these instead of demo numbers.
  */
 import { balance, unknownOpening } from '../engines/insights/balance';
-import { averageMonthlySpending, categoryTotal, lastMonths, monthSummary, monthsWithData, totalMatching } from '../engines/insights/monthly';
+import { averageMonthlyIncome, averageMonthlySpending, categoryTotal, lastMonths, monthSummary, monthsWithData, percentOf, totalMatching } from '../engines/insights/monthly';
 import { alternatives, type Alternative, type AlternativeRule } from '../engines/savings/alternatives';
 import { suggestCuts } from '../engines/savings/suggestCuts';
 import alternativesJson from '../../content/alternatives.json';
@@ -29,6 +29,10 @@ export const alternativesFor = (category: string): Alternative[] =>
 /** Generic cuts (halve a flexible category), only for categories without a specific alternative. */
 const covered = new Set(savingsAlternatives.map((a) => a.category));
 export const savingsCuts = suggestCuts(monthlySpending.filter((c) => !covered.has(c.key)));
+
+/** Average monthly income over the last 12 months, and a monthly amount as a share of it (dashboard). */
+export const monthlyIncome = averageMonthlyIncome(transactions, yearMonths);
+export const shareOfIncome = (amountRappen: number): number => percentOf(amountRappen, monthlyIncome);
 
 /** Transactions of the newest month, newest first (Explained tab). */
 export const latestTransactions = transactions.filter((t) => t.date.startsWith(latestMonth));

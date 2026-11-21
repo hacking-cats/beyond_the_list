@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, nextTick, onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { goalPlan } from '../../engines/savings/goalPlan';
 import { paymentsPerMonth } from '../../engines/insights/monthly';
@@ -18,6 +19,7 @@ const { t } = i18n;
 // flexible categories that have no specific alternative. Biggest saving first.
 interface Idea {
   id: string;
+  category: string;
   title: string;
   tip: string;
   wit: string;
@@ -33,6 +35,7 @@ const ideas = computed<Idea[]>(() =>
       const params = { count: a.count, now: chf0(a.nowRappen), alt: price(a.altRappen), total: chf0(a.totalRappen) };
       return {
         id: `alt.${a.key}`,
+        category: a.category,
         title: t(`features.savings.alt.${a.key}.title`),
         tip: t(`features.savings.alt.${a.key}.tip`, params),
         wit: '',
@@ -43,6 +46,7 @@ const ideas = computed<Idea[]>(() =>
     }),
     ...savingsCuts.map((c) => ({
       id: `cut.${c.key}`,
+      category: c.key,
       title: cat(c.key, 'name'),
       tip: cat(c.key, 'tip'),
       wit: hasWit(c.key) ? cat(c.key, 'wit') : '',
@@ -60,7 +64,7 @@ const projectName = (p: SavingsProject) => (p.preset ? t(`features.savings.goals
 
 const goalFrancs = ref(Math.round(current.value.amountRappen / 100));
 const savedFrancs = ref(Math.round(demoSavedRappen / 100));
-const months = ref(24);
+const months = ref(12);
 const plan = ref(new Set<string>());
 const started = ref(false);
 
@@ -129,6 +133,23 @@ function togglePlan(key: string) {
   if (next.has(key)) next.delete(key);
   else next.add(key);
   plan.value = next;
+}
+
+// Coming from a dashboard bubble (?cat=<category>): that category's ideas first, and scroll to them.
+const route = useRoute();
+const router = useRouter();
+const focus = computed(() => (typeof route.query.cat === 'string' ? route.query.cat : ''));
+const focusName = computed(() => (focus.value ? t(`categories.${focus.value}.name`) : ''));
+const focusHits = computed(() => ideas.value.filter((i) => i.category === focus.value));
+const shownIdeas = computed(() =>
+  focusHits.value.length ? [...focusHits.value, ...ideas.value.filter((i) => i.category !== focus.value)] : ideas.value,
+);
+const ideasSection = ref<HTMLElement | null>(null);
+onMounted(() => {
+  if (focus.value) void nextTick(() => ideasSection.value?.scrollIntoView({ block: 'start' }));
+});
+function showAll() {
+  void router.replace({ path: route.path, query: {} });
 }
 
 const result = computed(() =>
@@ -232,11 +253,11 @@ const chf0 = (r: number) => formatChf(r, { decimals: 0 });
 
     <label class="field">
       {{ t('features.savings.targetL') }}: <b class="amount">{{ chf0(chfToRappen(goalFrancs)) }}</b>
-      <input v-model.number="goalFrancs" type="range" min="1000" max="80000" step="500" />
+      <input v-model.number="goalFrancs" type="range" min="200" max="30000" step="100" />
     </label>
     <label class="field">
       {{ t('features.savings.savedL') }}: <b class="amount">{{ chf0(chfToRappen(savedFrancs)) }}</b>
-      <input v-model.number="savedFrancs" type="range" min="0" max="20000" step="100" />
+      <input v-model.number="savedFrancs" type="range" min="0" max="5000" step="50" />
     </label>
     <label class="field">
       {{ t('features.savings.whenL') }}: <b>{{ months }}</b>
@@ -247,10 +268,17 @@ const chf0 = (r: number) => formatChf(r, { decimals: 0 });
       <span class="result__amount">{{ chf0(result.neededPerMonthRappen) }}</span>
     </div>
 
-    <div class="section">
+    <div ref="ideasSection" class="section">
       <p class="section__title">{{ t('features.savings.ideasH') }}</p>
+      <div v-if="focus" style="display: flex; align-items: center; justify-content: space-between; gap: var(--sp-sm); margin-bottom: var(--sp-sm)">
+        <p v-if="focusHits.length" style="margin: 0">
+          <b>{{ t('features.dashboard.focusH') }} {{ focusName }}</b>
+        </p>
+        <p v-else style="margin: 0">{{ t('features.dashboard.focusNone') }}</p>
+        <button class="btn btn--ghost" @click="showAll">{{ t('features.dashboard.focusAll') }}</button>
+      </div>
       <p class="hint">{{ t('features.savings.ideasP') }}</p>
-      <div v-for="i in ideas" :key="i.id" class="card">
+      <div v-for="i in shownIdeas" :key="i.id" class="card">
         <DsIcon name="bulb" />
         <div class="card__body">
           <p class="card__title">{{ i.title }}</p>

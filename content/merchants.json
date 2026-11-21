@@ -240,7 +240,8 @@
       "Lidl",
       "Aldi",
       "Denner",
-      "Migros"
+      "Migros",
+      "Coop Bern"
     ],
     "name": "Supermarket",
     "category": "groceries"
@@ -256,7 +257,9 @@
   {
     "match": [
       "Uber Eats",
-      "Kebab"
+      "Kebab",
+      "Just Eat",
+      "McDonald's"
     ],
     "name": "Takeaway and delivery",
     "category": "eatingOut"
@@ -314,14 +317,18 @@
   {
     "match": [
       "Serafe",
-      "WG-Kasse"
+      "WG-Kasse",
+      "Sunrise Internet"
     ],
     "name": "Household fees",
     "category": "household"
   },
   {
     "match": [
-      "Zahnarzt"
+      "Zahnarzt",
+      "Schulzahnklinik",
+      "Kieferorthopädie",
+      "Apotheke"
     ],
     "name": "Dentist",
     "category": "health"
@@ -353,5 +360,80 @@
     ],
     "name": "Help from family",
     "category": "familyHelp"
+  },
+  {
+    "match": [
+      "Disney Plus",
+      "Disney+"
+    ],
+    "name": "Disney+",
+    "category": "stream"
+  },
+  {
+    "match": [
+      "Temu",
+      "Klarna"
+    ],
+    "name": "Online shop",
+    "category": "shop"
+  },
+  {
+    "match": [
+      "Tagesschule",
+      "Kita"
+    ],
+    "name": "Childcare",
+    "category": "childcare"
+  },
+  {
+    "match": [
+      "Junioren",
+      "Schwimmkurs",
+      "Schullager",
+      "Schulmaterial",
+      "Sackgeld"
+    ],
+    "name": "Children: school and activities",
+    "category": "kids"
+  },
+  {
+    "match": [
+      "Lebara"
+    ],
+    "name": "Lebara (prepaid)",
+    "category": "phone"
+  },
+  {
+    "match": [
+      "Ochsner Sport"
+    ],
+    "name": "Ochsner Sport",
+    "category": "clothes"
+  },
+  {
+    "match": [
+      "Spielwaren",
+      "Weihnachtsgeschenke",
+      "Geschenk"
+    ],
+    "name": "Gifts",
+    "category": "gifts"
+  },
+  {
+    "match": [
+      "Apple.com/bill",
+      "Roblox",
+      "Nintendo",
+      "Google Play"
+    ],
+    "name": "Games and in-app purchases",
+    "category": "games"
+  },
+  {
+    "match": [
+      "TCS Camping"
+    ],
+    "name": "TCS Camping",
+    "category": "holiday"
   }
 ]

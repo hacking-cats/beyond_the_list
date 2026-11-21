@@ -80,3 +80,16 @@ export function totalMatching(txs: Transaction[], parts: string[], year: string)
     .filter((t) => counts(t) && t.kind !== 'income' && t.date.startsWith(year) && hit(t))
     .reduce((s, t) => s - t.amountRappen, 0);
 }
+
+/** Average income per month over `months` (salary and any other income; refunds excluded). */
+export function averageMonthlyIncome(txs: Transaction[], months: string[]): number {
+  const total = txs
+    .filter((t) => counts(t) && t.kind === 'income' && months.includes(t.date.slice(0, 7)))
+    .reduce((s, t) => s + t.amountRappen, 0);
+  return Math.round(total / Math.max(1, months.length));
+}
+
+/** `part` as a whole-number percentage of `whole` (0 when `whole` is 0). */
+export function percentOf(part: number, whole: number): number {
+  return whole > 0 ? Math.round((part * 100) / whole) : 0;
+}

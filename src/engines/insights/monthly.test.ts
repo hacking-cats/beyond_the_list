@@ -6,7 +6,7 @@ import { categorizeAll } from '../categorize/categorize';
 import { mergeAccounts, parseCsv, toTransactions } from '../ingest/ingest';
 import { suggestCuts } from '../savings/suggestCuts';
 import type { SpendingKind } from './categoryShares';
-import { averageMonthlySpending, categoryTotal, lastMonths, monthSummary, monthsWithData, paymentsPerMonth, totalMatching } from './monthly';
+import { averageMonthlySpending, categoryTotal, lastMonths, monthSummary, monthsWithData, paymentsPerMonth, totalMatching, averageMonthlyIncome, percentOf } from './monthly';
 
 const own = ['Account1', 'Account3'];
 const file = (name: string) => readFileSync(new URL(`../../../data/dummy/${name}`, import.meta.url), 'utf8');
@@ -59,5 +59,20 @@ describe('totalMatching', () => {
   it('sums the matching payments of one year, case-insensitive', () => {
     const txs = [tx('Serafe Haushaltabgabe', 335, '2025-01-28'), tx('serafe', 10, '2024-12-01'), tx('Coop', 50, '2025-02-01'), tx('Serafe', 5, '2025-03-01', 'income')];
     expect(totalMatching(txs, ['Serafe'], '2025')).toBe(33500);
+  });
+});
+
+describe('averageMonthlyIncome and percentOf', () => {
+  const tx = (kind: 'income' | 'expense' | 'refund', chf: number, date: string) => ({
+    id: kind + date + chf, accountId: 'Account1', date, amountRappen: Math.round(chf * 100) * (kind === 'expense' ? -1 : 1),
+    kind, counterparty: 'X', originalName: 'X', status: 'settled' as const,
+  });
+  it('averages income over the window, without refunds or expenses', () => {
+    const txs = [tx('income', 4000, '2025-01-23'), tx('income', 3000, '2025-02-23'), tx('refund', 50, '2025-02-03'), tx('expense', 10, '2025-02-04')];
+    expect(averageMonthlyIncome(txs, ['2025-01', '2025-02'])).toBe(350000);
+  });
+  it('rounds the percentage and handles zero', () => {
+    expect(percentOf(149000, 393260)).toBe(38);
+    expect(percentOf(100, 0)).toBe(0);
   });
 });

@@ -2,7 +2,10 @@
   {
     "key": "zvvPass",
     "category": "transport",
-    "match": ["ZVV 2x Einzelbillett", "ZVV Einzelbillett"],
+    "match": [
+      "ZVV 2x Einzelbillett",
+      "ZVV Einzelbillett"
+    ],
     "type": "flatPerMonth",
     "altRappen": 8900,
     "source": "assumption: ZVV monthly pass for zone 110 (city of Zurich), adult, 2nd class, about CHF 89 (check zvv.ch)"
@@ -10,15 +13,23 @@
   {
     "key": "discounter",
     "category": "groceries",
-    "match": ["Coop Zürich", "Coop Oerlikon", "Coop Pronto"],
+    "match": [
+      "Coop Zürich",
+      "Coop Oerlikon",
+      "Coop Bern",
+      "Coop Pronto",
+      "Migros"
+    ],
     "type": "percent",
     "percent": 20,
-    "source": "assumption: a similar basket costs about 20% less at Lidl, Aldi or Denner (check a recent price comparison)"
+    "source": "assumption: a similar basket costs about 20% less at Denner, Lidl or Aldi, or with the budget lines Prix Garantie and M-Budget (check a recent price comparison)"
   },
   {
     "key": "coffeeAtHome",
     "category": "coffee",
-    "match": ["Starbucks"],
+    "match": [
+      "Starbucks"
+    ],
     "type": "perPurchase",
     "altRappen": 50,
     "source": "assumption: coffee made at home and taken in a thermos costs about CHF 0.50 a cup"
@@ -26,7 +37,10 @@
   {
     "key": "cookInstead",
     "category": "eatingOut",
-    "match": ["Uber Eats"],
+    "match": [
+      "Uber Eats",
+      "Just Eat"
+    ],
     "type": "percent",
     "percent": 50,
     "source": "assumption: cooking a double portion or using Too Good To Go halves the cost of delivered meals"
@@ -34,7 +48,9 @@
   {
     "key": "budgetPhone",
     "category": "phone",
-    "match": ["Swisscom"],
+    "match": [
+      "Swisscom"
+    ],
     "type": "flatPerMonth",
     "altRappen": 2500,
     "source": "assumption: budget mobile plans with unlimited calls in Switzerland cost about CHF 20 to 30 a month"
@@ -42,7 +58,9 @@
   {
     "key": "halbtax",
     "category": "transport",
-    "match": ["SBB Billett"],
+    "match": [
+      "SBB Billett"
+    ],
     "type": "halfFareCard",
     "altRappen": 19000,
     "source": "assumption: Halbtax costs CHF 190 a year and halves SBB tickets (check sbb.ch)"
@@ -50,7 +68,9 @@
   {
     "key": "kioskSnacks",
     "category": "coffee",
-    "match": ["k kiosk"],
+    "match": [
+      "k kiosk"
+    ],
     "type": "percent",
     "percent": 50,
     "source": "assumption: drinks and snacks bought at the supermarket cost about half the kiosk price"
@@ -58,7 +78,9 @@
   {
     "key": "lottery",
     "category": "lottery",
-    "match": ["Swisslos"],
+    "match": [
+      "Swisslos"
+    ],
     "type": "percent",
     "percent": 100,
     "source": "the whole amount: lottery tickets are optional"
@@ -66,7 +88,9 @@
   {
     "key": "lateFees",
     "category": "fees",
-    "match": ["Mahngebühr"],
+    "match": [
+      "Mahngebühr"
+    ],
     "type": "percent",
     "percent": 100,
     "source": "the whole amount: reminder fees are avoidable when bills are paid on time"
@@ -74,7 +98,9 @@
   {
     "key": "cheaperTransfer",
     "category": "fees",
-    "match": ["Western Union Transfergebühr"],
+    "match": [
+      "Western Union Transfergebühr"
+    ],
     "type": "perPurchase",
     "altRappen": 400,
     "source": "assumption: online money-transfer services often charge about CHF 4 for CHF 200 (compare the total cost including the exchange rate)"
@@ -82,9 +108,54 @@
   {
     "key": "postomat",
     "category": "fees",
-    "match": ["Gebühr Bargeldbezug Fremdautomat"],
+    "match": [
+      "Gebühr Bargeldbezug Fremdautomat"
+    ],
     "type": "percent",
     "percent": 100,
     "source": "assumption: PostFinance charges CHF 2 at other banks' ATMs and nothing at a Postomat (check postfinance.ch)"
+  },
+  {
+    "key": "streamingRotate",
+    "category": "stream",
+    "match": [
+      "Netflix",
+      "Disney Plus",
+      "Spotify"
+    ],
+    "type": "percent",
+    "percent": 30,
+    "source": "assumption: keeping one video service at a time and switching every few months saves about one subscription"
+  },
+  {
+    "key": "inAppLimit",
+    "category": "games",
+    "match": [
+      "Apple.com/bill",
+      "Roblox"
+    ],
+    "type": "percent",
+    "percent": 50,
+    "source": "assumption: a fixed monthly limit (Apple Family Sharing 'Ask to Buy' or one gift card a month) halves in-app spending"
+  },
+  {
+    "key": "onlineWait",
+    "category": "shop",
+    "match": [
+      "Temu"
+    ],
+    "type": "percent",
+    "percent": 50,
+    "source": "assumption: waiting 48 hours and bundling orders avoids about half of small online orders"
+  },
+  {
+    "key": "kidsSecondHand",
+    "category": "clothes",
+    "match": [
+      "Zalando Bestellung Kinder"
+    ],
+    "type": "percent",
+    "percent": 40,
+    "source": "assumption: children's clothes second-hand (Kinderkleiderbörse, Brockenhaus, Ricardo, Tutti) cost about 40% less"
   }
 ]

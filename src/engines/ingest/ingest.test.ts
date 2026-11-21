@@ -100,3 +100,25 @@ describe('andres_2025 (low-income persona, private account only)', () => {
     expect(balance).toBe(10982);
   });
 });
+
+describe('jeanine_singlemom_2025 (single mother, private account and credit card)', () => {
+  const a1 = load('jeanine_singlemom_2025_Account1_2025.csv', 'Account1');
+  const a3 = load('jeanine_singlemom_2025_Account3_2025.csv', 'Account3');
+
+  it('reads both files without errors', () => {
+    expect(parseCsv(file('jeanine_singlemom_2025_Account1_2025.csv'))).toMatchObject({ errors: [] });
+    expect(parseCsv(file('jeanine_singlemom_2025_Account3_2025.csv'))).toMatchObject({ errors: [] });
+    expect(a1).toHaveLength(430);
+    expect(a3).toHaveLength(143);
+  });
+  it('counts each monthly card payment once, and the salary plus 13th salary as income', () => {
+    const merged = mergeAccounts([a1, a3]);
+    expect(merged.filter((t) => t.kind === 'transfer')).toHaveLength(12);
+    expect(merged.filter((t) => t.kind === 'income')).toHaveLength(13);
+    expect(merged.filter((t) => t.kind === 'refund')).toHaveLength(1);
+  });
+  it('the card payments cover the card purchases up to the last billing day', () => {
+    const card = a3.reduce((s, t) => s + t.amountRappen, 0);
+    expect(card).toBe(-12185); // purchases after 23 December, billed in January
+  });
+});

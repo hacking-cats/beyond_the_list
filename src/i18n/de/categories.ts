@@ -26,4 +26,8 @@ export default {
   fees: { name: 'Gebühren und Mahnungen', short: 'Gebühren', explain: 'Bankgebühren, Überweisungsgebühren und Mahngebühren für zu spät bezahlte Rechnungen.', tip: 'Die meisten Gebühren lassen sich vermeiden: Rechnungen gleich nach dem Zahltag bezahlen und gratis Automaten nutzen.' },
   lottery: { name: 'Lotto', short: 'Lotto', explain: 'Lottoscheine, zum Beispiel Swisslos EuroMillions.', tip: 'Leg den gleichen Betrag stattdessen zur Seite. Dieses Geld behältst du sicher.' },
   familyHelp: { name: 'Hilfe von der Familie', short: 'Familienhilfe', explain: 'Geld, das dir jemand aus der Familie oder ein Freund geschickt hat. Wenn du solche Hilfe oft brauchst, hilft eine kostenlose Schulden- und Budgetberatung beim Planen.' },
+  childcare: { name: 'Kinderbetreuung', short: 'Betreuung', explain: 'Gebühren für die Tagesschule oder die Kita. Vielerorts hängen sie vom Einkommen ab.' },
+  kids: { name: 'Kinder: Schule und Freizeit', short: 'Kinder', explain: 'Schullager, Schulmaterial, Vereine, Kurse und Sackgeld.' },
+  gifts: { name: 'Geschenke und Geburtstage', short: 'Geschenke', explain: 'Geschenke zu Geburtstagen und Weihnachten.', tip: 'Leg vor Dezember ein Geschenkbudget pro Kind fest und verteile die Einkäufe übers Jahr.' },
+  games: { name: 'Games und In-App-Käufe', short: 'Games', explain: 'Käufe in Games und Apps, zum Beispiel Roblox, und in Game-Stores wie dem Nintendo eShop.', tip: 'Setz auf den Geräten der Kinder ein monatliches Limit für In-App-Käufe.' },
 };

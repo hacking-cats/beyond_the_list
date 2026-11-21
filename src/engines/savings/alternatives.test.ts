@@ -55,7 +55,7 @@ describe('alternatives for the Andrés persona', () => {
 
   it('finds every idea the persona was built for', () => {
     expect(ideas.map((i) => i.key).sort()).toEqual(
-      ['budgetPhone', 'cheaperTransfer', 'coffeeAtHome', 'cookInstead', 'discounter', 'halbtax', 'kioskSnacks', 'lateFees', 'lottery', 'postomat', 'zvvPass'].sort(),
+      ['budgetPhone', 'cheaperTransfer', 'coffeeAtHome', 'cookInstead', 'discounter', 'halbtax', 'kioskSnacks', 'lateFees', 'lottery', 'postomat', 'streamingRotate', 'zvvPass'].sort(),
     );
   });
   it('the monthly pass beats single tickets, the Halbtax pays off', () => {
@@ -65,5 +65,26 @@ describe('alternatives for the Andrés persona', () => {
   it('late fees and the phone plan', () => {
     expect(byKey.lateFees).toMatchObject({ count: 4, totalRappen: 11000 });
     expect(byKey.budgetPhone!.saveRappen).toBe(4400); // 69.90 - 25
+  });
+});
+
+describe('alternatives for the Jeanine single-mother persona', () => {
+  const own = ['Account1', 'Account3'];
+  const read = (n: string) => readFileSync(new URL(`../../../data/dummy/${n}`, import.meta.url), 'utf8');
+  const txs = [
+    ...toTransactions(parseCsv(read('jeanine_singlemom_2025_Account1_2025.csv')).rows, 'Account1', own),
+    ...toTransactions(parseCsv(read('jeanine_singlemom_2025_Account3_2025.csv')).rows, 'Account3', own),
+  ];
+  const months = [...new Set(txs.map((t) => t.date.slice(0, 7)))].sort();
+  const ideas = alternatives(txs, months, rulesJson as AlternativeRule[]);
+
+  it('finds the family ideas, the biggest first', () => {
+    expect(ideas.map((i) => i.key)).toEqual([
+      'discounter', 'onlineWait', 'kidsSecondHand', 'budgetPhone', 'inAppLimit', 'cookInstead', 'streamingRotate', 'lateFees', 'postomat',
+    ]);
+  });
+  it('streaming: Netflix, Disney+ and Spotify every month', () => {
+    const s = ideas.find((i) => i.key === 'streamingRotate')!;
+    expect(s).toMatchObject({ count: 36, nowRappen: 5475, saveRappen: 1600 });
   });
 });

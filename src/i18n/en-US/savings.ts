@@ -65,9 +65,9 @@ export default {
   timesL: 'payments in the last 12 months',
   alt: {
     zvvPass: { title: 'Monthly pass instead of single tickets', tip: 'You bought {count} single tickets in the last 12 months, about {now} a month. A ZVV monthly pass for the city costs about {alt} and covers all your trips.' },
-    discounter: { title: 'Lidl, Aldi or Denner instead of Coop', tip: 'You spend about {now} a month at Coop and Coop Pronto. The same basket is usually about a fifth cheaper at a discounter. Shopping once a week with a list also saves the late-night Coop Pronto top-ups.' },
+    discounter: { title: 'Denner, Lidl or Aldi for the big shop', tip: 'You spend about {now} a month at Coop, Migros and Coop Pronto. The same basket is usually about a fifth cheaper at Denner, Lidl or Aldi, or with the budget lines Prix Garantie and M-Budget. One big shop a week with a list also saves the quick top-ups after work.' },
     coffeeAtHome: { title: 'Coffee from home', tip: 'You bought {count} coffees at Starbucks in the last 12 months, about {now} a month. Coffee from home in a thermos costs about {alt} a cup.' },
-    cookInstead: { title: 'Cook instead of ordering', tip: 'You ordered from Uber Eats {count} times in the last 12 months, about {now} a month. Cooking a double portion on your day off, or picking up a Too Good To Go bag, costs about half.' },
+    cookInstead: { title: 'Cook instead of ordering', tip: 'You ordered food delivery {count} times in the last 12 months, about {now} a month. Cooking a double portion on your day off and freezing half, or picking up a Too Good To Go bag, costs about half.' },
     budgetPhone: { title: 'A cheaper phone plan', tip: 'Your Swisscom plan costs {now} a month. Budget plans on the same networks cost about {alt} a month with unlimited calls in Switzerland. Check that calls to your home country are cheap too.' },
     halbtax: { title: 'Get a Halbtax', tip: 'You paid full fare for {count} train tickets in the last 12 months ({total}). A Halbtax costs {alt} a year and halves these tickets.' },
     kioskSnacks: { title: 'Snacks from the supermarket', tip: 'You stopped at the kiosk {count} times in the last 12 months, about {now} a month. Drinks and snacks from Lidl or Denner cost about half.' },
@@ -75,5 +75,9 @@ export default {
     lateFees: { title: 'Avoid reminder fees', tip: 'You paid {count} reminder fees in the last 12 months ({total}). Pay health insurance right after payday, by standing order or eBill. If money is short, call the insurer before the due date and ask to pay in parts.' },
     cheaperTransfer: { title: 'Cheaper transfers home', tip: 'You paid {total} in Western Union fees in the last 12 months. Online transfer services often charge about {alt} per transfer. Compare the total cost, including the exchange rate.' },
     postomat: { title: 'Take cash at a Postomat', tip: "You paid {total} in fees for cash from other banks' ATMs. Cash from a PostFinance Postomat is free." },
+    streamingRotate: { title: 'One video service at a time', tip: 'Netflix, Disney+ and Spotify together cost you about {now} a month. Keep the one the children use most and switch the others every few months: films and series stay, only the timing changes.' },
+    inAppLimit: { title: 'A monthly limit for in-app purchases', tip: 'The children bought Roblox and other in-app items {count} times in the last 12 months ({total}). Turn on "Ask to Buy" in Apple Family Sharing, or give one gift card a month: when it is used up, it is used up.' },
+    onlineWait: { title: 'Wait 48 hours before a Temu order', tip: 'You ordered on Temu {count} times in the last 12 months ({total}). Put things in the basket and order once a month: many small items are not missed, and cheap ones often break fast.' },
+    kidsSecondHand: { title: "Children's clothes second-hand", tip: "You spend about {now} a month on children's clothes and shoes at Zalando. Children grow fast: a Kinderkleiderbörse, the Brockenhaus, Ricardo or Tutti usually cost less than half." },
   },
 };
