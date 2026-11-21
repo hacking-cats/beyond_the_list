@@ -33,6 +33,16 @@ import {
   outlinedSportsSoccer,
   outlinedUmbrella,
   outlinedWeekend,
+  outlinedAccountBalance,
+  outlinedBolt,
+  outlinedCheckroom,
+  outlinedHealthAndSafety,
+  outlinedHelpOutline,
+  outlinedLiveTv,
+  outlinedMedicalServices,
+  outlinedRestaurant,
+  outlinedShoppingBag,
+  outlinedTrain,
 } from '@quasar/extras/material-icons-outlined';
 
 const icons: Record<string, string> = {
@@ -65,6 +75,17 @@ const icons: Record<string, string> = {
   sports_soccer: outlinedSportsSoccer,
   umbrella: outlinedUmbrella,
   weekend: outlinedWeekend,
+  // Spending categories (content/categories.json)
+  account_balance: outlinedAccountBalance,
+  bolt: outlinedBolt,
+  checkroom: outlinedCheckroom,
+  health_and_safety: outlinedHealthAndSafety,
+  help_outline: outlinedHelpOutline,
+  live_tv: outlinedLiveTv,
+  medical_services: outlinedMedicalServices,
+  restaurant: outlinedRestaurant,
+  shopping_bag: outlinedShoppingBag,
+  train: outlinedTrain,
 };
 
 export function icon(name: string): string {
@@ -72,3 +93,17 @@ export function icon(name: string): string {
 }
 
 export const hasIcon = (name: string): boolean => name in icons;
+
+/**
+ * Path data of an icon, for drawing it inside our own <svg> (24 × 24 units).
+ * @quasar/extras stores an icon as "d@@style&&d@@style…"; the style part marks the invisible padding path.
+ */
+export function iconPaths(name: string): { d: string; hidden: boolean }[] {
+  return icon(name)
+    .split('|')[0]!
+    .split('&&')
+    .map((part) => {
+      const [d = '', style = ''] = part.split('@@');
+      return { d, hidden: style.includes('fill:none') };
+    });
+}

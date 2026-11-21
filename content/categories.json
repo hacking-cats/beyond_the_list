@@ -31,7 +31,7 @@
   },
   {
     "key": "health",
-    "icon": "visibility",
+    "icon": "medical_services",
     "color": "#005C66",
     "kind": "essential"
   },
