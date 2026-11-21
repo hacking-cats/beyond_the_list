@@ -17,4 +17,6 @@ export default {
   introBody: 'Fai domande sui tuoi soldi con parole tue. Trascina in giù dalla parte alta dello schermo per iniziare.',
   introTry: 'Prova',
   introDismiss: 'Capito',
+  error: 'Scusa, al momento non riesco a raggiungere il server. Riprova tra poco.',
+  thinking: 'Sto pensando…',
 };
