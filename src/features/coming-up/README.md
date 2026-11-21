@@ -15,3 +15,4 @@ Set aside money each month for the final tax bill (sliders for amount and months
 ## Known gaps
 - The savings pot is not stored; texts are general, not per canton.
 - The expected final tax bill starts at the tax paid in the newest year of the statements.
+- Without tax payments in the statements (withholding tax), the tax bill card is replaced by a short explanation. The Serafe card and the premium-reduction figures come from the statements.

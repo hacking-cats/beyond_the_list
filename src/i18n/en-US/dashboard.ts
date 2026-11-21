@@ -14,4 +14,5 @@ export default {
   ideasBtn: 'See savings ideas',
   essentialNote: "An essential. We don't suggest cutting here.",
   listH: 'All categories',
+  cheaperWay: 'A cheaper way',
 };

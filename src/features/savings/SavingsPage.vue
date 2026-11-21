@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { goalPlan } from '../../engines/savings/goalPlan';
 import { paymentsPerMonth } from '../../engines/insights/monthly';
 import { demoNewProjectRappen, demoSavedRappen, projectIcons } from '../../shared/demo-data';
-import { savingsCuts, transactions, yearMonths } from '../../shared/statements';
+import { savingsAlternatives, savingsCuts, transactions, yearMonths } from '../../shared/statements';
 import { chfToRappen, formatChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
@@ -13,8 +13,45 @@ import { addProject, MAX_IMAGE_BYTES, projectsState, removeProject, type Savings
 const i18n = useI18n();
 const { t } = i18n;
 
-// Savings ideas, computed from the statements (flexible spending only, biggest first).
-const ideas = savingsCuts.map((c) => ({ ...c, perMonth: paymentsPerMonth(transactions, yearMonths, c.key) }));
+// Savings ideas, computed from the statements by the engines: first the cheaper alternatives
+// found in the user's own payments (content/alternatives.json), then generic cuts for the
+// flexible categories that have no specific alternative. Biggest saving first.
+interface Idea {
+  id: string;
+  title: string;
+  tip: string;
+  wit: string;
+  detail: string;
+  nowRappen: number;
+  saveRappen: number;
+}
+/** A price for the tip text: whole francs without decimals (89 CHF), else with (0.50 CHF). */
+const price = (r: number) => formatChf(r, { decimals: r % 100 === 0 ? 0 : 2 });
+const ideas = computed<Idea[]>(() =>
+  [
+    ...savingsAlternatives.map((a) => {
+      const params = { count: a.count, now: chf0(a.nowRappen), alt: price(a.altRappen), total: chf0(a.totalRappen) };
+      return {
+        id: `alt.${a.key}`,
+        title: t(`features.savings.alt.${a.key}.title`),
+        tip: t(`features.savings.alt.${a.key}.tip`, params),
+        wit: '',
+        detail: `${a.count} ${t('features.savings.timesL')}`,
+        nowRappen: a.nowRappen,
+        saveRappen: a.saveRappen,
+      };
+    }),
+    ...savingsCuts.map((c) => ({
+      id: `cut.${c.key}`,
+      title: cat(c.key, 'name'),
+      tip: cat(c.key, 'tip'),
+      wit: hasWit(c.key) ? cat(c.key, 'wit') : '',
+      detail: detail(paymentsPerMonth(transactions, yearMonths, c.key)),
+      nowRappen: c.nowRappen,
+      saveRappen: c.saveRappen,
+    })),
+  ].sort((a, b) => b.saveRappen - a.saveRappen),
+);
 
 const current = computed<SavingsProject>(
   () => projectsState.projects.find((p) => p.key === projectsState.selected) ?? projectsState.projects[0]!,
@@ -99,7 +136,7 @@ const result = computed(() =>
     goalRappen: chfToRappen(goalFrancs.value),
     savedRappen: chfToRappen(savedFrancs.value),
     months: months.value,
-    selectedSavingsRappen: ideas.filter((i) => plan.value.has(i.key)).map((i) => i.saveRappen),
+    selectedSavingsRappen: ideas.value.filter((i) => plan.value.has(i.id)).map((i) => i.saveRappen),
   }),
 );
 const cat = (key: string, field: 'name' | 'tip' | 'wit') => t(`categories.${key}.${field}`);
@@ -213,11 +250,11 @@ const chf0 = (r: number) => formatChf(r, { decimals: 0 });
     <div class="section">
       <p class="section__title">{{ t('features.savings.ideasH') }}</p>
       <p class="hint">{{ t('features.savings.ideasP') }}</p>
-      <div v-for="i in ideas" :key="i.key" class="card">
+      <div v-for="i in ideas" :key="i.id" class="card">
         <DsIcon name="bulb" />
         <div class="card__body">
-          <p class="card__title">{{ cat(i.key, 'name') }}</p>
-          <p class="line__original">{{ detail(i.perMonth) }}</p>
+          <p class="card__title">{{ i.title }}</p>
+          <p class="line__original">{{ i.detail }}</p>
           <div class="result">
             <span>{{ t('features.savings.nowL') }}</span>
             <span class="amount">{{ chf0(i.nowRappen) }} {{ t('common.perMonth') }}</span>
@@ -226,10 +263,10 @@ const chf0 = (r: number) => formatChf(r, { decimals: 0 });
             <span>{{ t('features.savings.saveL') }}</span>
             <span class="amount positive">{{ chf0(i.saveRappen) }} {{ t('common.perMonth') }}</span>
           </div>
-          <p>{{ cat(i.key, 'tip') }}</p>
-          <p v-if="hasWit(i.key)" class="wit" style="margin: 0 0 var(--sp-sm)">{{ cat(i.key, 'wit') }}</p>
-          <button class="chip" :aria-pressed="plan.has(i.key)" @click="togglePlan(i.key)">
-            {{ plan.has(i.key) ? t('features.savings.addedL') : t('features.savings.addL') }}
+          <p>{{ i.tip }}</p>
+          <p v-if="i.wit" class="wit" style="margin: 0 0 var(--sp-sm)">{{ i.wit }}</p>
+          <button class="chip" :aria-pressed="plan.has(i.id)" @click="togglePlan(i.id)">
+            {{ plan.has(i.id) ? t('features.savings.addedL') : t('features.savings.addL') }}
           </button>
         </div>
       </div>

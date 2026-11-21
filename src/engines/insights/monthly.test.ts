@@ -6,7 +6,7 @@ import { categorizeAll } from '../categorize/categorize';
 import { mergeAccounts, parseCsv, toTransactions } from '../ingest/ingest';
 import { suggestCuts } from '../savings/suggestCuts';
 import type { SpendingKind } from './categoryShares';
-import { averageMonthlySpending, categoryTotal, lastMonths, monthSummary, monthsWithData, paymentsPerMonth } from './monthly';
+import { averageMonthlySpending, categoryTotal, lastMonths, monthSummary, monthsWithData, paymentsPerMonth, totalMatching } from './monthly';
 
 const own = ['Account1', 'Account3'];
 const file = (name: string) => readFileSync(new URL(`../../../data/dummy/${name}`, import.meta.url), 'utf8');
@@ -48,5 +48,16 @@ describe('insights on the dummy year (known answers, checked separately)', () =>
     const cuts = suggestCuts(averageMonthlySpending(txs, year, kindOf));
     expect(cuts.map((c) => c.key)).toEqual(['shop', 'hobbies', 'holiday', 'clothes', 'eatingOut']);
     expect(cuts[0]).toEqual({ key: 'shop', nowRappen: 141446, saveRappen: 70800 });
+  });
+});
+
+describe('totalMatching', () => {
+  const tx = (originalName: string, chf: number, date: string, kind: 'expense' | 'income' = 'expense') => ({
+    id: originalName + date, accountId: 'Account1', date, amountRappen: Math.round(chf * 100) * (kind === 'expense' ? -1 : 1),
+    kind, counterparty: 'X', originalName, status: 'settled' as const,
+  });
+  it('sums the matching payments of one year, case-insensitive', () => {
+    const txs = [tx('Serafe Haushaltabgabe', 335, '2025-01-28'), tx('serafe', 10, '2024-12-01'), tx('Coop', 50, '2025-02-01'), tx('Serafe', 5, '2025-03-01', 'income')];
+    expect(totalMatching(txs, ['Serafe'], '2025')).toBe(33500);
   });
 });

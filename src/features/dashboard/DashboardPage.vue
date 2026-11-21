@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { categoryShares } from '../../engines/insights/categoryShares';
-import { monthlySpending } from '../../shared/statements';
+import { alternativesFor, monthlySpending } from '../../shared/statements';
 import { iconOf } from '../../shared/transactions';
 import { formatChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
@@ -24,6 +24,21 @@ function pick(key: string) {
   selected.value = selected.value === key ? null : key;
 }
 const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field}`);
+
+const price = (r: number) => formatChf(r, { decimals: r % 100 === 0 ? 0 : 2 });
+// The biggest cheaper alternative found in this category's payments (same as on the Savings page).
+const selectedAlt = computed(() => (selected.value ? alternativesFor(selected.value)[0] : undefined));
+const altTitle = computed(() => (selectedAlt.value ? t(`features.savings.alt.${selectedAlt.value.key}.title`) : ''));
+const altTip = computed(() => {
+  const a = selectedAlt.value;
+  if (!a) return '';
+  return t(`features.savings.alt.${a.key}.tip`, {
+    count: a.count,
+    now: formatChf(a.nowRappen, { decimals: 0 }),
+    alt: price(a.altRappen),
+    total: formatChf(a.totalRappen, { decimals: 0 }),
+  });
+});
 </script>
 
 <template>
@@ -67,7 +82,11 @@ const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field
           {{ t('common.perMonth') }}
         </p>
         <p>{{ selectedItem.percent }}% {{ t('features.dashboard.shareL') }}.</p>
-        <p>{{ cat(selectedItem.key, 'tip') }}</p>
+        <template v-if="selectedAlt">
+          <p><b>{{ altTitle }}</b></p>
+          <p>{{ altTip }}</p>
+        </template>
+        <p v-else>{{ cat(selectedItem.key, 'tip') }}</p>
         <button class="btn btn--secondary" @click="router.push('/savings')">
           {{ t('features.dashboard.ideasBtn') }}
         </button>
@@ -81,6 +100,13 @@ const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field
         </p>
         <p>{{ selectedItem.percent }}% {{ t('features.dashboard.shareL') }}.</p>
         <p>{{ t('features.dashboard.essentialNote') }}</p>
+        <template v-if="selectedAlt">
+          <p><b>{{ t('features.dashboard.cheaperWay') }}: {{ altTitle }}</b></p>
+          <p>{{ altTip }}</p>
+          <button class="btn btn--secondary" @click="router.push('/savings')">
+            {{ t('features.dashboard.ideasBtn') }}
+          </button>
+        </template>
       </div>
     </div>
     <p v-else class="hint" role="status">{{ t('features.dashboard.pickP') }}</p>

@@ -3,11 +3,13 @@
  * Pages read these instead of demo numbers.
  */
 import { balance, unknownOpening } from '../engines/insights/balance';
-import { averageMonthlySpending, categoryTotal, lastMonths, monthSummary, monthsWithData } from '../engines/insights/monthly';
+import { averageMonthlySpending, categoryTotal, lastMonths, monthSummary, monthsWithData, totalMatching } from '../engines/insights/monthly';
+import { alternatives, type Alternative, type AlternativeRule } from '../engines/savings/alternatives';
 import { suggestCuts } from '../engines/savings/suggestCuts';
+import alternativesJson from '../../content/alternatives.json';
 import { accountTransactions, kindOf, transactions } from './transactions';
 
-export { transactions, kindOf, demoPersonName } from './transactions';
+export { transactions, kindOf, demoPersonName, hasCreditCard } from './transactions';
 
 /** The last 12 months that have data (the averaging window). */
 export const yearMonths = lastMonths(transactions, 12);
@@ -17,13 +19,31 @@ export const latestSummary = monthSummary(transactions, latestMonth);
 
 /** Average monthly spending per category over the last 12 months. */
 export const monthlySpending = averageMonthlySpending(transactions, yearMonths, kindOf);
-export const savingsCuts = suggestCuts(monthlySpending);
+
+/** Cheaper alternatives found in the user's own payments (content/alternatives.json), biggest saving first. */
+export const savingsAlternatives: Alternative[] = alternatives(transactions, yearMonths, alternativesJson as AlternativeRule[]);
+/** The alternatives for one category, biggest saving first (dashboard tip). */
+export const alternativesFor = (category: string): Alternative[] =>
+  savingsAlternatives.filter((a) => a.category === category);
+
+/** Generic cuts (halve a flexible category), only for categories without a specific alternative. */
+const covered = new Set(savingsAlternatives.map((a) => a.category));
+export const savingsCuts = suggestCuts(monthlySpending.filter((c) => !covered.has(c.key)));
 
 /** Transactions of the newest month, newest first (Explained tab). */
 export const latestTransactions = transactions.filter((t) => t.date.startsWith(latestMonth));
 
 /** Tax paid in the newest year of data (default for the expected final tax bill). */
 export const taxPaidLastYear = categoryTotal(transactions, 'tax', latestMonth.slice(0, 4));
+
+/** Health insurance (premiums and deductible) and all income in the newest year of data. */
+export const insuranceLastYear = categoryTotal(transactions, 'insurance', latestMonth.slice(0, 4));
+export const incomeLastYear = monthsWithData(transactions)
+  .filter((m) => m.startsWith(latestMonth.slice(0, 4)))
+  .reduce((sum, m) => sum + monthSummary(transactions, m).incomeRappen, 0);
+
+/** Yearly Serafe fee (radio and TV) paid in the newest year of data; 0 when none. */
+export const serafeLastYear = totalMatching(transactions, ['Serafe'], latestMonth.slice(0, 4));
 
 /**
  * Balances (Transaction contract, rule 6): opening balance + settled rows per account.

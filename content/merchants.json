@@ -231,5 +231,127 @@
     ],
     "name": "Online shop",
     "category": "shop"
+  },
+  {
+    "match": [
+      "Coop Zürich",
+      "Coop Oerlikon",
+      "Coop Pronto",
+      "Lidl",
+      "Aldi",
+      "Denner",
+      "Migros"
+    ],
+    "name": "Supermarket",
+    "category": "groceries"
+  },
+  {
+    "match": [
+      "Starbucks",
+      "k kiosk"
+    ],
+    "name": "Coffee and snacks",
+    "category": "coffee"
+  },
+  {
+    "match": [
+      "Uber Eats",
+      "Kebab"
+    ],
+    "name": "Takeaway and delivery",
+    "category": "eatingOut"
+  },
+  {
+    "match": [
+      "ZVV",
+      "SBB Billett",
+      "SBB CFF FFS"
+    ],
+    "name": "Public transport",
+    "category": "transport"
+  },
+  {
+    "match": [
+      "Swisscom"
+    ],
+    "name": "Swisscom",
+    "category": "phone"
+  },
+  {
+    "match": [
+      "Western Union Geldtransfer"
+    ],
+    "name": "Money sent home",
+    "category": "moneyHome"
+  },
+  {
+    "match": [
+      "Mahngebühr",
+      "Krankenkasse Mahngebühr",
+      "Transfergebühr",
+      "Gebühr Bargeldbezug Fremdautomat",
+      "Kontoführung",
+      "ZVV Busse"
+    ],
+    "name": "Fees and reminders",
+    "category": "fees"
+  },
+  {
+    "match": [
+      "Swisslos"
+    ],
+    "name": "Swisslos",
+    "category": "lottery"
+  },
+  {
+    "match": [
+      "Bargeldbezug Fremdautomat",
+      "Bargeldbezug Postomat"
+    ],
+    "name": "Cash withdrawal",
+    "category": "cash"
+  },
+  {
+    "match": [
+      "Serafe",
+      "WG-Kasse"
+    ],
+    "name": "Household fees",
+    "category": "household"
+  },
+  {
+    "match": [
+      "Zahnarzt"
+    ],
+    "name": "Dentist",
+    "category": "health"
+  },
+  {
+    "match": [
+      "Brockenhaus"
+    ],
+    "name": "Brockenhaus (second-hand)",
+    "category": "clothes"
+  },
+  {
+    "match": [
+      "Handy-Reparatur"
+    ],
+    "name": "Phone repair",
+    "category": "phone"
+  },
+  {
+    "match": [
+      "Migrationsamt"
+    ],
+    "name": "Migration office",
+    "category": "official"
+  },
+  {
+    "match": [
+      "Twint von"
+    ],
+    "name": "Help from family",
+    "category": "familyHelp"
   }
 ]

@@ -14,7 +14,7 @@
 `npm test` (goalPlan known answers). Visual: `npm run dev`, open `#/savings`.
 
 ## Known gaps
-- Ideas are computed from the statements (biggest flexible categories, halved); "Already saved" is still a demo value. Own projects are kept in memory only (lost on reload) until the Storage contract exists.
+- Ideas are computed from the statements: first cheaper alternatives found in the user's own payments (`engines/savings/alternatives.ts` with `content/alternatives.json`, e.g. ZVV monthly pass, Lidl instead of Coop, Halbtax), then the biggest flexible categories without an alternative, halved; "Already saved" is still a demo value. Own projects are kept in memory only (lost on reload) until the Storage contract exists.
 
 ## Requirements to fill in
 - [ ] Acceptance criteria (PM).

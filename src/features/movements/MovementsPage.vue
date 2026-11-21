@@ -19,12 +19,16 @@ function toggle(id: string) {
 const NEW_TO_YOU = new Set(['tax', 'insurance', 'utilities']);
 const isNew = (tx: Transaction) => tx.kind === 'expense' && NEW_TO_YOU.has(tx.category ?? '');
 const title = (tx: Transaction) =>
-  tx.kind === 'transfer' || tx.kind === 'income' ? t(`categories.${tx.kind}.name`) : tx.counterparty;
+  tx.kind === 'transfer'
+    ? t('categories.transfer.name')
+    : tx.kind === 'income'
+      ? t(`categories.${tx.category ?? 'income'}.name`)
+      : tx.counterparty;
 const day = (tx: Transaction) => `${tx.date.slice(8, 10)}.${tx.date.slice(5, 7)}.`;
 const explain = (tx: Transaction) =>
   tx.kind === 'refund'
     ? `${t('categories.refund.explain')} (${t(`categories.${tx.category ?? 'other'}.name`)})`
-    : t(`categories.${tx.kind === 'expense' ? (tx.category ?? 'other') : tx.kind}.explain`);
+    : t(`categories.${tx.kind === 'expense' || tx.kind === 'income' ? (tx.category ?? tx.kind) : tx.kind}.explain`);
 </script>
 
 <template>

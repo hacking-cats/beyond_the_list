@@ -17,4 +17,13 @@ export default {
   transfer: { name: 'Kreditkartenrechnung', short: 'Karte', explain: 'Du hast die Kreditkartenrechnung vom Privatkonto bezahlt. Das sind keine neuen Ausgaben: Die Einkäufe stehen schon auf der Karte.' },
   income: { name: 'Lohn', short: 'Lohn', explain: 'Dein Lohn nach Abzügen. AHV-Beiträge sind schon abgezogen, und dein Arbeitgeber zahlt nochmals gleich viel. Im Dezember zahlen viele Arbeitgeber zusätzlich einen 13. Monatslohn.' },
   refund: { explain: 'Geld zurück von einem Shop, zum Beispiel nach einer Rücksendung. Es senkt deine Ausgaben in dieser Kategorie.' },
+  groceries: { name: 'Lebensmittel', short: 'Lebensmittel', explain: 'Essen und Haushaltsartikel aus dem Supermarkt. Discounter wie Lidl, Aldi und Denner sind für den gleichen Einkauf meist günstiger.' },
+  moneyHome: { name: 'Geld nach Hause', short: 'Nach Hause', explain: 'Geld, das du deiner Familie im Ausland geschickt hast. Gebühren und Wechselkurse sind je nach Anbieter sehr verschieden.' },
+  household: { name: 'Haushalt und Wohnung', short: 'Haushalt', explain: 'Gemeinsame Kosten der Wohnung, zum Beispiel Internet, und die jährliche Serafe-Abgabe für Radio und TV, die jeder Haushalt in der Schweiz bezahlt.' },
+  official: { name: 'Bewilligungen und Amtsgebühren', short: 'Ämter', explain: 'Gebühren an Behörden, zum Beispiel für die Verlängerung der Aufenthaltsbewilligung.' },
+  cash: { name: 'Bargeld', short: 'Bargeld', explain: 'Bargeld, das du abgehoben hast. Am PostFinance-Postomat ist es gratis, an Automaten anderer Banken kann es etwas kosten.' },
+  coffee: { name: 'Kaffee und Snacks', short: 'Kaffee', explain: 'Kaffee, Getränke und Snacks für unterwegs.', tip: 'Ein Thermosbecher von zu Hause und Snacks aus dem Supermarkt kosten nur einen Bruchteil.' },
+  fees: { name: 'Gebühren und Mahnungen', short: 'Gebühren', explain: 'Bankgebühren, Überweisungsgebühren und Mahngebühren für zu spät bezahlte Rechnungen.', tip: 'Die meisten Gebühren lassen sich vermeiden: Rechnungen gleich nach dem Zahltag bezahlen und gratis Automaten nutzen.' },
+  lottery: { name: 'Lotto', short: 'Lotto', explain: 'Lottoscheine, zum Beispiel Swisslos EuroMillions.', tip: 'Leg den gleichen Betrag stattdessen zur Seite. Dieses Geld behältst du sicher.' },
+  familyHelp: { name: 'Hilfe von der Familie', short: 'Familienhilfe', explain: 'Geld, das dir jemand aus der Familie oder ein Freund geschickt hat. Wenn du solche Hilfe oft brauchst, hilft eine kostenlose Schulden- und Budgetberatung beim Planen.' },
 };

@@ -69,3 +69,14 @@ export function categoryTotal(txs: Transaction[], category: string, year: string
     .filter((t) => counts(t) && t.kind !== 'income' && t.category === category && t.date.startsWith(year))
     .reduce((s, t) => s - t.amountRappen, 0);
 }
+
+/** Total spent in a year on payments whose name or counterparty contains one of `parts` (positive). */
+export function totalMatching(txs: Transaction[], parts: string[], year: string): number {
+  const hit = (t: Transaction) => {
+    const hay = `${t.originalName} ${t.counterparty}`.toLowerCase();
+    return parts.some((p) => hay.includes(p.toLowerCase()));
+  };
+  return txs
+    .filter((t) => counts(t) && t.kind !== 'income' && t.date.startsWith(year) && hit(t))
+    .reduce((s, t) => s - t.amountRappen, 0);
+}

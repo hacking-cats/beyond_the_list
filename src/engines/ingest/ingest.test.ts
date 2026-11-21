@@ -73,3 +73,30 @@ describe('mergeAccounts', () => {
     expect(merged[0]!.date >= merged[merged.length - 1]!.date).toBe(true);
   });
 });
+
+describe('andres_2025 (low-income persona, private account only)', () => {
+  const name = 'andres_2025_Account1_2025.csv';
+  const a1 = load(name, 'Account1');
+
+  it('reads without errors', () => {
+    const { rows, errors } = parseCsv(file(name));
+    expect(errors).toEqual([]);
+    expect(rows).toHaveLength(835);
+  });
+  it('has integer Rappen, unique ids and only wage plus cousin top-ups as income', () => {
+    expect(a1.every((t) => Number.isInteger(t.amountRappen))).toBe(true);
+    expect(new Set(a1.map((t) => t.id)).size).toBe(a1.length);
+    const income = mergeAccounts([a1]).filter((t) => t.kind === 'income');
+    expect(income).toHaveLength(15);
+  });
+  it('never goes below zero and ends the year with almost nothing', () => {
+    let balance = 0;
+    let lowest = Infinity;
+    for (const t of [...a1].sort((x, y) => x.date.localeCompare(y.date) || y.amountRappen - x.amountRappen)) {
+      balance += t.amountRappen;
+      lowest = Math.min(lowest, balance);
+    }
+    expect(lowest).toBeGreaterThanOrEqual(0);
+    expect(balance).toBe(10982);
+  });
+});

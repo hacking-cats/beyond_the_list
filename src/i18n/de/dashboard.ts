@@ -14,4 +14,5 @@ export default {
   ideasBtn: 'Sparideen ansehen',
   essentialNote: 'Notwendig. Hier schlagen wir nicht vor zu sparen.',
   listH: 'Alle Kategorien',
+  cheaperWay: 'Günstiger geht es so',
 };

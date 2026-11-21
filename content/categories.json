@@ -82,5 +82,59 @@
     "icon": "smartphone",
     "color": "#FF5A36",
     "kind": "flexible"
+  },
+  {
+    "key": "groceries",
+    "icon": "shopping_cart",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "moneyHome",
+    "icon": "currency_exchange",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "household",
+    "icon": "cottage",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "official",
+    "icon": "badge",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "cash",
+    "icon": "local_atm",
+    "color": "#005C66",
+    "kind": "essential"
+  },
+  {
+    "key": "coffee",
+    "icon": "local_cafe",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  },
+  {
+    "key": "fees",
+    "icon": "receipt_long",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  },
+  {
+    "key": "lottery",
+    "icon": "casino",
+    "color": "#FF5A36",
+    "kind": "flexible"
+  },
+  {
+    "key": "familyHelp",
+    "icon": "volunteer_activism",
+    "color": "#005C66",
+    "kind": "essential"
   }
 ]
