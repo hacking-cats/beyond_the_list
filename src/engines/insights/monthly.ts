@@ -4,7 +4,8 @@ import type { CategorySpending, SpendingKind } from './categoryShares';
 /**
  * Monthly numbers from transactions. Pure; money in Rappen.
  * Transfers and pending rows never count as spending; refunds are netted against
- * spending (insights SPEC rules 1 and 2). Balances are never computed from rows.
+ * spending (insights SPEC rules 1 and 2). Account balances follow the Transaction contract,
+ * rule 6 (opening balance + settled rows per account); they are not computed here.
  */
 
 const counts = (t: Transaction) => t.status === 'settled' && t.kind !== 'transfer';
