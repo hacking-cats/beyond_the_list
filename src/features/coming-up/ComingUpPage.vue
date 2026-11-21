@@ -6,6 +6,7 @@ import { percentOf } from '../../engines/insights/monthly';
 import { incomeLastYear, insuranceLastYear, serafeLastYear, taxPaidLastYear } from '../../shared/statements';
 import { chfToRappen, displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
+import SavingsGoal from '../savings/SavingsGoal.vue';
 
 const { t } = useI18n();
 const taxFrancs = ref(Math.max(500, Math.round(taxPaidLastYear / 100)));
@@ -23,6 +24,8 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 
 <template>
   <div>
+    <SavingsGoal style="margin-bottom: var(--sp-lg)" />
+
     <div v-if="!paysTaxBills" class="worth">
       <DsIcon name="info" />
       <div>
