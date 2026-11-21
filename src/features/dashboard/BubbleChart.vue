@@ -2,7 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { CategoryShare } from '../../engines/insights/categoryShares';
-import { formatChf } from '../../shared/money';
+import { displayChf } from '../../shared/money';
 import { iconOf } from '../../shared/transactions';
 import { iconPaths } from '../../shared/ui/icons';
 import { packCircles } from './packCircles';
@@ -29,9 +29,9 @@ const bubbles = computed(() =>
   packing.value.circles.map((c) => {
     const item = props.items[c.index]!;
     const big = c.r >= 55;
-    const amount = formatChf(item.amountRappen, { decimals: 0 });
+    const amount = displayChf(item.amountRappen, { decimals: 0 });
     // Icon above the amount when both fit; otherwise the icon alone (the amount is in the list).
-    const withAmount = c.r >= 30 && amount.length * (big ? 8 : 7) <= 2 * c.r - 10;
+    const withAmount = c.r >= 30 && (amount.length - 2) * (big ? 8 : 7) <= 2 * c.r - 10; // -2: bidi marks
     const iconSize = withAmount ? (big ? 30 : 24) : Math.round(Math.min(24, Math.max(12, c.r * 1.1)));
     return {
       ...c,

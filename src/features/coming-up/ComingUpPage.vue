@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { setAsidePerMonth } from '../../engines/savings/goalPlan';
 import { taxPaidLastYear } from '../../shared/statements';
-import { chfToRappen, formatChf } from '../../shared/money';
+import { chfToRappen, displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 
 const { t } = useI18n();
@@ -12,7 +12,7 @@ const months = ref(4);
 const perMonth = computed(() => setAsidePerMonth(chfToRappen(taxFrancs.value), months.value));
 const potCreated = ref(false);
 const showFranchise = ref(false);
-const chf0 = (r: number) => formatChf(r, { decimals: 0 });
+const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 </script>
 
 <template>

@@ -44,3 +44,12 @@ export function formatChf(amountRappen: Rappen, options: FormatOptions = {}): st
 export function chfToRappen(francs: number): Rappen {
   return Math.round(francs * 100);
 }
+
+/**
+ * formatChf for the screen: wraps the amount in Unicode left-to-right isolate marks
+ * (U+2066 … U+2069, invisible) so it keeps its order inside right-to-left text such as Arabic.
+ * Use in templates; use formatChf for data, tests and text sent to the LLM.
+ */
+export function displayChf(amountRappen: Rappen, options: FormatOptions = {}): string {
+  return `⁦${formatChf(amountRappen, options)}⁩`;
+}
