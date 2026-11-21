@@ -27,6 +27,16 @@ const suggestions = [
   { key: 'suggestFuture', icon: 'auto_awesome' },
 ] as const;
 
+// The suggestions stay while the person picks them; once they start with their own question,
+// the suggestions make room for the conversation.
+const pickedSuggestion = ref(false);
+const showSuggestions = computed(() => lines.value.length === 0 || pickedSuggestion.value);
+function pick(key: string) {
+  if (busy.value) return;
+  pickedSuggestion.value = true;
+  void send(t(`buddy.${key}`));
+}
+
 const heading = ref<HTMLElement | null>(null);
 const log = ref<HTMLElement | null>(null);
 
@@ -94,9 +104,9 @@ onBeforeUnmount(() => {
       <div class="buddy__spacer" />
       <h2 id="buddy-title" ref="heading" class="buddy__heading" tabindex="-1">{{ t('buddy.heading') }}</h2>
 
-      <ul class="buddy__suggest" :aria-label="t('buddy.suggestions')">
+      <ul v-if="showSuggestions" class="buddy__suggest" :aria-label="t('buddy.suggestions')">
         <li v-for="s in suggestions" :key="s.key">
-          <button type="button" class="buddy__chip" @click="void send(t(`buddy.${s.key}`))">
+          <button type="button" class="buddy__chip" @click="pick(s.key)">
             <q-icon :name="icon(s.icon)" size="20px" aria-hidden="true" />
             <span>{{ t(`buddy.${s.key}`) }}</span>
           </button>
