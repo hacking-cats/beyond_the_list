@@ -2,6 +2,7 @@ export default {
   appName: 'Beyond the List',
   menu: 'Menu',
   language: 'Language',
+  sections: 'Sections',
   hello: 'Hi Sara 👋',
   jointAccount: 'Joint household account · Müller family',
   prototype: 'Prototype · demo data',

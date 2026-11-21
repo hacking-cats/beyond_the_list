@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { nextTick, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { enabledFeatures } from '../features/registry';
 import { demoAccount } from '../shared/demo-data';
 import { formatChf } from '../shared/money';
+import { icon } from '../shared/ui/icons';
 
-// One layout for the whole app, as in the klar prototype: header with language switch,
-// greeting and balance, then a tab bar generated from the feature registry.
+// One layout for the whole app: header with language switch, greeting and balance, the page,
+// and a bottom tab bar (icons only, each with an accessible name) from the feature registry.
 const { t, locale } = useI18n();
 const route = useRoute();
 const tabs = enabledFeatures();
@@ -16,14 +16,7 @@ const languages = [
   { code: 'de', label: 'DE' },
 ] as const;
 
-// Keep the active tab visible when the tab bar scrolls on narrow phones.
-watch(
-  () => [route.path, locale.value],
-  async () => {
-    await nextTick();
-    document.querySelector('.tabs .tab[aria-selected="true"]')?.scrollIntoView({ inline: 'nearest', block: 'nearest' });
-  },
-);
+
 </script>
 
 <template>
@@ -49,23 +42,25 @@ watch(
       <p class="summary__sub">{{ t('common.jointAccount') }}</p>
     </section>
 
-    <nav class="tabs" role="tablist">
-      <router-link
-        v-for="f in tabs"
-        :key="f.key"
-        :to="f.route"
-        class="tab"
-        role="tab"
-        :aria-selected="route.path === f.route"
-      >
-        {{ t(f.titleKey) }}
-      </router-link>
-    </nav>
-
     <main class="panel">
       <router-view />
     </main>
 
     <footer class="app-footer">{{ t('common.footer') }}</footer>
+
+    <nav class="tabbar" role="tablist" :aria-label="t('common.sections')">
+      <router-link
+        v-for="f in tabs"
+        :key="f.key"
+        :to="f.route"
+        class="tabbar__tab"
+        role="tab"
+        :aria-selected="route.path === f.route"
+        :aria-label="t(f.titleKey)"
+        :title="t(f.titleKey)"
+      >
+        <q-icon :name="icon(f.icon)" size="26px" aria-hidden="true" />
+      </router-link>
+    </nav>
   </div>
 </template>

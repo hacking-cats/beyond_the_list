@@ -2,25 +2,85 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { goalPlan } from '../../engines/savings/goalPlan';
-import { demoGoals, demoIdeas, demoSavedRappen, type GoalKey } from '../../shared/demo-data';
+import { demoIdeas, demoNewProjectRappen, demoSavedRappen, projectIcons } from '../../shared/demo-data';
 import { chfToRappen, formatChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
+import { icon } from '../../shared/ui/icons';
+import { addProject, MAX_IMAGE_BYTES, projectsState, removeProject, type SavingsProject } from './projects';
 
 const { t } = useI18n();
 
-const goalKeys = Object.keys(demoGoals) as GoalKey[];
-const goalKey = ref<GoalKey>('car');
-const goalFrancs = ref(Math.round(demoGoals.car / 100));
+const current = computed<SavingsProject>(
+  () => projectsState.projects.find((p) => p.key === projectsState.selected) ?? projectsState.projects[0]!,
+);
+const projectName = (p: SavingsProject) => (p.preset ? t(`features.savings.goals.${p.key}`) : (p.name ?? ''));
+
+const goalFrancs = ref(Math.round(current.value.amountRappen / 100));
 const savedFrancs = ref(Math.round(demoSavedRappen / 100));
 const months = ref(24);
 const plan = ref(new Set<string>());
 const started = ref(false);
 
-function pickGoal(key: GoalKey) {
-  goalKey.value = key;
-  goalFrancs.value = Math.round(demoGoals[key] / 100);
+function pickGoal(p: SavingsProject) {
+  projectsState.selected = p.key;
+  goalFrancs.value = Math.round(p.amountRappen / 100);
   started.value = false;
+  adding.value = false;
 }
+
+// ---- Add a project of your own -------------------------------------------------
+const adding = ref(false);
+const newName = ref('');
+const newIcon = ref(projectIcons[0]!);
+const newImage = ref<string | undefined>(undefined);
+const formError = ref('');
+
+function openForm() {
+  adding.value = true;
+  newName.value = '';
+  newIcon.value = projectIcons[0]!;
+  newImage.value = undefined;
+  formError.value = '';
+}
+function onPhoto(e: Event) {
+  const input = e.target as HTMLInputElement;
+  const file = input.files?.[0];
+  input.value = '';
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    formError.value = t('features.savings.photoWrongType');
+    return;
+  }
+  if (file.size > MAX_IMAGE_BYTES) {
+    formError.value = t('features.savings.photoTooBig');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = () => {
+    if (typeof reader.result === 'string') newImage.value = reader.result;
+    formError.value = '';
+  };
+  reader.readAsDataURL(file);
+}
+function create() {
+  const name = newName.value.trim();
+  if (!name) {
+    formError.value = t('features.savings.nameRequired');
+    return;
+  }
+  const project = addProject({
+    name,
+    icon: newIcon.value,
+    ...(newImage.value ? { image: newImage.value } : {}),
+    amountRappen: demoNewProjectRappen,
+  });
+  pickGoal(project);
+}
+function removeCurrent() {
+  removeProject(current.value.key);
+  goalFrancs.value = Math.round(current.value.amountRappen / 100);
+}
+
 function togglePlan(key: string) {
   const next = new Set(plan.value);
   if (next.has(key)) next.delete(key);
@@ -43,11 +103,86 @@ const chf0 = (r: number) => formatChf(r, { decimals: 0 });
 <template>
   <div>
     <p class="card__title">{{ t('features.savings.goalH') }}</p>
-    <div class="chips" style="margin-top: 0" role="group" :aria-label="t('features.savings.goalH')">
-      <button v-for="k in goalKeys" :key="k" class="chip" :aria-pressed="k === goalKey" @click="pickGoal(k)">
-        {{ t(`features.savings.goals.${k}`) }}
+    <div class="goals" role="group" :aria-label="t('features.savings.goalH')">
+      <button
+        v-for="p in projectsState.projects"
+        :key="p.key"
+        class="goal"
+        :aria-pressed="p.key === projectsState.selected"
+        :aria-label="projectName(p)"
+        :title="projectName(p)"
+        @click="pickGoal(p)"
+      >
+        <img v-if="p.image" :src="p.image" alt="" />
+        <q-icon v-else :name="icon(p.icon)" size="26px" aria-hidden="true" />
+      </button>
+      <button
+        class="goal goal--add"
+        :aria-pressed="adding"
+        :aria-label="t('features.savings.addNew')"
+        :title="t('features.savings.addNew')"
+        @click="adding ? (adding = false) : openForm()"
+      >
+        <q-icon :name="icon('add')" size="26px" aria-hidden="true" />
       </button>
     </div>
+
+    <form v-if="adding" class="card card--plain new-project" @submit.prevent="create">
+      <p class="card__title">{{ t('features.savings.newH') }}</p>
+      <label class="ask__label" for="project-name">{{ t('features.savings.nameL') }}</label>
+      <input
+        id="project-name"
+        v-model="newName"
+        class="ask__input"
+        maxlength="40"
+        autocomplete="off"
+        :placeholder="t('features.savings.namePh')"
+      />
+      <p class="ask__label">{{ t('features.savings.iconL') }}</p>
+      <div class="goals" role="radiogroup" :aria-label="t('features.savings.iconL')">
+        <button
+          v-for="name in projectIcons"
+          :key="name"
+          type="button"
+          class="goal goal--sm"
+          role="radio"
+          :aria-checked="!newImage && name === newIcon"
+          :aria-pressed="!newImage && name === newIcon"
+          :aria-label="t(`features.savings.icons.${name}`)"
+          :title="t(`features.savings.icons.${name}`)"
+          @click="newIcon = name; newImage = undefined"
+        >
+          <q-icon :name="icon(name)" size="22px" aria-hidden="true" />
+        </button>
+      </div>
+      <p class="ask__label">{{ t('features.savings.photoL') }}</p>
+      <div class="photo-row">
+        <img v-if="newImage" :src="newImage" alt="" class="photo-preview" />
+        <label class="btn btn--secondary">
+          <q-icon :name="icon('photo_camera')" size="20px" aria-hidden="true" />
+          {{ t('features.savings.photoBtn') }}
+          <input type="file" accept="image/*" class="visually-hidden" @change="onPhoto" />
+        </label>
+        <button v-if="newImage" type="button" class="btn btn--ghost" @click="newImage = undefined">
+          {{ t('features.savings.photoRemove') }}
+        </button>
+      </div>
+      <p class="hint" style="margin: 0">{{ t('features.savings.photoNote') }}</p>
+      <p v-if="formError" class="form-error" role="alert">{{ formError }}</p>
+      <div class="form-actions">
+        <button type="submit" class="btn btn--primary">{{ t('features.savings.createBtn') }}</button>
+        <button type="button" class="btn btn--secondary" @click="adding = false">
+          {{ t('features.savings.cancelBtn') }}
+        </button>
+      </div>
+    </form>
+
+    <p class="goal-name">
+      <span>{{ t('features.savings.savingFor') }}: <b>{{ projectName(current) }}</b></span>
+      <button v-if="!current.preset" class="btn btn--ghost" @click="removeCurrent">
+        {{ t('features.savings.removeBtn') }}
+      </button>
+    </p>
 
     <label class="field">
       {{ t('features.savings.targetL') }}: <b class="amount">{{ chf0(chfToRappen(goalFrancs)) }}</b>

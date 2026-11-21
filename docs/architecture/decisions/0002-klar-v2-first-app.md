@@ -14,7 +14,8 @@ A single-file HTML prototype ("klar", V1) was built and styled with the team des
   4. **Savings** (`savings`): savings goal, ideas from spending habits, the resulting plan.
   5. **Overview** (`dashboard`): spending bubbles, ranked list.
   - **AI chat, Investment ideas, Data generator**: registered but `enabled: false` (placeholder pages, no route, no tab).
-- **Tab bar instead of the planned hamburger drawer** (AGENTS.md "header with hamburger, drawer"), to match klar. The tabs come from the registry, so a drawer can replace them later without touching the pages.
+- **Bottom tab bar with icons instead of the planned hamburger drawer** (AGENTS.md "header with hamburger, drawer"; the design system also says "no bottom navigation"). Order: Overview, Explained, Savings, Coming up, My future. Icons are Material outlined SVGs from `@quasar/extras` (`src/shared/ui/icons.ts`), each tab with an accessible name. The tabs come from the registry, so a drawer can replace them later without touching the pages.
+- **Savings goals are icons**: house, car, holiday, emergency fund, education, bucket list, children, plus "Add new project" (own name, icon or photo). Projects live in memory only (`features/savings/projects.ts`) until the Storage contract is frozen; a photo is a data URL that never leaves the phone.
 - **Money is shown as in klar and the design system** (`1'234.50 CHF`, minus sign U+2212). This differs from AGENTS.md (`CHF 1'234.50`); `src/shared/money.ts` is the only place to change if the team keeps the AGENTS.md format.
 - **No contract is implemented.** Made-up data lives in `src/shared/demo-data.ts` until the `TransactionSource` fake adapter exists; pages read it directly instead of through `useServices()`.
 - Numbers come from pure, tested functions: `engines/savings/goalPlan.ts`, `engines/insights/categoryShares.ts`, `shared/money.ts`.

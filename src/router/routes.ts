@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from 'vue-router';
 import { enabledFeatures } from '../features/registry';
 
 // Routes come from the feature registry; disabled features have no route.
-// The start page is the first tab (as in the klar prototype: Explained).
+// The start page is the first tab (Overview).
 const enabled = enabledFeatures();
 const start = enabled[0]?.route ?? '/';
 
