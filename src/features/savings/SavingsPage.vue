@@ -4,8 +4,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { goalPlan } from '../../engines/savings/goalPlan';
 import { savingWithCap } from '../../engines/savings/alternatives';
-import { paymentsPerMonth } from '../../engines/insights/monthly';
-import { savingsAlternatives, savingsCuts, transactions, yearMonths } from '../../shared/statements';
+import { savingsAlternatives, savingsCuts } from '../../shared/statements';
+import { groupOf, iconOf } from '../../shared/transactions';
 import { chfToRappen, displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
@@ -23,9 +23,10 @@ interface Idea {
   id: string;
   category: string;
   title: string;
+  /** A word or two under the round button. */
+  label: string;
   tip: string;
   wit: string;
-  detail: string;
   nowRappen: number;
   saveRappen: number;
 }
@@ -39,9 +40,9 @@ const ideas = computed<Idea[]>(() =>
         id: `alt.${a.key}`,
         category: a.category,
         title: t(`features.savings.alt.${a.key}.title`),
+        label: t(`features.savings.altShort.${a.key}`),
         tip: t(`features.savings.alt.${a.key}.tip`, params),
         wit: '',
-        detail: `${a.count} ${t('features.savings.timesL')}`,
         nowRappen: a.nowRappen,
         saveRappen: a.saveRappen,
       };
@@ -50,9 +51,9 @@ const ideas = computed<Idea[]>(() =>
       id: `cut.${c.key}`,
       category: c.key,
       title: cat(c.key, 'name'),
+      label: cat(c.key, 'short'),
       tip: cat(c.key, 'tip'),
       wit: hasWit(c.key) ? cat(c.key, 'wit') : '',
-      detail: detail(paymentsPerMonth(transactions, yearMonths, c.key)),
       nowRappen: c.nowRappen,
       saveRappen: c.saveRappen,
     })),
@@ -75,6 +76,13 @@ const capMaxFrancs = Math.max(capRecommendedFrancs, Math.ceil((capIdea?.nowRappe
 const capFrancs = ref(capRecommendedFrancs);
 const capOn = ref(false);
 const capDialog = ref(false);
+/** The limit is on and confirmed: its card leaves the list, a one-line status stays. */
+const capDone = ref(false);
+function onCapDialogHide() {
+  capDone.value = capOn.value;
+  // Confirmed: the limit card closes into its round "Games" button.
+  if (capOn.value && openIdea.value === CAP_IDEA) openIdea.value = null;
+}
 const capSaveRappen = computed(() => savingWithCap(capIdea?.nowRappen ?? 0, chfToRappen(capFrancs.value)));
 const saveOf = (i: Idea) => (i.id === CAP_IDEA ? capSaveRappen.value : i.saveRappen);
 function setCap(on: boolean) {
@@ -99,17 +107,30 @@ const router = useRouter();
 const focus = computed(() => (typeof route.query.cat === 'string' ? route.query.cat : ''));
 const focusName = computed(() => (focus.value ? t(`categories.${focus.value}.name`) : ''));
 const focusHits = computed(() => ideas.value.filter((i) => i.category === focus.value));
-// Without a focus, the game-purchase cap comes first so it is the first thing on the Savings tab.
-const capFirst = computed(() => [
-  ...ideas.value.filter((i) => i.id === CAP_IDEA),
-  ...ideas.value.filter((i) => i.id !== CAP_IDEA),
-]);
-const shownIdeas = computed(() =>
-  focusHits.value.length ? [...focusHits.value, ...ideas.value.filter((i) => i.category !== focus.value)] : capFirst.value,
-);
+// The game-purchase cap is always first: a full card until the limit is confirmed, then a round
+// button like the other ideas (tap to open it again). The specialist follows the game limit.
+// The other ideas are round buttons; tapping one opens its card under that row.
+const capItem = computed(() => ideas.value.find((i) => i.id === CAP_IDEA));
+/** The cap shows as an open card, without its round button, until it is confirmed. */
+const capOpenTop = computed(() => !!capItem.value && !capDone.value);
+const gridIdeas = computed(() => {
+  const rest = ideas.value.filter((i) => i.id !== CAP_IDEA);
+  const ordered = focusHits.value.length
+    ? [...rest.filter((i) => i.category === focus.value), ...rest.filter((i) => i.category !== focus.value)]
+    : rest;
+  return capItem.value ? [capItem.value, ...ordered] : ordered;
+});
+const openIdea = ref<string | null>(null);
+function toggleIdea(id: string) {
+  openIdea.value = openIdea.value === id ? null : id;
+}
+const isOpen = (i: Idea) => (i.id === CAP_IDEA && capOpenTop.value) || openIdea.value === i.id;
 const ideasSection = ref<HTMLElement | null>(null);
 onMounted(() => {
-  if (focus.value) void nextTick(() => ideasSection.value?.scrollIntoView({ block: 'start' }));
+  if (!focus.value) return;
+  const hit = gridIdeas.value.find((i) => i.category === focus.value);
+  openIdea.value = hit && !(hit.id === CAP_IDEA && capOpenTop.value) ? hit.id : null;
+  void nextTick(() => ideasSection.value?.scrollIntoView({ block: 'start' }));
 });
 function showAll() {
   void router.replace({ path: route.path, query: {} });
@@ -123,11 +144,12 @@ const result = computed(() =>
     selectedSavingsRappen: ideas.value.filter((i) => plan.value.has(i.id)).map(saveOf),
   }),
 );
-const cat = (key: string, field: 'name' | 'tip' | 'wit') => t(`categories.${key}.${field}`);
+const cat = (key: string, field: 'name' | 'short' | 'tip' | 'wit') => t(`categories.${key}.${field}`);
 const hasWit = (key: string) => i18n.te(`categories.${key}.wit`);
-const detail = (n: number) =>
-  n >= 1 ? `${n} ${t('features.savings.paymentsPerMonth')}` : t('features.savings.nowAndThen');
 const chf0 = (r: number) => displayChf(r, { decimals: 0 });
+/** Under a round button: the saving, or for the confirmed game limit the limit itself. */
+const dotSub = (i: Idea) =>
+  i.id === CAP_IDEA && capOn.value ? t('features.savings.capStatus', { amount: chf0(chfToRappen(capFrancs.value)) }) : chf0(saveOf(i));
 </script>
 
 <template>
@@ -141,50 +163,67 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
         <p v-else style="margin: 0">{{ t('features.dashboard.focusNone') }}</p>
         <button class="btn btn--ghost" @click="showAll">{{ t('features.dashboard.focusAll') }}</button>
       </div>
-      <p class="hint">{{ t('features.savings.ideasP') }}</p>
-      <template v-for="(i, index) in shownIdeas" :key="i.id">
-      <div class="card">
-        <DsIcon name="bulb" />
-        <div class="card__body">
-          <p class="card__title">{{ i.title }}</p>
-          <p class="line__original">{{ i.detail }}</p>
-          <div class="result">
-            <span>{{ t('features.savings.nowL') }}</span>
-            <span class="amount">{{ chf0(i.nowRappen) }} {{ t('common.perMonth') }}</span>
-          </div>
-          <div class="result">
-            <span>{{ t('features.savings.saveL') }}</span>
-            <span class="amount positive">{{ chf0(saveOf(i)) }} {{ t('common.perMonth') }}</span>
-          </div>
-          <p>{{ i.tip }}</p>
-          <p v-if="i.wit" class="wit" style="margin: 0 0 var(--sp-sm)">{{ i.wit }}</p>
-          <div v-if="i.id === CAP_IDEA" class="cap">
-            <q-toggle
-              :model-value="capOn"
-              color="primary"
-              size="lg"
-              class="cap__toggle"
-              :label="t('features.savings.capL')"
-              @update:model-value="setCap"
-            />
-            <label class="field" style="margin-top: 0">
-              {{ t('features.savings.capMaxL') }}:
-              <b class="amount">{{ chf0(chfToRappen(capFrancs)) }} {{ t('common.perMonth') }}</b>
-              <input v-model.number="capFrancs" type="range" min="0" :max="capMaxFrancs" step="5" />
-            </label>
-            <p class="hint" style="margin: 0">
-              {{ t('features.savings.capRec', { amount: chf0(chfToRappen(capRecommendedFrancs)) }) }}
-            </p>
-          </div>
-          <button v-else class="chip" :aria-pressed="plan.has(i.id)" @click="togglePlan(i.id)">
-            {{ plan.has(i.id) ? t('features.savings.addedL') : t('features.savings.addL') }}
+      <p v-if="!capOpenTop" class="hint">{{ t('features.savings.ideasTap') }}</p>
+      <div class="idea-grid">
+        <template v-for="i in gridIdeas" :key="i.id">
+          <button
+            v-if="!(i.id === CAP_IDEA && capOpenTop)"
+            class="idea-dot"
+            :class="`idea-dot--${groupOf(i.category)}`"
+            :aria-expanded="openIdea === i.id"
+            :aria-controls="`idea-${i.id}`"
+            :aria-label="`${i.title}, ${dotSub(i)}`"
+            @click="toggleIdea(i.id)"
+          >
+            <span class="idea-dot__circle">
+              <q-icon :name="icon(iconOf(i.category))" size="26px" aria-hidden="true" />
+              <span v-if="plan.has(i.id)" class="idea-dot__check" aria-hidden="true">✓</span>
+            </span>
+            <span class="idea-dot__label">{{ i.label }}</span>
+            <span class="idea-dot__save amount">{{ dotSub(i) }}</span>
           </button>
-        </div>
+          <div v-if="isOpen(i)" :id="`idea-${i.id}`" class="card idea idea--open">
+            <DsIcon v-if="i.id === CAP_IDEA && capOpenTop" name="bulb" />
+            <div class="card__body">
+              <p class="card__title">{{ i.title }}</p>
+              <p class="idea__nums">
+                <span>{{ t('features.savings.nowShort') }} <b class="amount">{{ chf0(i.nowRappen) }}</b></span>
+                <span class="positive">{{ t('features.savings.saveShort') }} <b class="amount">{{ chf0(saveOf(i)) }}</b> {{ t('common.perMonth') }}</span>
+              </p>
+              <p class="idea__tip">{{ i.tip }}</p>
+              <p v-if="i.wit" class="wit idea__tip">{{ i.wit }}</p>
+              <div v-if="i.id === CAP_IDEA" class="cap">
+                <q-toggle
+                  :model-value="capOn"
+                  color="primary"
+                  size="lg"
+                  class="cap__toggle"
+                  :label="t('features.savings.capL')"
+                  @update:model-value="setCap"
+                />
+                <label class="field" style="margin-top: 0">
+                  {{ t('features.savings.capMaxL') }}:
+                  <b class="amount">{{ chf0(chfToRappen(capFrancs)) }} {{ t('common.perMonth') }}</b>
+                  <input v-model.number="capFrancs" type="range" min="0" :max="capMaxFrancs" step="5" />
+                </label>
+                <p class="hint" style="margin: 0">
+                  {{ t('features.savings.capRec', { amount: chf0(chfToRappen(capRecommendedFrancs)) }) }}
+                </p>
+              </div>
+              <button v-else class="chip" :aria-pressed="plan.has(i.id)" @click="togglePlan(i.id)">
+                {{ plan.has(i.id) ? t('features.savings.addedL') : t('features.savings.addL') }}
+              </button>
+            </div>
+          </div>
+          <!-- Talk to a specialist: right after the game-purchase limit card -->
+          <template v-if="i.id === CAP_IDEA && capOpenTop">
+            <div class="idea-grid__full"><AdviceBooking /></div>
+            <p class="hint idea-grid__full" style="margin: 0">{{ t('features.savings.ideasTap') }}</p>
+          </template>
+        </template>
+        <!-- Once the limit is a round button: the specialist follows the ideas -->
+        <div v-if="!capOpenTop" class="idea-grid__full"><AdviceBooking /></div>
       </div>
-      <!-- Talk to a specialist: right after the first savings idea -->
-      <AdviceBooking v-if="index === 0" />
-      </template>
-      <AdviceBooking v-if="!shownIdeas.length" />
     </div>
 
     <div class="worth" role="status">
@@ -217,7 +256,7 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 
     <InvestIdeas class="section" />
 
-    <q-dialog v-model="capDialog">
+    <q-dialog v-model="capDialog" @hide="onCapDialogHide">
       <div class="cap-done" role="alertdialog" aria-labelledby="cap-done-h" aria-describedby="cap-done-p">
         <q-icon class="cap-done__icon" :name="icon('task_alt')" size="48px" aria-hidden="true" />
         <h2 id="cap-done-h" class="cap-done__title">{{ t('features.savings.capDoneH') }}</h2>
@@ -232,6 +271,29 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 </template>
 
 <style scoped>
+.idea { margin-bottom: var(--sp-sm); padding: var(--sp-sm) var(--sp-md); gap: var(--sp-sm); }
+.idea .card__title { margin: 0; }
+.idea__nums { display: flex; flex-wrap: wrap; gap: 0 var(--sp-md); margin: 2px 0 var(--sp-xs); font-size: var(--fs-small); color: var(--text-secondary); }
+.idea__nums .positive { color: var(--success-text); }
+.idea__tip { margin: 0 0 var(--sp-sm); font-size: var(--fs-small); line-height: 1.4; }
+.idea-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); grid-auto-flow: row dense;
+  gap: var(--sp-md) var(--sp-xs); margin-top: var(--sp-sm); }
+.idea-dot { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: var(--touch); padding: 0;
+  border: 0; background: none; color: var(--text); font: inherit; cursor: pointer; }
+.idea-dot__circle { position: relative; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%;
+  transition: box-shadow 0.15s; }
+.idea-dot--cutBack .idea-dot__circle { background: var(--grapefruit); color: var(--text); }
+.idea-dot--recurring .idea-dot__circle { background: var(--petrol); color: var(--text-inverse); }
+.idea-dot--occasional .idea-dot__circle { background: var(--petrol-light); color: var(--petrol); box-shadow: inset 0 0 0 1px var(--petrol); }
+.idea-dot[aria-expanded='true'] .idea-dot__circle { box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--petrol); }
+.idea-dot:focus-visible { outline: none; }
+.idea-dot:focus-visible .idea-dot__circle { outline: 3px solid var(--petrol); outline-offset: 4px; }
+.idea-dot__check { position: absolute; inset-block-start: -4px; inset-inline-end: -4px; display: grid; place-items: center;
+  width: 22px; height: 22px; border: 2px solid var(--surface); border-radius: 50%; background: var(--success-text);
+  color: var(--text-inverse); font-size: 12px; font-weight: 700; }
+.idea-dot__label { font-size: var(--fs-caption); line-height: 1.2; text-align: center; }
+.idea-dot__save { font-size: var(--fs-caption); font-weight: 700; color: var(--success-text); }
+.idea--open, .idea-grid__full { grid-column: 1 / -1; margin: 0; }
 .cap { display: flex; flex-direction: column; gap: var(--sp-sm); padding-top: var(--sp-sm); border-top: 1px solid var(--border); }
 .cap__toggle { margin-inline-start: calc(-1 * var(--sp-sm)); font-weight: 600; }
 .cap-done { width: 100%; max-width: 360px; padding: var(--sp-lg); text-align: center;

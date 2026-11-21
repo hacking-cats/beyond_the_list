@@ -6,7 +6,7 @@ export default {
   flexL: 'يمكن تقليله',
   ofAll: 'من مصاريفك',
   allL: 'الكل',
-  onlyFlexL: 'فقط ما يمكنك تقليله',
+  onlyFlexL: 'التوفير المُوصى به',
   essential: 'أساسيات',
   flexible: 'يمكن تقليله',
   pickP: 'اضغط على فقاعة لترى ما هي وكم تكلّفك.',

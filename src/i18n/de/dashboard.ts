@@ -6,7 +6,7 @@ export default {
   flexL: 'Könntest du reduzieren',
   ofAll: 'deiner Ausgaben',
   allL: 'Alle',
-  onlyFlexL: 'Nur was du reduzieren könntest',
+  onlyFlexL: 'Empfohlene Einsparungen',
   essential: 'Notwendiges',
   flexible: 'Könntest du reduzieren',
   pickP: 'Tippe auf eine Blase, um zu sehen, was sie ist und was sie dich kostet.',
