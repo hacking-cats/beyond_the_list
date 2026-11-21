@@ -5,6 +5,7 @@
  */
 import {
   outlinedAdd,
+  outlinedAutoAwesome,
   outlinedBeachAccess,
   outlinedBubbleChart,
   outlinedCardGiftcard,
@@ -16,6 +17,7 @@ import {
   outlinedDirectionsCar,
   outlinedElderly,
   outlinedEvent,
+  outlinedExpandLess,
   outlinedFavorite,
   outlinedFlight,
   outlinedHome,
@@ -29,6 +31,7 @@ import {
   outlinedReceiptLong,
   outlinedSavings,
   outlinedSchool,
+  outlinedSend,
   outlinedSmartphone,
   outlinedSportsSoccer,
   outlinedUmbrella,
@@ -47,6 +50,7 @@ import {
 
 const icons: Record<string, string> = {
   add: outlinedAdd,
+  auto_awesome: outlinedAutoAwesome,
   beach_access: outlinedBeachAccess,
   bubble_chart: outlinedBubbleChart,
   card_giftcard: outlinedCardGiftcard,
@@ -58,6 +62,7 @@ const icons: Record<string, string> = {
   directions_car: outlinedDirectionsCar,
   elderly: outlinedElderly,
   event: outlinedEvent,
+  expand_less: outlinedExpandLess,
   favorite: outlinedFavorite,
   flight: outlinedFlight,
   home: outlinedHome,
@@ -71,6 +76,7 @@ const icons: Record<string, string> = {
   receipt_long: outlinedReceiptLong,
   savings: outlinedSavings,
   school: outlinedSchool,
+  send: outlinedSend,
   smartphone: outlinedSmartphone,
   sports_soccer: outlinedSportsSoccer,
   umbrella: outlinedUmbrella,
