@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import links from '../../../content/postfinance-links.json';
 import { firstFreeDay, sampleSlots, type AdviceDay } from '../../engines/advice/sampleSlots';
+import { buildIcs, googleCalendarUrl, icsFileName, type CalendarEvent } from '../../engines/advice/calendar';
 import { productLanguage } from '../../engines/invest/matchProducts';
 import { intlLocale } from '../../i18n/languages';
 import { icon } from '../../shared/ui/icons';
@@ -53,6 +54,7 @@ function show() {
   day.value = firstFreeDay(days.value);
   time.value = null;
   step.value = 'pick';
+  calSaved.value = false;
   open.value = true;
 }
 function pickDay(d: AdviceDay) {
@@ -64,6 +66,41 @@ function pickTime(slot: { time: string; free: boolean }) {
   if (slot.free) time.value = slot.time;
 }
 const where = computed(() => (place.value === 'branch' ? t('features.savings.advice.nearYou') : t('features.savings.advice.byVideo')));
+
+// Calendar entry for the chosen (sample) time. Title and text say it is NOT booked.
+const calSaved = ref(false);
+const calendarEvent = computed<CalendarEvent | null>(() => {
+  if (!day.value || !time.value) return null;
+  const topicName = t(`features.savings.advice.topics.${topic.value}`);
+  return {
+    date: day.value.date,
+    time: time.value,
+    durationMinutes: 60,
+    title: t('features.savings.advice.calTitle', { topic: topicName }),
+    description: t('features.savings.advice.calDesc', { phone: phone.display }),
+    location: where.value,
+    uid: `advice-${day.value.date}-${time.value.replace(':', '')}@beyond-the-list`,
+    stamp: new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''),
+  };
+});
+const googleUrl = computed(() => (calendarEvent.value ? googleCalendarUrl(calendarEvent.value) : '#'));
+function downloadIcs() {
+  const ev = calendarEvent.value;
+  if (!ev) return;
+  try {
+    const url = URL.createObjectURL(new Blob([buildIcs(ev)], { type: 'text/calendar;charset=utf-8' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = icsFileName(ev.date, ev.time);
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    calSaved.value = true;
+  } catch {
+    calSaved.value = false;
+  }
+}
 </script>
 
 <template>
@@ -187,6 +224,22 @@ const where = computed(() => (place.value === 'branch' ? t('features.savings.adv
             <li>{{ t('features.savings.advice.realApp') }}</li>
             <li>{{ t('features.savings.advice.realPhone') }} <span dir="ltr" class="advice-phone">{{ phone.display }}</span></li>
           </ul>
+        </div>
+        <div class="advice-cal" role="group" :aria-labelledby="'advice-cal-h'">
+          <p id="advice-cal-h" class="advice-cal__title">
+            <q-icon :name="icon('event')" size="20px" aria-hidden="true" />
+            {{ t('features.savings.advice.calH') }}
+          </p>
+          <div class="advice-cal__buttons">
+            <button class="btn btn--secondary advice-cal__btn" type="button" @click="downloadIcs">
+              {{ t('features.savings.advice.calFile') }}
+            </button>
+            <a class="btn btn--secondary advice-cal__btn" :href="googleUrl" target="_blank" rel="noopener noreferrer">
+              {{ t('features.savings.advice.calGoogle') }}
+              <q-icon :name="icon('open_in_new')" size="18px" aria-hidden="true" />
+            </a>
+          </div>
+          <p class="advice-sheet__note" role="status">{{ calSaved ? t('features.savings.advice.calSaved') : t('features.savings.advice.calHint') }}</p>
         </div>
         <a class="btn btn--primary btn--block advice-done__link" :href="adviceUrl" target="_blank" rel="noopener noreferrer">
           {{ t('features.savings.advice.openAdvice') }}

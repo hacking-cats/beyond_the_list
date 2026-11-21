@@ -5,7 +5,7 @@ import { defineConfig } from '#q-app';
 
 export default defineConfig((ctx) => {
   return {
-    boot: ['i18n'],
+    boot: ['i18n', 'services'],
 
     css: ['app.css'],
 
@@ -27,6 +27,12 @@ export default defineConfig((ctx) => {
       // GitHub Pages serves the site from /<repo>/; the Pages workflow sets PUBLIC_PATH.
       // Android (Capacitor) and local builds keep '/'.
       publicPath: process.env.PUBLIC_PATH || '/',
+
+      // finAInce chat backend (src/adapters/assistant/http.ts), read as import.meta.env.FINAINCE_CHAT_URL.
+      // Override with FINAINCE_CHAT_URL=<url>; FINAINCE_CHAT_URL= (empty) uses the offline fake.
+      defineEnv: {
+        FINAINCE_CHAT_URL: process.env.FINAINCE_CHAT_URL ?? 'https://d114-85-195-234-16.ngrok-free.app/chat',
+      },
 
       vitePlugins: [
         [

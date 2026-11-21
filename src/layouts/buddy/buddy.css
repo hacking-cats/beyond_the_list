@@ -75,6 +75,7 @@
 .buddy__msg--user { align-self: flex-end; background: var(--petrol); color: var(--text-inverse); border-bottom-right-radius: var(--r-sm); }
 .buddy__msg--buddy { align-self: flex-start; background: var(--surface); color: var(--text-secondary);
   border: 1px solid var(--border); border-bottom-left-radius: var(--r-sm); }
+.buddy__thinking { font-style: italic; opacity: .75; }
 
 .buddy__ask { position: relative; display: flex; align-items: center; gap: var(--sp-sm);
   margin: 0 var(--sp-lg) var(--sp-sm); padding: var(--sp-xs) var(--sp-xs) var(--sp-xs) var(--sp-lg);

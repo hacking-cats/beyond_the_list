@@ -17,4 +17,6 @@ export default {
   introBody: 'Posez des questions sur votre argent avec vos propres mots. Tirez vers le bas depuis le haut de l’écran pour commencer.',
   introTry: 'Essayer',
   introDismiss: 'Compris',
+  error: 'Désolé, je ne peux pas joindre le serveur pour le moment. Réessayez dans un instant.',
+  thinking: 'Je réfléchis…',
 };

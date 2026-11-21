@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useServices } from '../../composables/useServices';
 import { icon } from '../../shared/ui/icons';
 import type { PanEvent } from './useBuddyPull';
 
 // The finAInce buddy: a pale yellow chat sheet that rolls down from the top of the app.
 // It follows the finger while the header is pulled (progress), and settles open or shut.
-// Placeholder only: the Assistant contract (src/contracts/assistant.md) is still a draft with no
-// implementation and no useServices() yet, so a sent message gets a "not connected yet" note.
-// When the assistant exists, `send` calls useServices().assistant.ask(text, context) instead.
+// A sent message goes to useServices().assistant.ask(); the composition root picks the backend
+// (src/boot/services.ts), with the offline fake as fallback.
 const props = defineProps<{ open: boolean; progress: number; dragging: boolean }>();
 const emit = defineEmits<{ close: []; pan: [evt: PanEvent] }>();
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
+const { assistant } = useServices();
 
-type Line = { id: number; role: 'user' | 'buddy'; text?: string };
+// A buddy line without text is still waiting for the answer; `error` shows the failure note.
+type Line = { id: number; role: 'user' | 'buddy'; text?: string; error?: boolean };
 const lines = ref<Line[]>([]);
 const draft = ref('');
 let nextId = 1;
@@ -31,12 +33,25 @@ const log = ref<HTMLElement | null>(null);
 const visible = computed(() => props.open || props.dragging || props.progress > 0);
 const style = computed(() => ({ transform: `translate3d(0, ${(props.progress - 1) * 100}%, 0)` }));
 
-function send(text: string) {
+const busy = computed(() => lines.value.some((l) => l.role === 'buddy' && !l.text && !l.error));
+
+function scrollDown() {
+  void nextTick(() => log.value?.scrollTo({ top: log.value.scrollHeight }));
+}
+
+async function send(text: string) {
   const clean = text.trim();
-  if (!clean) return;
+  if (!clean || busy.value) return;
+  const answerId = nextId + 1;
   lines.value.push({ id: nextId++, role: 'user', text: clean }, { id: nextId++, role: 'buddy' });
   draft.value = '';
-  void nextTick(() => log.value?.scrollTo({ top: log.value.scrollHeight }));
+  scrollDown();
+  const result = await assistant.ask(clean, { page: 'buddy', locale: locale.value });
+  const line = lines.value.find((l) => l.id === answerId);
+  if (!line) return;
+  if ('reply' in result) line.text = result.reply.text;
+  else line.error = true;
+  scrollDown();
 }
 
 function onKey(e: KeyboardEvent) {
@@ -81,7 +96,7 @@ onBeforeUnmount(() => {
 
       <ul class="buddy__suggest" :aria-label="t('buddy.suggestions')">
         <li v-for="s in suggestions" :key="s.key">
-          <button type="button" class="buddy__chip" @click="send(t(`buddy.${s.key}`))">
+          <button type="button" class="buddy__chip" @click="void send(t(`buddy.${s.key}`))">
             <q-icon :name="icon(s.icon)" size="20px" aria-hidden="true" />
             <span>{{ t(`buddy.${s.key}`) }}</span>
           </button>
@@ -90,11 +105,13 @@ onBeforeUnmount(() => {
 
       <div v-for="l in lines" :key="l.id" class="buddy__msg" :class="`buddy__msg--${l.role}`">
         <span class="visually-hidden">{{ l.role === 'user' ? t('buddy.you') : t('buddy.name') }}:</span>
-        {{ l.role === 'user' ? l.text : t('buddy.notConnected') }}
+        <template v-if="l.text">{{ l.text }}</template>
+        <template v-else-if="l.error">{{ t('buddy.error') }}</template>
+        <span v-else class="buddy__thinking">{{ t('buddy.thinking') }}</span>
       </div>
     </div>
 
-    <form class="buddy__ask" @submit.prevent="send(draft)">
+    <form class="buddy__ask" @submit.prevent="void send(draft)">
       <label class="visually-hidden" for="buddy-input">{{ t('buddy.inputLabel') }}</label>
       <input
         id="buddy-input"
@@ -105,7 +122,7 @@ onBeforeUnmount(() => {
         enterkeyhint="send"
         :placeholder="t('buddy.placeholder')"
       />
-      <button class="buddy__send" type="submit" :aria-label="t('buddy.send')" :disabled="!draft.trim()">
+      <button class="buddy__send" type="submit" :aria-label="t('buddy.send')" :disabled="!draft.trim() || busy">
         <q-icon :name="icon('send')" size="20px" aria-hidden="true" />
       </button>
     </form>

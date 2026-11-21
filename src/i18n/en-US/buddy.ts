@@ -17,4 +17,6 @@ export default {
   introBody: 'Ask questions about your money in your own words. Pull down from the top of the screen to start.',
   introTry: 'Try it',
   introDismiss: 'Got it',
+  error: 'Sorry, I can\'t reach the server right now. Please try again in a moment.',
+  thinking: 'Thinking…',
 };

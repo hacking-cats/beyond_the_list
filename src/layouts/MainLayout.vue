@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { enabledFeatures } from '../features/registry';
@@ -11,12 +12,15 @@ import BuddyIntro from './buddy/BuddyIntro.vue';
 import { useBuddyPull } from './buddy/useBuddyPull';
 import './buddy/buddy.css';
 
-// One layout for the whole app: header with language switch, greeting and balance, the page,
+// One layout for the whole app: header with language switch, greeting and balance (Overview only), the page,
 // and a bottom tab bar (icons only, each with an accessible name) from the feature registry.
 // Pulling the header down rolls down the finAInce buddy (src/layouts/buddy/).
 const { t } = useI18n();
 const route = useRoute();
 const tabs = enabledFeatures();
+
+// The greeting and balance belong to the Overview tab only; other tabs start with their content.
+const showSummary = computed(() => route.name === 'dashboard');
 
 const buddy = useBuddyPull();
 function closeBuddy() {
@@ -40,7 +44,7 @@ function closeBuddy() {
 
     <BuddyIntro @try="buddy.setOpen(true)" />
 
-    <section class="summary">
+    <section v-if="showSummary" class="summary">
       <p class="summary__hello">{{ t('common.hi') }} {{ demoPersonName }} 👋</p>
       <p class="summary__balance amount">{{ displayChf(totalBalanceRappen) }}</p>
       <p class="summary__sub">
