@@ -9,7 +9,6 @@
 ## What the user can do
 - Pick a goal (house, car, holiday, other), set amount, already saved and months; see what to save per month.
 - Pick savings ideas from their spending habits (never essentials); the plan shows the monthly amount found, months to the goal at that pace, and what is still missing.
-- "Your future": AHV coverage, pillar 3a, individual taxation from 2032.
 
 ## How to test
 `npm test` (goalPlan known answers). Visual: `npm run dev`, open `#/savings`.

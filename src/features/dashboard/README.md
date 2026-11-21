@@ -1,14 +1,13 @@
-# Feature: Dashboard
+# Feature: Dashboard (tab "Overview")
 
 - **Route:** `/dashboard`
 - **Status:** fake (demo data from `src/shared/demo-data.ts`)
 - **Services used (via useServices()):** none yet; planned: transactions, storage, assistant, notifier
-- **Engines used:** insights (`categoryShares`), savings (`setAsidePerMonth`)
+- **Engines used:** insights (`categoryShares`)
 - **Decisions:** [0002](../../../docs/architecture/decisions/0002-klar-v2-first-app.md)
 
 ## What the user can do
-- See the balance and where the money goes: one bubble per category (area = monthly spend), petrol for essentials, grapefruit for spending that could be cut. Filter to "only what you could cut", tap a bubble for amount, share and a tip; full ranked list below (table view for accessibility).
-- "Coming up": set aside money for the final tax bill, the health insurance switch deadline, premium reduction.
+- See where the money goes: one bubble per category (area = monthly spend), petrol for essentials, grapefruit for spending that could be cut. Filter to "only what you could cut", tap a bubble for amount, share and a tip; full ranked list below (table view for accessibility).
 
 ## Public API
 `DashboardPage.vue` (registered in `features/registry.ts`), `BubbleChart.vue`, `packCircles(values, width)`.

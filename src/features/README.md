@@ -4,9 +4,11 @@ One folder per page. Each page declares itself in the feature registry (`registr
 
 | Folder | Page |
 |---|---|
-| `dashboard/` | Dashboard |
-| `movements/` | Movements |
-| `chat/` | AI chat |
+| `dashboard/` | Dashboard (tab "Overview") |
+| `movements/` | Movements (tab "Explained") |
+| `chat/` | AI chat (disabled) |
 | `savings/` | Savings |
-| `invest/` | Investment ideas |
-| `data-generator/` | Dummy data generator |
+| `invest/` | Investment ideas (disabled) |
+| `data-generator/` | Dummy data generator (disabled) |
+| `coming-up/` | Coming up: bills and deadlines ahead |
+| `my-future/` | My future: pension and taxes later in life |

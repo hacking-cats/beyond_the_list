@@ -15,7 +15,6 @@ const savedFrancs = ref(Math.round(demoSavedRappen / 100));
 const months = ref(24);
 const plan = ref(new Set<string>());
 const started = ref(false);
-const showAhv = ref(false);
 
 function pickGoal(key: GoalKey) {
   goalKey.value = key;
@@ -42,8 +41,8 @@ const chf0 = (r: number) => formatChf(r, { decimals: 0 });
 </script>
 
 <template>
-  <q-page class="page">
-    <h1 class="page-title">{{ t('features.savings.goalH') }}</h1>
+  <div>
+    <p class="card__title">{{ t('features.savings.goalH') }}</p>
     <div class="chips" style="margin-top: 0" role="group" :aria-label="t('features.savings.goalH')">
       <button v-for="k in goalKeys" :key="k" class="chip" :aria-pressed="k === goalKey" @click="pickGoal(k)">
         {{ t(`features.savings.goals.${k}`) }}
@@ -113,35 +112,8 @@ const chf0 = (r: number) => formatChf(r, { decimals: 0 });
         <p v-else>{{ t('features.savings.planNone') }}</p>
       </div>
     </div>
-    <button class="btn btn--primary btn--block" @click="started = true">{{ t('features.savings.startBtn') }}</button>
+    <button class="btn btn--primary btn--block" style="margin-top: var(--sp-lg)" @click="started = true">{{ t('features.savings.startBtn') }}</button>
     <p class="done" role="status">{{ started ? t('features.savings.started') : '' }}</p>
 
-    <div class="section" style="margin-top: var(--sp-xl)">
-      <p class="section__title">{{ t('features.savings.futureH') }}</p>
-      <div class="card card--plain">
-        <div class="card__body">
-          <p class="card__title">{{ t('features.savings.ahvH') }}</p>
-          <p>{{ t('features.savings.ahvP') }}</p>
-          <button v-if="!showAhv" class="btn btn--secondary" @click="showAhv = true">
-            {{ t('features.savings.ahvBtn') }}
-          </button>
-          <p v-else>{{ t('features.savings.ahvMore') }}</p>
-        </div>
-      </div>
-      <div class="tone tone--attention">
-        <DsIcon name="attention" />
-        <div class="tone__content">
-          <p class="tone__title">{{ t('features.savings.p3H') }}</p>
-          <p class="tone__body">{{ t('features.savings.p3P') }}</p>
-        </div>
-      </div>
-      <div class="worth">
-        <DsIcon name="info" />
-        <div>
-          <p class="worth__title">{{ t('features.savings.indH') }}</p>
-          <p>{{ t('features.savings.indP') }}</p>
-        </div>
-      </div>
-    </div>
-  </q-page>
+  </div>
 </template>

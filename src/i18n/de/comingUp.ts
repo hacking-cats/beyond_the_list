@@ -1,0 +1,16 @@
+export default {
+  title: 'Demnächst',
+  taxH: 'Definitive Steuerrechnung 2026',
+  taxP: 'Basierend auf dem Vorjahr erwarten wir ungefähr diesen Betrag, wenn die definitive Rechnung kommt (meist im Frühling).',
+  taxL: 'Erwartete Rechnung',
+  monthsL: 'Monate zum Sparen',
+  perMonth: 'Pro Monat zurücklegen',
+  saveBtn: 'Spartopf erstellen',
+  saved: '✓ Spartopf erstellt (Prototyp)',
+  kkH: 'Krankenkasse: Frist 30. November',
+  kkP: 'Wer die Grundversicherung fürs nächste Jahr wechseln will, muss bis 30. November kündigen. Die Prämien ändern jedes Jahr – vergleichen lohnt sich.',
+  kkBtn: 'Was ist die Franchise?',
+  kkMore: 'Die Franchise ist der Betrag, den du pro Jahr selbst zahlst, bevor die Versicherung zahlt. Höhere Franchise = tiefere Prämie, aber mehr Risiko bei Krankheit.',
+  prH: 'Vielleicht bekommst du Prämienverbilligung',
+  prP: 'Haushalte mit tieferem Einkommen bekommen Hilfe bei den Prämien. Jeder Kanton hat eigene Regeln und Formulare.',
+};

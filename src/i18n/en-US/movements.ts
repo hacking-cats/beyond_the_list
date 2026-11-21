@@ -1,5 +1,5 @@
 export default {
-  title: 'Movements',
+  title: 'Explained',
   hint: 'Tap any payment to see what it means in plain language.',
   newToYou: 'New to you?',
   lines: {

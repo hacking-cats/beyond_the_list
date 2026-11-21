@@ -5,8 +5,8 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <q-page class="page">
-    <h1 class="page-title">{{ t('features.chat.title') }}</h1>
+  <div>
+    <p class="card__title">{{ t('features.chat.title') }}</p>
     <p class="hint">{{ t('common.comingSoon') }}</p>
-  </q-page>
+  </div>
 </template>

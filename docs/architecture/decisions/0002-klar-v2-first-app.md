@@ -7,11 +7,15 @@
 A single-file HTML prototype ("klar", V1) was built and styled with the team design system. The repo had no app yet; decision 0001 fixes the stack (Vue 3 + Quasar v2, hash router, GitHub Pages). All contracts are still `draft`, and CLAUDE.md says not to implement a draft contract without asking.
 
 ## Decision
-- The Quasar app is created in `src/` and klar's screens are mapped onto the planned pages:
-  - **Dashboard**: balance, spending overview (bubble chart + ranked list), and "Coming up" (tax set-aside, health insurance deadline, premium reduction).
-  - **Movements**: statement lines that explain themselves on tap.
-  - **Savings**: savings goal, ideas from spending habits, the resulting plan, and "Your future" (AHV, pillar 3a, individual taxation).
-  - **AI chat, Investment ideas, Data generator**: registered but `enabled: false` (placeholder pages, no route, no menu entry).
+- The Quasar app is created in `src/` and looks and behaves exactly like klar V1: header with EN/DE, greeting and balance, then **five tabs generated from the feature registry**, in klar's order:
+  1. **Explained** (`movements`): statement lines that explain themselves on tap.
+  2. **Coming up** (`coming-up`, new): tax set-aside, health insurance deadline, premium reduction.
+  3. **My future** (`my-future`, new): AHV, pillar 3a, individual taxation.
+  4. **Savings** (`savings`): savings goal, ideas from spending habits, the resulting plan.
+  5. **Overview** (`dashboard`): spending bubbles, ranked list.
+  - **AI chat, Investment ideas, Data generator**: registered but `enabled: false` (placeholder pages, no route, no tab).
+- **Tab bar instead of the planned hamburger drawer** (AGENTS.md "header with hamburger, drawer"), to match klar. The tabs come from the registry, so a drawer can replace them later without touching the pages.
+- **Money is shown as in klar and the design system** (`1'234.50 CHF`, minus sign U+2212). This differs from AGENTS.md (`CHF 1'234.50`); `src/shared/money.ts` is the only place to change if the team keeps the AGENTS.md format.
 - **No contract is implemented.** Made-up data lives in `src/shared/demo-data.ts` until the `TransactionSource` fake adapter exists; pages read it directly instead of through `useServices()`.
 - Numbers come from pure, tested functions: `engines/savings/goalPlan.ts`, `engines/insights/categoryShares.ts`, `shared/money.ts`.
 - The bubble chart uses its own small packing function (`features/dashboard/packCircles.ts`); no chart library was added (AGENTS.md: ask first).

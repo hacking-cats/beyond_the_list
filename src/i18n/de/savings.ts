@@ -1,5 +1,5 @@
 export default {
-  title: 'Sparen',
+  title: 'Sparziel',
   goalH: 'Wofür sparst du?',
   goals: { house: 'Haus', car: 'Auto', holiday: 'Ferien', other: 'Etwas anderes' },
   targetL: 'Zielbetrag',
@@ -27,13 +27,4 @@ export default {
     coffee: { name: 'Kaffee zum Mitnehmen', detail: 'Etwa 12 Kaffees pro Monat', tip: 'An den meisten Tagen die Thermosflasche von zu Hause, einmal pro Woche das Café.', wit: '' },
     stream: { name: 'Streaming-Abos', detail: '3 Dienste gleichzeitig', tip: 'Eines behalten und alle paar Monate wechseln. Die Serien laufen nicht davon.', wit: '' },
   },
-  futureH: 'Deine Zukunft',
-  ahvH: 'AHV: versichert ✓',
-  ahvP: "Du hast keinen Lohn, bist aber dieses Jahr über deinen Partner versichert, weil seine Beiträge über CHF 1'060 liegen. Jahre mit Kindern unter 16 geben zudem Erziehungsgutschriften für deine Rente.",
-  ahvBtn: 'Meinen AHV-Auszug bestellen',
-  ahvMore: 'Bei der Ausgleichskasse kannst du gratis einen Auszug deines individuellen Kontos (IK-Auszug) bestellen. Er zeigt, ob ein Jahr fehlt. Lücken kann man meist nur 5 Jahre zurück nachzahlen.',
-  p3H: 'Säule 3a: nicht möglich',
-  p3P: 'In die Säule 3a kann nur einzahlen, wer selbst Erwerbseinkommen hat. Darum haben Eltern, die zu Hause bleiben, im Alter oft weniger eigenes Geld.',
-  indH: 'Bald: jede Person macht ihre eigene Steuererklärung',
-  indP: 'Im März 2026 wurde die Individualbesteuerung angenommen. Sie soll spätestens 2032 starten. Dann hast du eine eigene Steuererklärung – es lohnt sich, die Finanzen jetzt zu verstehen.',
 };

@@ -3,16 +3,14 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { categoryShares } from '../../engines/insights/categoryShares';
-import { setAsidePerMonth } from '../../engines/savings/goalPlan';
-import { demoAccount, demoSpending, demoTaxBillRappen } from '../../shared/demo-data';
-import { chfToRappen, formatChf } from '../../shared/money';
+import { demoSpending } from '../../shared/demo-data';
+import { formatChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import BubbleChart from './BubbleChart.vue';
 
 const { t } = useI18n();
 const router = useRouter();
 
-// Overview
 const onlyFlexible = ref(false);
 const selected = ref<string | null>(null);
 const overview = computed(() => categoryShares(demoSpending));
@@ -24,24 +22,11 @@ function pick(key: string) {
   selected.value = selected.value === key ? null : key;
 }
 const cat = (key: string, field: 'name' | 'tip') => t(`features.dashboard.cats.${key}.${field}`);
-
-// Coming up
-const taxFrancs = ref(Math.round(demoTaxBillRappen / 100));
-const months = ref(4);
-const perMonth = computed(() => setAsidePerMonth(chfToRappen(taxFrancs.value), months.value));
-const potCreated = ref(false);
-const showFranchise = ref(false);
 </script>
 
 <template>
-  <q-page class="page">
-    <section class="summary">
-      <p class="summary__hello">{{ t('common.hello') }}</p>
-      <p class="summary__balance amount">{{ formatChf(demoAccount.balanceRappen) }}</p>
-      <p class="summary__sub">{{ t('common.jointAccount') }}</p>
-    </section>
-
-    <h1 class="page-title">{{ t('features.dashboard.overviewH') }}</h1>
+  <div>
+    <p class="card__title">{{ t('features.dashboard.overviewH') }}</p>
     <p class="hint">{{ t('features.dashboard.overviewP') }}</p>
 
     <div class="stats">
@@ -113,53 +98,5 @@ const showFranchise = ref(false);
       </ul>
     </div>
 
-    <div class="section" style="margin-top: var(--sp-xl)">
-      <p class="section__title">{{ t('features.dashboard.comingUpH') }}</p>
-
-      <div class="tone tone--attention">
-        <DsIcon name="attention" />
-        <div class="tone__content">
-          <p class="tone__title">{{ t('features.dashboard.taxH') }}</p>
-          <p class="tone__body">{{ t('features.dashboard.taxP') }}</p>
-          <label class="field">
-            {{ t('features.dashboard.taxL') }}:
-            <b class="amount">{{ formatChf(chfToRappen(taxFrancs), { decimals: 0 }) }}</b>
-            <input v-model.number="taxFrancs" type="range" min="500" max="8000" step="100" />
-          </label>
-          <label class="field">
-            {{ t('features.dashboard.monthsL') }}: <b>{{ months }}</b>
-            <input v-model.number="months" type="range" min="1" max="12" />
-          </label>
-          <div class="result">
-            <span>{{ t('features.dashboard.perMonth') }}</span>
-            <span class="result__amount">{{ formatChf(perMonth, { decimals: 0 }) }}</span>
-          </div>
-          <button class="btn btn--primary btn--block" @click="potCreated = true">
-            {{ t('features.dashboard.saveBtn') }}
-          </button>
-          <p class="done" role="status">{{ potCreated ? t('features.dashboard.saved') : '' }}</p>
-        </div>
-      </div>
-
-      <div class="worth">
-        <DsIcon name="info" />
-        <div>
-          <p class="worth__title">{{ t('features.dashboard.kkH') }}</p>
-          <p>{{ t('features.dashboard.kkP') }}</p>
-          <button v-if="!showFranchise" class="btn btn--secondary" @click="showFranchise = true">
-            {{ t('features.dashboard.kkBtn') }}
-          </button>
-          <p v-else>{{ t('features.dashboard.kkMore') }}</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <DsIcon name="bulb" />
-        <div class="card__body">
-          <p class="card__title">{{ t('features.dashboard.prH') }}</p>
-          <p>{{ t('features.dashboard.prP') }}</p>
-        </div>
-      </div>
-    </div>
-  </q-page>
+  </div>
 </template>

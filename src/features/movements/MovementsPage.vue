@@ -16,8 +16,7 @@ function toggle(key: string) {
 </script>
 
 <template>
-  <q-page class="page">
-    <h1 class="page-title">{{ t('features.movements.title') }}</h1>
+  <div>
     <p class="hint">{{ t('features.movements.hint') }}</p>
     <ul class="statement statement--flush">
       <li v-for="line in demoLines" :key="line.key">
@@ -39,5 +38,5 @@ function toggle(key: string) {
         </div>
       </li>
     </ul>
-  </q-page>
+  </div>
 </template>

@@ -1,4 +1,4 @@
-# Feature: Movements
+# Feature: Movements (tab "Explained")
 
 - **Route:** `/movements`
 - **Status:** fake (demo data from `src/shared/demo-data.ts`)

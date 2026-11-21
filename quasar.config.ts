@@ -9,9 +9,9 @@ export default defineConfig((ctx) => {
 
     css: ['app.css'],
 
-    // Material icon font for the drawer (FeatureEntry.icon is a Material icon name).
-    // No web font for text: the design system falls back to the system font offline.
-    extras: ['material-icons'],
+    // No icon or web fonts: the design system has its own SVG icons and falls back to the
+    // system font offline. Add 'material-icons' here when a page uses QIcon.
+    extras: [],
 
     build: {
       target: {},

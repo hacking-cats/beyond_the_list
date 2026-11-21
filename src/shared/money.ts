@@ -1,6 +1,8 @@
 /**
- * Money helpers. Money is always an integer number of Rappen (1 CHF = 100 Rappen),
- * shown Swiss style: `CHF 1'234.50`, negative `-CHF 1'234.50` (see AGENTS.md).
+ * Money helpers. Money is always an integer number of Rappen (1 CHF = 100 Rappen).
+ * Shown as in the klar prototype and the design system (patterns/data-display.md):
+ * `1'234.50 CHF`, negative with the minus sign U+2212: `−1'234.50 CHF`.
+ * NOTE: AGENTS.md currently says `CHF 1'234.50`; see decision 0002.
  */
 
 export type Rappen = number;
@@ -34,8 +36,8 @@ export function formatChf(amountRappen: Rappen, options: FormatOptions = {}): st
     const rappen = String(abs % 100).padStart(2, '0');
     body = `${groupThousands(String(francs))}.${rappen}`;
   }
-  const prefix = amountRappen < 0 ? '-' : options.sign && amountRappen > 0 ? '+' : '';
-  return `${prefix}CHF ${body}`;
+  const prefix = amountRappen < 0 ? '\u2212' : options.sign && amountRappen > 0 ? '+' : '';
+  return `${prefix}${body} CHF`;
 }
 
 /** Whole francs to Rappen, for amounts the user picks with a slider. */

@@ -6,6 +6,8 @@ import savings from './savings';
 import chat from './chat';
 import invest from './invest';
 import dataGenerator from './dataGenerator';
+import comingUp from './comingUp';
+import myFuture from './myFuture';
 
 export default {
   common,
@@ -16,5 +18,7 @@ export default {
     chat,
     invest,
     dataGenerator,
+    comingUp,
+    myFuture,
   },
 };
