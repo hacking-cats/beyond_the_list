@@ -1,4 +1,4 @@
-/* PostFinAInce buddy: pull-down hint on the header, first-visit banner and the pale yellow chat sheet.
+/* finAInce buddy: pull-down hint on the header, first-visit banner and the pale yellow chat sheet.
    Only design-system tokens (brand yellow, petrol, tint.attention). Animations move transform and opacity only, so older Android phones stay smooth.
    prefers-reduced-motion switches every animation off (tokens.css and the rule at the end). */
 

@@ -1,4 +1,4 @@
-# layouts/buddy: PostFinAInce buddy
+# layouts/buddy: finAInce buddy
 
 - **Purpose:** a pale yellow AI chat sheet (brand yellow and petrol) that rolls down from the top when the user pulls the header down (or taps the sparkle button), plus a "listening" glow on the header as a hint and a first-visit banner.
 - **Contract used / implemented:** none yet. It should call `useServices().assistant.ask()` ([assistant.md](../../contracts/assistant.md)), but that contract is still `draft` and has no implementation or `useServices()`. Until then a sent message gets a fixed "not connected yet" note (i18n `buddy.notConnected`).

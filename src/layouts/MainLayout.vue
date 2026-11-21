@@ -13,7 +13,7 @@ import './buddy/buddy.css';
 
 // One layout for the whole app: header with language switch, greeting and balance, the page,
 // and a bottom tab bar (icons only, each with an accessible name) from the feature registry.
-// Pulling the header down rolls down the PostFinAInce buddy (src/layouts/buddy/).
+// Pulling the header down rolls down the finAInce buddy (src/layouts/buddy/).
 const { t, locale } = useI18n();
 const route = useRoute();
 const tabs = enabledFeatures();

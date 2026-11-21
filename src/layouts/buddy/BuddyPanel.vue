@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { icon } from '../../shared/ui/icons';
 import type { PanEvent } from './useBuddyPull';
 
-// The PostFinAInce buddy: a pale yellow chat sheet that rolls down from the top of the app.
+// The finAInce buddy: a pale yellow chat sheet that rolls down from the top of the app.
 // It follows the finger while the header is pulled (progress), and settles open or shut.
 // Placeholder only: the Assistant contract (src/contracts/assistant.md) is still a draft with no
 // implementation and no useServices() yet, so a sent message gets a "not connected yet" note.
