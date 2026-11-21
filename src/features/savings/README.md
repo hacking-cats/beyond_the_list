@@ -9,7 +9,7 @@
 ## What the user can do
 - Pick a goal by icon (house, car, holiday, emergency fund, education, bucket list, children) or add a project of your own with a name and an icon or photo; set amount, already saved and months; see what to save per month. This part (`SavingsGoal.vue`) is shown on the Coming up tab; both tabs share the goal through `goalState` in `projects.ts`.
 - Pick savings ideas from their spending habits (never essentials); the plan shows the monthly amount found, months to the goal at that pace, and what is still missing.
-- Cap the children's game and in-app purchases (App Store, Google Play, PlayStation, Xbox, ...): a toggle with a monthly maximum on a slider (starts at the recommended budget from `content/alternatives.json`); switching it on adds the saving (`savingWithCap`) to the plan and shows a confirmation. Prototype: no real card limit is set.
+- Cap the children's game and in-app purchases (App Store, Google Play, PlayStation, Xbox, ...): a toggle with a monthly maximum on a slider (starts at the recommended budget from `content/alternatives.json`); switching it on adds the saving (`savingWithCap`) to the plan and shows a confirmation. After OK the card leaves the list (the next idea moves up) and a one-line status with a Change button stays. Prototype: no real card limit is set.
 
 ## How to test
 `npm test` (goalPlan known answers). Visual: `npm run dev`, open `#/savings`.
