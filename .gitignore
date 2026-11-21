@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.quasar/
+.env*
+!.env.example
+# Real challenge data never goes into the repo
+*.csv
+!tests/fixtures/**/*.csv
