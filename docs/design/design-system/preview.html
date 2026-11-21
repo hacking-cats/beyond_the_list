@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Beyond the List · components</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Beyond the List: design tokens for the single-file app. Same values as tokens/*.json. */
+:root {
+  --yellow: #FFCC00;  --yellow-dark: #E6B800;   /* primary button background only */
+  --petrol: #005C66;  --petrol-dark: #00474F;   /* links, secondary buttons, chips, marker */
+  --grapefruit: #FF5A36;                         /* action border and icon only, never text */
+  --light-blue: #7FD1E8;                         /* decorative only */
+
+  --surface: #FFFFFF; --surface-subtle: #F5F7F8; --surface-inverse: #0E1A1C;
+  --tint-attention: #FFF6DB; --tint-action: #FFEDE8; --tint-info: #E8F6FB;
+
+  --text: #10201F; --text-secondary: #4A5A5C; --text-muted: #616F70;
+  --text-inverse: #FFFFFF; --text-disabled: #8A9798;
+  --border: #D8DEDF; --border-strong: #616F70;
+
+  --success-text: #1B7F4B; --warning-text: #946219; --error-text: #C0392B;
+  --info-text: #266BC7; --urgent-text: #BC4227;
+
+  --font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fs-title: 22px; --fs-subtitle: 18px; --fs-body: 16px; --fs-small: 14px;
+  --fs-caption: 12px; --fs-wit: 15px; --fs-display: 32px;
+
+  --sp-xs: 4px; --sp-sm: 8px; --sp-md: 12px; --sp-lg: 16px; --sp-xl: 24px; --sp-xxl: 32px;
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-pill: 999px;
+  --shadow-sheet: 0 -4px 24px rgba(0, 0, 0, 0.12);
+
+  --t-fast: 120ms; --t-normal: 200ms; --t-slow: 300ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --touch: 44px; --content-max: 480px;
+}
+.amount { font-variant-numeric: tabular-nums; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* Beyond the List: component classes. Requires tokens.css.
+   Markup for every component: see preview.html. */
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0; font-family: var(--font); font-size: var(--fs-body); line-height: 1.5;
+  color: var(--text); background: var(--surface-subtle); -webkit-font-smoothing: antialiased;
+}
+.app { max-width: var(--content-max); margin: 0 auto; min-height: 100vh; background: var(--surface);
+  padding-bottom: env(safe-area-inset-bottom); }
+:focus-visible { outline: 2px solid var(--petrol); outline-offset: 2px; }
+.icon { width: 24px; height: 24px; flex: none; stroke: currentColor; fill: none;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon--sm { width: 20px; height: 20px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---- Header ------------------------------------------------------------- */
+.app-header { position: sticky; top: 0; z-index: 10; background: var(--surface);
+  border-bottom: 1px solid var(--border); display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--sp-xs) var(--sp-sm);
+  padding: calc(var(--sp-md) + env(safe-area-inset-top)) var(--sp-lg) var(--sp-md); }
+.app-header__title { flex: 1; margin: 0; font-size: var(--fs-title); font-weight: 600; }
+.app-header__date { order: 3; width: 100%; display: flex; align-items: center;
+  justify-content: space-between; gap: var(--sp-sm); white-space: nowrap; font-size: var(--fs-small); color: var(--text-secondary); }
+.chip-proto { font-size: var(--fs-caption); font-weight: 600; color: var(--text-secondary);
+  background: var(--surface-subtle); border: 1px solid var(--border); border-radius: var(--r-pill);
+  padding: 2px 10px; }
+
+/* ---- Statement line -------------------------------------------------------- */
+.statement { list-style: none; margin: 0; padding: 0; }
+.day { margin: 0; padding: var(--sp-xl) var(--sp-lg) var(--sp-sm); font-size: var(--fs-caption);
+  font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+.line { display: flex; align-items: center; gap: var(--sp-md); width: 100%; min-height: 56px;
+  padding: var(--sp-sm) var(--sp-lg); background: none; border: 0; border-bottom: 1px solid var(--border);
+  font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.line:active { background: var(--surface-subtle); }
+.line__main { flex: 1; min-width: 0; }
+.line__merchant, .line__original { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.line__original { font-size: var(--fs-caption); color: var(--text-muted); }
+.line__flag { display: inline-flex; color: var(--petrol); }
+.line__flag--attention { color: var(--warning-text); }
+.line__flag--action { color: var(--grapefruit); }
+.line__amount { white-space: nowrap; font-weight: 600; font-variant-numeric: tabular-nums; }
+.line__amount--in { color: var(--success-text); }
+
+/* ---- Answer sheet ---------------------------------------------------------- */
+.backdrop { position: fixed; inset: 0; z-index: 20; background: rgba(14, 26, 28, 0.45);
+  opacity: 0; pointer-events: none; transition: opacity var(--t-normal) var(--ease); }
+.backdrop.is-open { opacity: 1; pointer-events: auto; }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; margin: 0 auto;
+  max-width: var(--content-max); max-height: 85vh; overflow-y: auto; background: var(--surface);
+  border-radius: var(--r-lg) var(--r-lg) 0 0; box-shadow: var(--shadow-sheet);
+  padding: var(--sp-sm) var(--sp-lg) calc(var(--sp-xl) + env(safe-area-inset-bottom));
+  transform: translateY(100%); transition: transform var(--t-normal) var(--ease); }
+.sheet.is-open { transform: none; }
+.sheet__handle { width: 36px; height: 4px; margin: 0 auto var(--sp-sm); border-radius: var(--r-pill);
+  background: var(--border); }
+.sheet__close { position: absolute; top: var(--sp-sm); right: var(--sp-sm); width: var(--touch);
+  height: var(--touch); display: grid; place-items: center; border: 0; border-radius: var(--r-pill);
+  background: none; color: var(--text-secondary); cursor: pointer; }
+.sheet__head { padding-right: var(--touch); margin-bottom: var(--sp-lg); }
+.sheet__merchant { margin: 0; font-size: var(--fs-subtitle); font-weight: 600; }
+.sheet__amount { margin: var(--sp-xs) 0; font-size: var(--fs-title); font-weight: 600;
+  font-variant-numeric: tabular-nums; }
+.sheet__meta { font-size: var(--fs-caption); color: var(--text-muted); }
+.section { margin-top: var(--sp-lg); }
+.section__title { margin: 0 0 var(--sp-xs); font-size: var(--fs-caption); font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+.section p { margin: 0 0 var(--sp-sm); }
+.worth { display: flex; gap: var(--sp-md); margin-top: var(--sp-lg); padding: var(--sp-md);
+  background: var(--tint-info); border-radius: var(--r-md); }
+.worth > .icon { color: var(--info-text); }
+.worth__title { margin: 0 0 2px; font-size: var(--fs-small); font-weight: 600; color: var(--info-text); }
+.worth p { margin: 0; }
+.wit { margin: var(--sp-lg) 0 0; font-size: var(--fs-wit); font-style: italic; color: var(--text-secondary); }
+
+/* ---- Tone block -------------------------------------------------------------- */
+.tone { display: flex; gap: var(--sp-md); margin-bottom: var(--sp-lg); padding: var(--sp-md);
+  border-radius: var(--r-md); }
+.tone__content { flex: 1; min-width: 0; }
+.tone__title { margin: 0 0 var(--sp-xs); font-weight: 600; }
+.tone__body { margin: 0; }
+.tone--attention { background: var(--tint-attention); }
+.tone--attention > .icon, .tone--attention .tone__title { color: var(--warning-text); }
+.tone--action { background: var(--tint-action); border: 2px solid var(--grapefruit); }
+.tone--action > .icon { color: var(--grapefruit); }
+.tone--action .tone__title { color: var(--urgent-text); }
+.tone__actions { display: flex; flex-wrap: wrap; gap: var(--sp-sm); margin-top: var(--sp-md); }
+.tone__actions .btn { flex: 1 1 140px; }
+.tone__done { margin: var(--sp-md) 0 0; font-weight: 600; }
+
+/* ---- Buttons ----------------------------------------------------------------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-sm);
+  min-height: 48px; padding: 0 var(--sp-lg); border: 1px solid transparent; border-radius: var(--r-md);
+  font: inherit; font-weight: 600; cursor: pointer; }
+.btn--primary { background: var(--yellow); color: var(--text); }
+.btn--primary:active { background: var(--yellow-dark); }
+.btn--secondary { background: var(--surface); color: var(--petrol); border-color: var(--petrol); }
+.btn--secondary:active { background: var(--surface-subtle); }
+.btn--ghost { min-height: var(--touch); padding: 0 var(--sp-sm); background: none; color: var(--petrol); }
+.btn:disabled { background: var(--surface-subtle); border-color: var(--border); color: var(--text-disabled); cursor: default; }
+
+/* ---- Question chips ------------------------------------------------------------ */
+.chips { display: flex; flex-wrap: wrap; gap: var(--sp-sm); margin-top: var(--sp-xl); }
+.chip { min-height: var(--touch); padding: var(--sp-sm) var(--sp-md); border: 1px solid var(--petrol);
+  border-radius: var(--r-pill); background: var(--surface); color: var(--petrol); font: inherit;
+  font-size: var(--fs-small); font-weight: 500; text-align: left; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--petrol); color: var(--text-inverse); }
+.reply { margin: var(--sp-sm) 0 var(--sp-md); padding: var(--sp-md); background: var(--surface-subtle);
+  border-radius: var(--r-md); }
+.reply__q { margin: 0 0 var(--sp-xs); font-weight: 600; }
+.reply p { margin: 0; }
+.reply--loading { color: var(--text-muted); }
+.ask { margin-top: var(--sp-lg); }
+.ask__label { display: block; margin-bottom: var(--sp-xs); font-size: var(--fs-small); color: var(--text-secondary); }
+.ask__row { display: flex; gap: var(--sp-sm); }
+.ask__input { flex: 1; min-width: 0; min-height: var(--touch); padding: 0 var(--sp-md);
+  border: 1px solid var(--border-strong); border-radius: var(--r-md); font: inherit; color: var(--text); }
+.ask__send { width: var(--touch); height: var(--touch); display: grid; place-items: center; border: 0;
+  border-radius: var(--r-md); background: var(--petrol); color: var(--text-inverse); cursor: pointer; }
+
+/* ---- Time jump ------------------------------------------------------------------ */
+.jump { position: fixed; inset: 0; z-index: 50; display: grid; place-content: center; gap: var(--sp-sm);
+  padding: var(--sp-xl); text-align: center; background: var(--petrol); color: var(--text-inverse);
+  opacity: 0; pointer-events: none; transition: opacity var(--t-slow) var(--ease); }
+.jump.is-on { opacity: 1; pointer-events: auto; }
+.jump__date { margin: 0; font-size: var(--fs-display); font-weight: 700; line-height: 1.1; }
+.jump__sub { margin: 0; font-size: var(--fs-subtitle); }
+
+
+/* preview only: show overlays inline */
+.label { max-width: var(--content-max); margin: var(--sp-xxl) auto var(--sp-sm); padding: 0 var(--sp-lg);
+  font-size: var(--fs-caption); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); }
+.app { min-height: auto; }
+.sheet--static { position: relative; transform: none; max-height: none; box-shadow: var(--shadow-sheet); }
+.jump--static { position: relative; inset: auto; min-height: 320px; max-width: var(--content-max); margin: 0 auto var(--sp-xxl); }
+
+</style></head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.1V16h5v-.1c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-attention" viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19L12 3.5z"/><path d="M12 10v4.5M12 17.2v.1"/></symbol>
+  <symbol id="i-action" viewBox="0 0 24 24"><path d="M8 2.5h8L21.5 8v8L16 21.5H8L2.5 16V8z"/><path d="M12 7.5v5.5M12 16.2v.1"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.1"/></symbol>
+  <symbol id="i-jump" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M13 8.5l3.5 3.5-3.5 3.5"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-6 16-2.5-6.5z"/><path d="M11.5 13.5 20 4"/></symbol>
+</svg>
+
+<div class="app">
+  <header class="app-header">
+    <h1 class="app-header__title">Statement</h1>
+    <span class="chip-proto">Prototype · demo data</span>
+    <div class="app-header__date">Today: 23 September 2025
+      <button class="btn btn--ghost" type="button"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-jump"/></svg> Jump ahead</button></div>
+  </header>
+
+  <h2 class="day">Tuesday, 23 September 2025</h2>
+  <ul class="statement">
+    <li><button class="line" type="button"><span class="line__main"><span class="line__merchant">Credit card</span><span class="line__original">Kreditkarten-Zahlung 2025-09-23</span></span><span class="line__flag"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-bulb"/></svg><span class="visually-hidden">Worth a look</span></span><span class="line__amount">−10'018.53</span></button></li>
+    <li><button class="line" type="button"><span class="line__main"><span class="line__merchant">Employer AG</span><span class="line__original">Salärzahlung Employer AG</span></span><span class="line__flag"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-bulb"/></svg><span class="visually-hidden">Worth a look</span></span><span class="line__amount line__amount--in">+7'464.00</span></button></li>
+  </ul>
+  <h2 class="day">Thursday, 18 September 2025</h2>
+  <ul class="statement">
+    <li><button class="line" type="button"><span class="line__main"><span class="line__merchant">Swiss Intl. Airlines</span><span class="line__original">Swiss Intl. Airlines 2025-09-18</span></span><span class="line__flag line__flag--action"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-action"/></svg><span class="visually-hidden">Action needed</span></span><span class="line__amount">−1'766.50</span></button></li>
+    <li><button class="line" type="button"><span class="line__main"><span class="line__merchant">Swiss Intl. Airlines</span><span class="line__original">Swiss Intl. Airlines 2025-09-18 #5</span></span><span class="line__flag line__flag--attention"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-attention"/></svg><span class="visually-hidden">Worth a check</span></span><span class="line__amount">−98.00</span></button></li>
+    <li><button class="line" type="button"><span class="line__main"><span class="line__merchant">Paypal</span><span class="line__original">Paypal 2025-09-18</span></span><span class="line__amount">−67.00</span></button></li>
+  </ul>
+</div>
+
+<p class="label">Answer sheet, normal tone (shown inline here; in the app it slides up from the bottom)</p>
+<section class="sheet sheet--static is-open" role="dialog" aria-label="Credit card, 10'018.53 CHF">
+  <div class="sheet__handle"></div>
+  <button class="sheet__close" type="button" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+  <div class="sheet__head"><p class="sheet__merchant">Credit card</p><p class="sheet__amount">−10'018.53 CHF</p><span class="sheet__meta">23 September 2025 · Credit card payment</span></div>
+  <div class="section"><h3 class="section__title">What it is</h3><p>Kreditkarten-Zahlung: paying off your credit card. This one line pays for everything you bought with the card between 24 August and 23 September.</p></div>
+  <div class="section"><h3 class="section__title">Your picture</h3><p>Behind it: 28 purchases and 5 refunds, 10'205.97 CHF net. The biggest: Swiss Intl. Airlines 7'458.00 CHF (8 charges) and Apple Online Store 2'273.00 CHF (6 charges). It is the largest card bill so far this year.</p></div>
+  <div class="worth"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><div><p class="worth__title">Worth knowing</p><p>A card bill feels like one payment, but it is many decisions made weeks earlier. Paying the full amount each month avoids card interest, which is usually much higher than on a normal loan.</p></div></div>
+  <p class="wit">Your salary and your card bill met on the same day, 23 September. The bill was 2'554.53 CHF bigger.</p>
+  <div class="chips">
+    <button class="chip" type="button" aria-pressed="true">What did I buy with the card?</button>
+    <button class="chip" type="button" aria-pressed="false">Why is the bill different from my card purchases?</button>
+    <button class="chip" type="button" aria-pressed="false">How does this bill compare with the others?</button>
+  </div>
+  <div class="reply"><p class="reply__q">What did I buy with the card?</p><p>The biggest amounts between 24 August and 23 September: Swiss Intl. Airlines 7'458.00 CHF (8 charges), Apple Online Store 2'273.00 CHF (6 charges), Amazon 246.33 CHF (2 charges), Abercrombie &amp; Fitch 125.19 CHF (2 charges) and Paypal 78.25 CHF (2 charges).</p></div>
+  <div class="reply reply--loading"><p>Looking at your lines…</p></div>
+  <form class="ask" onsubmit="return false"><label class="ask__label" for="ask1">Ask about this line</label>
+    <div class="ask__row"><input class="ask__input" id="ask1" type="text"><button class="ask__send" type="submit" aria-label="Send"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-send"/></svg></button></div></form>
+</section>
+
+<p class="label">Answer sheet, action tone</p>
+<section class="sheet sheet--static is-open" role="dialog" aria-label="Swiss Intl. Airlines, 1'766.50 CHF">
+  <div class="sheet__handle"></div>
+  <button class="sheet__close" type="button" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+  <div class="sheet__head"><p class="sheet__merchant">Swiss Intl. Airlines</p><p class="sheet__amount">−1'766.50 CHF</p><span class="sheet__meta">18 September 2025 · Card purchase</span></div>
+  <div class="tone tone--action"><svg class="icon" aria-hidden="true"><use href="#i-action"/></svg><div class="tone__content"><p class="tone__title">Okay, no jokes this time.</p><p class="tone__body">4 charges of 1'766.50 CHF from Swiss Intl. Airlines on 18 September: 7'066.00 CHF together, 24% of a monthly salary. Was this you?</p>
+    <div class="tone__actions"><button class="btn btn--primary" type="button">Yes, these are mine</button><button class="btn btn--secondary" type="button">Check with my bank</button></div></div></div>
+  <div class="section"><h3 class="section__title">Your picture</h3><p>There are also 4 charges of 98.00 CHF from the same airline on the same day, which suggests one booking with several passengers. The statement alone cannot confirm it.</p></div>
+</section>
+
+<p class="label">Answer sheet, attention tone</p>
+<section class="sheet sheet--static is-open" role="dialog" aria-label="Swiss Intl. Airlines, 98.00 CHF">
+  <div class="sheet__head"><p class="sheet__merchant">Swiss Intl. Airlines</p><p class="sheet__amount">−98.00 CHF</p><span class="sheet__meta">18 September 2025 · Card purchase</span></div>
+  <div class="tone tone--attention"><svg class="icon" aria-hidden="true"><use href="#i-attention"/></svg><div class="tone__content"><p class="tone__title">Worth a check</p><p class="tone__body">There are 4 identical charges of 98.00 CHF from Swiss Intl. Airlines on 18 September. That can be normal, such as several tickets or items, or a mistake.</p></div></div>
+</section>
+
+<p class="label">Time jump (full screen in the app)</p>
+<div class="jump jump--static is-on"><p class="jump__date">23 December 2025</p><p class="jump__sub">Three months later</p></div>
+</body></html>

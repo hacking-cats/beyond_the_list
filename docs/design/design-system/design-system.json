@@ -1,0 +1,57 @@
+{
+  "name": "Beyond the List",
+  "version": "2.0.0",
+  "platform": "mobile-first web app (single HTML file)",
+  "brand": {
+    "personality": [
+      "trusted",
+      "calm",
+      "clear",
+      "human"
+    ],
+    "tone": "clear, helpful, quietly witty where a money habit is worth a second look",
+    "visualStyle": "clean, minimal, confident"
+  },
+  "tokens": {
+    "css": "tokens.css",
+    "color": "tokens/color.json",
+    "typography": "tokens/typography.json",
+    "spacing": "tokens/spacing.json",
+    "radius": "tokens/radius.json",
+    "shadow": "tokens/shadow.json",
+    "motion": "tokens/motion.json"
+  },
+  "rules": {
+    "mobileFirst": true,
+    "baseViewport": 360,
+    "maxContentWidth": 480,
+    "touchTargetMin": 44,
+    "darkMode": false,
+    "accessibility": "WCAG 2.2 AA (measured)",
+    "iconStyle": "outline",
+    "animation": "subtle",
+    "font": "Inter, system fallback",
+    "money": "7'464.00 CHF, tabular numbers, minus sign U+2212"
+  },
+  "screens": [
+    "statement",
+    "answer-sheet",
+    "time-jump"
+  ],
+  "components": [
+    "header",
+    "statement-line",
+    "answer-sheet",
+    "tone-block",
+    "question-chips",
+    "button",
+    "time-jump"
+  ],
+  "content": "All user-facing text comes from facts.json (built from content.json). The UI never writes its own explanations.",
+  "css": [
+    "tokens.css",
+    "components.css"
+  ],
+  "icons": "icons.svg",
+  "preview": "preview.html"
+}
