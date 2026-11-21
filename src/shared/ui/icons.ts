@@ -51,6 +51,10 @@ import {
   outlinedExpandMore,
   outlinedLanguage,
   outlinedSearch,
+  outlinedHandshake,
+  outlinedInfo,
+  outlinedOpenInNew,
+  outlinedShowChart,
 } from '@quasar/extras/material-icons-outlined';
 
 const icons: Record<string, string> = {
@@ -103,6 +107,11 @@ const icons: Record<string, string> = {
   expand_more: outlinedExpandMore,
   language: outlinedLanguage,
   search: outlinedSearch,
+  // Investment ideas
+  handshake: outlinedHandshake,
+  info: outlinedInfo,
+  open_in_new: outlinedOpenInNew,
+  show_chart: outlinedShowChart,
 };
 
 export function icon(name: string): string {

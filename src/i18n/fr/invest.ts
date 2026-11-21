@@ -1,3 +1,21 @@
 export default {
   title: 'Idées de placement',
+  sectionH: 'Vous voulez faire fructifier votre épargne ?',
+  intro: 'Des façons de placer avec PostFinance, expliquées simplement. Certaines commencent avec quelques francs par mois.',
+  noteTitle: 'Des idées, pas des conseils.',
+  noteBody: 'Les placements peuvent perdre de la valeur. Gardez d’abord de l’argent pour les urgences, et lisez les détails sur postfinance.ch avant de décider.',
+  listH: 'Commencer petit avec un plan d’épargne',
+  easiestStart: 'Le plus simple pour commencer',
+  fromL: 'Dès',
+  feesL: 'Frais',
+  linkBtn: 'Voir sur postfinance.ch',
+  opensSite: 'ouvre le site de PostFinance',
+  compareLink: 'Comparer tous les plans d’épargne sur postfinance.ch',
+  checked: 'Informations de postfinance.ch, vérifiées le 21 novembre 2026. Les prix et conditions peuvent changer.',
+  products: {
+    fundSavingPlan: { name: 'Plan d’épargne en fonds', what: 'Choisissez vous-même des fonds et versez régulièrement un montant fixe.', fees: 'commission d’émission 0,5–⁠0,75 % + dépôt 0,15 %' },
+    retirement3a: { name: 'Fonds de prévoyance (pilier 3a)', what: 'Épargner pour la retraite et payer moins d’impôts. Seulement avec votre propre revenu du travail.', fees: 'pas de frais de dépôt' },
+    etfSavingPlan: { name: 'Plan d’épargne ETF (e-trading)', what: 'Achetez des ETF automatiquement chaque semaine ou chaque mois. Vous choisissez et gérez vous-même.', fees: 'CHF 18 par trimestre + 1 % par achat' },
+    eAssetManagement: { name: 'E-gestion de patrimoine', what: 'Les spécialistes de PostFinance placent pour vous. Pour des montants plus élevés.', fees: '0,75 % par an' },
+  },
 };
