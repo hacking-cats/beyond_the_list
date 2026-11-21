@@ -4,7 +4,7 @@ Rules for every AI agent and every person working in this repo. Short on purpose
 
 ## The project in one paragraph
 
-Transaction insight app for migrants, refugees and low-income users of PostFinance in Switzerland (limited German, older Android phones). One main layout (header with hamburger, drawer generated from a feature registry) and pages: Dashboard, Movements, AI chat, Savings, Investment ideas, plus a dummy data generator. Suspicious-payment alerts show on the dashboard and as notifications. Out of MVP: live bank connection, receipt upload.
+Transaction insight app for migrants, refugees and low-income users of PostFinance in Switzerland (limited German, older Android phones). One main layout (header, the page, and a bottom tab bar with icons generated from a feature registry; see decision 0003) and pages: Dashboard, Movements, AI chat, Savings, Investment ideas, plus a dummy data generator. Suspicious-payment alerts show on the dashboard and as notifications. Out of MVP: live bank connection, receipt upload.
 
 ## Stack
 
