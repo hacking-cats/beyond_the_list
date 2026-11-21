@@ -4,8 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { goalPlan } from '../../engines/savings/goalPlan';
 import { savingWithCap } from '../../engines/savings/alternatives';
-import { paymentsPerMonth } from '../../engines/insights/monthly';
-import { savingsAlternatives, savingsCuts, transactions, yearMonths } from '../../shared/statements';
+import { savingsAlternatives, savingsCuts } from '../../shared/statements';
 import { chfToRappen, displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
@@ -24,7 +23,6 @@ interface Idea {
   title: string;
   tip: string;
   wit: string;
-  detail: string;
   nowRappen: number;
   saveRappen: number;
 }
@@ -40,7 +38,6 @@ const ideas = computed<Idea[]>(() =>
         title: t(`features.savings.alt.${a.key}.title`),
         tip: t(`features.savings.alt.${a.key}.tip`, params),
         wit: '',
-        detail: `${a.count} ${t('features.savings.timesL')}`,
         nowRappen: a.nowRappen,
         saveRappen: a.saveRappen,
       };
@@ -51,7 +48,6 @@ const ideas = computed<Idea[]>(() =>
       title: cat(c.key, 'name'),
       tip: cat(c.key, 'tip'),
       wit: hasWit(c.key) ? cat(c.key, 'wit') : '',
-      detail: detail(paymentsPerMonth(transactions, yearMonths, c.key)),
       nowRappen: c.nowRappen,
       saveRappen: c.saveRappen,
     })),
@@ -74,6 +70,11 @@ const capMaxFrancs = Math.max(capRecommendedFrancs, Math.ceil((capIdea?.nowRappe
 const capFrancs = ref(capRecommendedFrancs);
 const capOn = ref(false);
 const capDialog = ref(false);
+/** The limit is on and confirmed: its card leaves the list, a one-line status stays. */
+const capDone = ref(false);
+function onCapDialogHide() {
+  capDone.value = capOn.value;
+}
 const capSaveRappen = computed(() => savingWithCap(capIdea?.nowRappen ?? 0, chfToRappen(capFrancs.value)));
 const saveOf = (i: Idea) => (i.id === CAP_IDEA ? capSaveRappen.value : i.saveRappen);
 function setCap(on: boolean) {
@@ -104,7 +105,10 @@ const capFirst = computed(() => [
   ...ideas.value.filter((i) => i.id !== CAP_IDEA),
 ]);
 const shownIdeas = computed(() =>
-  focusHits.value.length ? [...focusHits.value, ...ideas.value.filter((i) => i.category !== focus.value)] : capFirst.value,
+  (focusHits.value.length
+    ? [...focusHits.value, ...ideas.value.filter((i) => i.category !== focus.value)]
+    : capFirst.value
+  ).filter((i) => !(capDone.value && i.id === CAP_IDEA)),
 );
 const ideasSection = ref<HTMLElement | null>(null);
 onMounted(() => {
@@ -124,8 +128,6 @@ const result = computed(() =>
 );
 const cat = (key: string, field: 'name' | 'tip' | 'wit') => t(`categories.${key}.${field}`);
 const hasWit = (key: string) => i18n.te(`categories.${key}.wit`);
-const detail = (n: number) =>
-  n >= 1 ? `${n} ${t('features.savings.paymentsPerMonth')}` : t('features.savings.nowAndThen');
 const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 </script>
 
@@ -141,21 +143,21 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
         <button class="btn btn--ghost" @click="showAll">{{ t('features.dashboard.focusAll') }}</button>
       </div>
       <p class="hint">{{ t('features.savings.ideasP') }}</p>
-      <div v-for="i in shownIdeas" :key="i.id" class="card">
+      <p v-if="capDone" class="cap-status" role="status">
+        <q-icon :name="icon('task_alt')" size="20px" aria-hidden="true" />
+        <span>{{ t('features.savings.capStatus', { amount: chf0(chfToRappen(capFrancs)) }) }}</span>
+        <button class="btn btn--ghost" @click="capDone = false">{{ t('features.savings.capChange') }}</button>
+      </p>
+      <div v-for="i in shownIdeas" :key="i.id" class="card idea">
         <DsIcon name="bulb" />
         <div class="card__body">
           <p class="card__title">{{ i.title }}</p>
-          <p class="line__original">{{ i.detail }}</p>
-          <div class="result">
-            <span>{{ t('features.savings.nowL') }}</span>
-            <span class="amount">{{ chf0(i.nowRappen) }} {{ t('common.perMonth') }}</span>
-          </div>
-          <div class="result">
-            <span>{{ t('features.savings.saveL') }}</span>
-            <span class="amount positive">{{ chf0(saveOf(i)) }} {{ t('common.perMonth') }}</span>
-          </div>
-          <p>{{ i.tip }}</p>
-          <p v-if="i.wit" class="wit" style="margin: 0 0 var(--sp-sm)">{{ i.wit }}</p>
+          <p class="idea__nums">
+            <span>{{ t('features.savings.nowShort') }} <b class="amount">{{ chf0(i.nowRappen) }}</b></span>
+            <span class="positive">{{ t('features.savings.saveShort') }} <b class="amount">{{ chf0(saveOf(i)) }}</b> {{ t('common.perMonth') }}</span>
+          </p>
+          <p class="idea__tip">{{ i.tip }}</p>
+          <p v-if="i.wit" class="wit idea__tip">{{ i.wit }}</p>
           <div v-if="i.id === CAP_IDEA" class="cap">
             <q-toggle
               :model-value="capOn"
@@ -211,7 +213,7 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 
     <InvestIdeas class="section" />
 
-    <q-dialog v-model="capDialog">
+    <q-dialog v-model="capDialog" @hide="onCapDialogHide">
       <div class="cap-done" role="alertdialog" aria-labelledby="cap-done-h" aria-describedby="cap-done-p">
         <q-icon class="cap-done__icon" :name="icon('task_alt')" size="48px" aria-hidden="true" />
         <h2 id="cap-done-h" class="cap-done__title">{{ t('features.savings.capDoneH') }}</h2>
@@ -226,6 +228,14 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 </template>
 
 <style scoped>
+.idea { margin-bottom: var(--sp-sm); padding: var(--sp-sm) var(--sp-md); gap: var(--sp-sm); }
+.idea .card__title { margin: 0; }
+.idea__nums { display: flex; flex-wrap: wrap; gap: 0 var(--sp-md); margin: 2px 0 var(--sp-xs); font-size: var(--fs-small); color: var(--text-secondary); }
+.idea__nums .positive { color: var(--success-text); }
+.idea__tip { margin: 0 0 var(--sp-sm); font-size: var(--fs-small); line-height: 1.4; }
+.cap-status { display: flex; align-items: center; gap: var(--sp-sm); margin: 0 0 var(--sp-sm); padding: var(--sp-xs) var(--sp-sm);
+  border-radius: var(--r-md); background: var(--surface-subtle); color: var(--success-text); font-size: var(--fs-small); font-weight: 600; }
+.cap-status span { flex: 1; }
 .cap { display: flex; flex-direction: column; gap: var(--sp-sm); padding-top: var(--sp-sm); border-top: 1px solid var(--border); }
 .cap__toggle { margin-inline-start: calc(-1 * var(--sp-sm)); font-weight: 600; }
 .cap-done { width: 100%; max-width: 360px; padding: var(--sp-lg); text-align: center;
