@@ -11,6 +11,7 @@ import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
 import { goalState, projectsState, type SavingsProject } from './projects';
 import InvestIdeas from '../invest/InvestIdeas.vue';
+import AdviceBooking from './AdviceBooking.vue';
 
 const i18n = useI18n();
 const { t } = i18n;
@@ -141,7 +142,8 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
         <button class="btn btn--ghost" @click="showAll">{{ t('features.dashboard.focusAll') }}</button>
       </div>
       <p class="hint">{{ t('features.savings.ideasP') }}</p>
-      <div v-for="i in shownIdeas" :key="i.id" class="card">
+      <template v-for="(i, index) in shownIdeas" :key="i.id">
+      <div class="card">
         <DsIcon name="bulb" />
         <div class="card__body">
           <p class="card__title">{{ i.title }}</p>
@@ -179,6 +181,10 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
           </button>
         </div>
       </div>
+      <!-- Talk to a specialist: right after the first savings idea -->
+      <AdviceBooking v-if="index === 0" />
+      </template>
+      <AdviceBooking v-if="!shownIdeas.length" />
     </div>
 
     <div class="worth" role="status">
