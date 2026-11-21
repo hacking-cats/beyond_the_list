@@ -1,0 +1,25 @@
+{
+  "motion": {
+    "duration": {
+      "fast": 120,
+      "normal": 200,
+      "slow": 300,
+      "timeJump": 1500
+    },
+    "easing": {
+      "standard": "cubic-bezier(0.2, 0, 0, 1)"
+    },
+    "rules": {
+      "useFor": [
+        "sheet open and close",
+        "answer appearing",
+        "time jump"
+      ],
+      "avoid": [
+        "decorative animation",
+        "parallax"
+      ],
+      "reducedMotion": "with prefers-reduced-motion, change instantly"
+    }
+  }
+}
