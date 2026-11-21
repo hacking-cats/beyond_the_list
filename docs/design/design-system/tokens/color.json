@@ -24,6 +24,10 @@
       "lightBlue": {
         "value": "#7FD1E8",
         "use": "decorative only, never text"
+      },
+      "petrolLight": {
+        "value": "#CCDBDE",
+        "use": "light petrol: non-recurring essentials in spending charts, with a 1px petrol outline (1.4:1 on white). Never text."
       }
     },
     "surface": {

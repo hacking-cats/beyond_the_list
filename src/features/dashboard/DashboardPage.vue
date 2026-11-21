@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { categoryShares } from '../../engines/insights/categoryShares';
 import { alternativesFor, monthlySpending, shareOfIncome } from '../../shared/statements';
-import { iconOf } from '../../shared/transactions';
+import { groupOf, iconOf, SPENDING_GROUPS } from '../../shared/transactions';
 import { displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
@@ -56,6 +56,15 @@ const altTip = computed(() => {
     total: displayChf(a.totalRappen, { decimals: 0 }),
   });
 });
+// The list in three parts: recurring essentials, occasional essentials, could cut back.
+const grouped = computed(() =>
+  SPENDING_GROUPS.map((group) => {
+    const items = overview.value.items.filter((i) => groupOf(i.key) === group);
+    const totalRappen = items.reduce((s, i) => s + i.amountRappen, 0);
+    const percent = overview.value.totalRappen > 0 ? Math.round((totalRappen / overview.value.totalRappen) * 100) : 0;
+    return { group, items, totalRappen, percent };
+  }).filter((g) => g.items.length > 0),
+);
 </script>
 
 <template>
@@ -87,12 +96,13 @@ const altTip = computed(() => {
     <BubbleChart :items="shown" :selected="selected" :label="t('features.dashboard.overviewH')" @pick="pick" />
 
     <ul class="legend">
-      <li><span class="swatch sw-essential"></span>{{ t('features.dashboard.essential') }}</li>
-      <li><span class="swatch sw-flexible"></span>{{ t('features.dashboard.flexible') }}</li>
+      <li v-for="g in SPENDING_GROUPS" :key="g">
+        <span class="swatch" :class="`sw-${g}`"></span>{{ t(`features.dashboard.groups.${g}`) }}
+      </li>
     </ul>
 
-    <div v-if="selectedItem && selectedItem.kind === 'flexible'" class="tone tone--attention" role="status">
-      <DsIcon name="attention" />
+    <div v-if="selectedItem && selectedItem.kind === 'flexible'" class="tone tone--action" role="status">
+      <DsIcon name="action" />
       <div class="tone__content">
         <p class="tone__title">
           {{ cat(selectedItem.key, 'name') }} · {{ displayChf(selectedItem.amountRappen, { decimals: 0 }) }}
@@ -136,16 +146,19 @@ const altTip = computed(() => {
     </div>
     <p v-else class="hint" role="status">{{ t('features.dashboard.pickP') }}</p>
 
-    <div class="section">
-      <p class="section__title">{{ t('features.dashboard.listH') }}</p>
+    <div v-for="g in grouped" :key="g.group" class="section">
+      <p class="section__title group-title">
+        <span>{{ t(`features.dashboard.groups.${g.group}`) }}</span>
+        <span class="amount">{{ displayChf(g.totalRappen, { decimals: 0 }) }} · {{ g.percent }}%</span>
+      </p>
       <ul class="rank">
-        <li v-for="item in overview.items" :key="item.key">
-          <span class="cat-badge" :class="`cat-badge--${item.kind}`" aria-hidden="true">
+        <li v-for="item in g.items" :key="item.key">
+          <span class="cat-badge" :class="`cat-badge--${groupOf(item.key)}`" aria-hidden="true">
             <q-icon :name="icon(iconOf(item.key))" size="20px" />
           </span>
           <span class="rank__name">
             {{ cat(item.key, 'name') }}
-            <span class="visually-hidden">, {{ t(`features.dashboard.${item.kind}`) }}</span>
+            <span class="visually-hidden">, {{ t(`features.dashboard.groups.${groupOf(item.key)}`) }}</span>
           </span>
           <span class="amount">{{ displayChf(item.amountRappen, { decimals: 0 }) }}</span>
           <span class="rank__share">{{ item.percent }}%</span>

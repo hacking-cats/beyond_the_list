@@ -4,8 +4,6 @@ export default {
   language: 'Lingua',
   sections: 'Sezioni',
   hi: 'Ciao',
-  balanceSince: 'Saldo dal',
-  fromStatements: 'calcolato dai tuoi estratti (non hanno un saldo iniziale)',
   privateAccount: 'Conto privato',
   creditCard: 'Carta di credito',
   prototype: 'Prototipo · dati demo',

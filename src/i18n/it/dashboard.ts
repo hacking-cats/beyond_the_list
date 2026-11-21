@@ -34,4 +34,9 @@ export default {
     cash: 'Prelievi di contanti. Un Postomat di PostFinance è gratuito; i bancomat di altre banche possono costare una commissione.',
     other: 'Pagamenti che non siamo ancora riusciti a classificare.',
   },
+  groups: {
+    recurring: 'Essenziale - ricorrente',
+    occasional: 'Essenziale - non ricorrente',
+    cutBack: 'Si potrebbe ridurre',
+  },
 };

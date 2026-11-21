@@ -4,8 +4,6 @@ export default {
   language: 'Мова',
   sections: 'Розділи',
   hi: 'Привіт,',
-  balanceSince: 'Баланс з',
-  fromStatements: 'пораховано з ваших виписок (у них немає початкового балансу)',
   privateAccount: 'Приватний рахунок',
   creditCard: 'Кредитна картка',
   prototype: 'Прототип · демо-дані',

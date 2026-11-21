@@ -4,6 +4,7 @@
   --petrol: #005C66;  --petrol-dark: #00474F;   /* links, secondary buttons, chips, marker */
   --grapefruit: #FF5A36;                         /* action border and icon only, never text */
   --light-blue: #7FD1E8;                         /* decorative only */
+  --petrol-light: #CCDBDE;                       /* light petrol: non-recurring essentials in spending charts; never text */
 
   --surface: #FFFFFF; --surface-subtle: #F5F7F8; --surface-inverse: #0E1A1C;
   --tint-attention: #FFF6DB; --tint-action: #FFEDE8; --tint-info: #E8F6FB;

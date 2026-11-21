@@ -4,8 +4,6 @@ export default {
   language: 'Sprache',
   sections: 'Bereiche',
   hi: 'Hallo',
-  balanceSince: 'Kontostand seit',
-  fromStatements: 'aus deinen Auszügen berechnet (sie haben keinen Anfangssaldo)',
   privateAccount: 'Privatkonto',
   creditCard: 'Kreditkarte',
   prototype: 'Prototyp · Demodaten',

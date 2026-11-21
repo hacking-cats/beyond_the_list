@@ -39,6 +39,12 @@ const kinds = new Map((categoriesJson as { key: string; kind: SpendingKind }[]).
 export const kindOf = (category: string): SpendingKind => kinds.get(category) ?? 'essential';
 
 const categoryIcons = new Map((categoriesJson as { key: string; icon: string }[]).map((c) => [c.key, c.icon]));
+export type SpendingGroup = 'recurring' | 'occasional' | 'cutBack';
+const groups = new Map((categoriesJson as { key: string; group: SpendingGroup }[]).map((c) => [c.key, c.group]));
+/** recurring essentials, occasional essentials, or spending that could be cut back. */
+export const groupOf = (category: string): SpendingGroup => groups.get(category) ?? 'occasional';
+export const SPENDING_GROUPS: SpendingGroup[] = ['recurring', 'occasional', 'cutBack'];
+
 /** Material icon name of a category (see src/shared/ui/icons.ts). */
 export const iconOf = (category: string): string => categoryIcons.get(category) ?? 'help_outline';
 
