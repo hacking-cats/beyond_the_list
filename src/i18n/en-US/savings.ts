@@ -127,9 +127,8 @@ export default {
   },
   nowShort: 'Now',
   saveShort: 'Save',
-  capStatus: 'Game limit on: {amount} a month',
-  capChange: 'Change',
-  ideasTap: 'More ideas. Tap one to see how.',
+  capStatus: 'Limit {amount}',
+  ideasTap: 'Tap an idea to see how it works.',
   altShort: {
     zvvPass: 'Monthly pass',
     discounter: 'Discounter',

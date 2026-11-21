@@ -127,9 +127,8 @@ export default {
   },
   nowShort: 'الآن',
   saveShort: 'التوفير',
-  capStatus: 'حد الألعاب مفعّل: {amount} في الشهر',
-  capChange: 'تغيير',
-  ideasTap: 'أفكار أخرى. المس واحدة لمعرفة المزيد.',
+  capStatus: 'الحد {amount}',
+  ideasTap: 'المس فكرة لترى كيف تعمل.',
   altShort: {
     zvvPass: 'اشتراك شهري',
     discounter: 'متاجر مخفّضة',

@@ -80,6 +80,8 @@ const capDialog = ref(false);
 const capDone = ref(false);
 function onCapDialogHide() {
   capDone.value = capOn.value;
+  // Confirmed: the limit card closes into its round "Games" button.
+  if (capOn.value && openIdea.value === CAP_IDEA) openIdea.value = null;
 }
 const capSaveRappen = computed(() => savingWithCap(capIdea?.nowRappen ?? 0, chfToRappen(capFrancs.value)));
 const saveOf = (i: Idea) => (i.id === CAP_IDEA ? capSaveRappen.value : i.saveRappen);
@@ -105,23 +107,29 @@ const router = useRouter();
 const focus = computed(() => (typeof route.query.cat === 'string' ? route.query.cat : ''));
 const focusName = computed(() => (focus.value ? t(`categories.${focus.value}.name`) : ''));
 const focusHits = computed(() => ideas.value.filter((i) => i.category === focus.value));
-// The game-purchase cap is always first, as a full card (or a one-line status once confirmed),
-// then the specialist. The other ideas are round buttons; tapping one opens its card.
-const capCard = computed(() => (capDone.value ? undefined : ideas.value.find((i) => i.id === CAP_IDEA)));
-const otherIdeas = computed(() => {
+// The game-purchase cap is always first: a full card until the limit is confirmed, then a round
+// button like the other ideas (tap to open it again). The specialist follows the game limit.
+// The other ideas are round buttons; tapping one opens its card under that row.
+const capItem = computed(() => ideas.value.find((i) => i.id === CAP_IDEA));
+/** The cap shows as an open card, without its round button, until it is confirmed. */
+const capOpenTop = computed(() => !!capItem.value && !capDone.value);
+const gridIdeas = computed(() => {
   const rest = ideas.value.filter((i) => i.id !== CAP_IDEA);
-  return focusHits.value.length
+  const ordered = focusHits.value.length
     ? [...rest.filter((i) => i.category === focus.value), ...rest.filter((i) => i.category !== focus.value)]
     : rest;
+  return capItem.value ? [capItem.value, ...ordered] : ordered;
 });
 const openIdea = ref<string | null>(null);
 function toggleIdea(id: string) {
   openIdea.value = openIdea.value === id ? null : id;
 }
+const isOpen = (i: Idea) => (i.id === CAP_IDEA && capOpenTop.value) || openIdea.value === i.id;
 const ideasSection = ref<HTMLElement | null>(null);
 onMounted(() => {
   if (!focus.value) return;
-  openIdea.value = otherIdeas.value.find((i) => i.category === focus.value)?.id ?? null;
+  const hit = gridIdeas.value.find((i) => i.category === focus.value);
+  openIdea.value = hit && !(hit.id === CAP_IDEA && capOpenTop.value) ? hit.id : null;
   void nextTick(() => ideasSection.value?.scrollIntoView({ block: 'start' }));
 });
 function showAll() {
@@ -139,6 +147,9 @@ const result = computed(() =>
 const cat = (key: string, field: 'name' | 'short' | 'tip' | 'wit') => t(`categories.${key}.${field}`);
 const hasWit = (key: string) => i18n.te(`categories.${key}.wit`);
 const chf0 = (r: number) => displayChf(r, { decimals: 0 });
+/** Under a round button: the saving, or for the confirmed game limit the limit itself. */
+const dotSub = (i: Idea) =>
+  i.id === CAP_IDEA && capOn.value ? t('features.savings.capStatus', { amount: chf0(chfToRappen(capFrancs.value)) }) : chf0(saveOf(i));
 </script>
 
 <template>
@@ -152,81 +163,67 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
         <p v-else style="margin: 0">{{ t('features.dashboard.focusNone') }}</p>
         <button class="btn btn--ghost" @click="showAll">{{ t('features.dashboard.focusAll') }}</button>
       </div>
-      <p class="hint">{{ t('features.savings.ideasP') }}</p>
-      <p v-if="capDone" class="cap-status" role="status">
-        <q-icon :name="icon('task_alt')" size="20px" aria-hidden="true" />
-        <span>{{ t('features.savings.capStatus', { amount: chf0(chfToRappen(capFrancs)) }) }}</span>
-        <button class="btn btn--ghost" @click="capDone = false">{{ t('features.savings.capChange') }}</button>
-      </p>
-      <div v-if="capCard" class="card idea">
-        <DsIcon name="bulb" />
-        <div class="card__body">
-          <p class="card__title">{{ capCard.title }}</p>
-          <p class="idea__nums">
-            <span>{{ t('features.savings.nowShort') }} <b class="amount">{{ chf0(capCard.nowRappen) }}</b></span>
-            <span class="positive">{{ t('features.savings.saveShort') }} <b class="amount">{{ chf0(capSaveRappen) }}</b> {{ t('common.perMonth') }}</span>
-          </p>
-          <p class="idea__tip">{{ capCard.tip }}</p>
-          <div class="cap">
-            <q-toggle
-              :model-value="capOn"
-              color="primary"
-              size="lg"
-              class="cap__toggle"
-              :label="t('features.savings.capL')"
-              @update:model-value="setCap"
-            />
-            <label class="field" style="margin-top: 0">
-              {{ t('features.savings.capMaxL') }}:
-              <b class="amount">{{ chf0(chfToRappen(capFrancs)) }} {{ t('common.perMonth') }}</b>
-              <input v-model.number="capFrancs" type="range" min="0" :max="capMaxFrancs" step="5" />
-            </label>
-            <p class="hint" style="margin: 0">
-              {{ t('features.savings.capRec', { amount: chf0(chfToRappen(capRecommendedFrancs)) }) }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Talk to a specialist: right after the game-purchase limit -->
-      <AdviceBooking />
-
-      <template v-if="otherIdeas.length">
-        <p class="hint" style="margin: var(--sp-md) 0 0">{{ t('features.savings.ideasTap') }}</p>
-        <div class="idea-grid">
-          <template v-for="i in otherIdeas" :key="i.id">
-            <button
-              class="idea-dot"
-              :class="`idea-dot--${groupOf(i.category)}`"
-              :aria-expanded="openIdea === i.id"
-              :aria-controls="`idea-${i.id}`"
-              :aria-label="`${i.title}, ${t('features.savings.saveShort')} ${chf0(i.saveRappen)} ${t('common.perMonth')}`"
-              @click="toggleIdea(i.id)"
-            >
-              <span class="idea-dot__circle">
-                <q-icon :name="icon(iconOf(i.category))" size="26px" aria-hidden="true" />
-                <span v-if="plan.has(i.id)" class="idea-dot__check" aria-hidden="true">✓</span>
-              </span>
-              <span class="idea-dot__label">{{ i.label }}</span>
-              <span class="idea-dot__save amount">{{ chf0(i.saveRappen) }}</span>
-            </button>
-            <div v-if="openIdea === i.id" :id="`idea-${i.id}`" class="card idea idea--open">
-              <div class="card__body">
-                <p class="card__title">{{ i.title }}</p>
-                <p class="idea__nums">
-                  <span>{{ t('features.savings.nowShort') }} <b class="amount">{{ chf0(i.nowRappen) }}</b></span>
-                  <span class="positive">{{ t('features.savings.saveShort') }} <b class="amount">{{ chf0(i.saveRappen) }}</b> {{ t('common.perMonth') }}</span>
+      <p v-if="!capOpenTop" class="hint">{{ t('features.savings.ideasTap') }}</p>
+      <div class="idea-grid">
+        <template v-for="i in gridIdeas" :key="i.id">
+          <button
+            v-if="!(i.id === CAP_IDEA && capOpenTop)"
+            class="idea-dot"
+            :class="`idea-dot--${groupOf(i.category)}`"
+            :aria-expanded="openIdea === i.id"
+            :aria-controls="`idea-${i.id}`"
+            :aria-label="`${i.title}, ${dotSub(i)}`"
+            @click="toggleIdea(i.id)"
+          >
+            <span class="idea-dot__circle">
+              <q-icon :name="icon(iconOf(i.category))" size="26px" aria-hidden="true" />
+              <span v-if="plan.has(i.id)" class="idea-dot__check" aria-hidden="true">✓</span>
+            </span>
+            <span class="idea-dot__label">{{ i.label }}</span>
+            <span class="idea-dot__save amount">{{ dotSub(i) }}</span>
+          </button>
+          <div v-if="isOpen(i)" :id="`idea-${i.id}`" class="card idea idea--open">
+            <DsIcon v-if="i.id === CAP_IDEA && capOpenTop" name="bulb" />
+            <div class="card__body">
+              <p class="card__title">{{ i.title }}</p>
+              <p class="idea__nums">
+                <span>{{ t('features.savings.nowShort') }} <b class="amount">{{ chf0(i.nowRappen) }}</b></span>
+                <span class="positive">{{ t('features.savings.saveShort') }} <b class="amount">{{ chf0(saveOf(i)) }}</b> {{ t('common.perMonth') }}</span>
+              </p>
+              <p class="idea__tip">{{ i.tip }}</p>
+              <p v-if="i.wit" class="wit idea__tip">{{ i.wit }}</p>
+              <div v-if="i.id === CAP_IDEA" class="cap">
+                <q-toggle
+                  :model-value="capOn"
+                  color="primary"
+                  size="lg"
+                  class="cap__toggle"
+                  :label="t('features.savings.capL')"
+                  @update:model-value="setCap"
+                />
+                <label class="field" style="margin-top: 0">
+                  {{ t('features.savings.capMaxL') }}:
+                  <b class="amount">{{ chf0(chfToRappen(capFrancs)) }} {{ t('common.perMonth') }}</b>
+                  <input v-model.number="capFrancs" type="range" min="0" :max="capMaxFrancs" step="5" />
+                </label>
+                <p class="hint" style="margin: 0">
+                  {{ t('features.savings.capRec', { amount: chf0(chfToRappen(capRecommendedFrancs)) }) }}
                 </p>
-                <p class="idea__tip">{{ i.tip }}</p>
-                <p v-if="i.wit" class="wit idea__tip">{{ i.wit }}</p>
-                <button class="chip" :aria-pressed="plan.has(i.id)" @click="togglePlan(i.id)">
-                  {{ plan.has(i.id) ? t('features.savings.addedL') : t('features.savings.addL') }}
-                </button>
               </div>
+              <button v-else class="chip" :aria-pressed="plan.has(i.id)" @click="togglePlan(i.id)">
+                {{ plan.has(i.id) ? t('features.savings.addedL') : t('features.savings.addL') }}
+              </button>
             </div>
+          </div>
+          <!-- Talk to a specialist: right after the game-purchase limit card -->
+          <template v-if="i.id === CAP_IDEA && capOpenTop">
+            <div class="idea-grid__full"><AdviceBooking /></div>
+            <p class="hint idea-grid__full" style="margin: 0">{{ t('features.savings.ideasTap') }}</p>
           </template>
-        </div>
-      </template>
+        </template>
+        <!-- Once the limit is a round button: the specialist follows the ideas -->
+        <div v-if="!capOpenTop" class="idea-grid__full"><AdviceBooking /></div>
+      </div>
     </div>
 
     <div class="worth" role="status">
@@ -279,9 +276,6 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 .idea__nums { display: flex; flex-wrap: wrap; gap: 0 var(--sp-md); margin: 2px 0 var(--sp-xs); font-size: var(--fs-small); color: var(--text-secondary); }
 .idea__nums .positive { color: var(--success-text); }
 .idea__tip { margin: 0 0 var(--sp-sm); font-size: var(--fs-small); line-height: 1.4; }
-.cap-status { display: flex; align-items: center; gap: var(--sp-sm); margin: 0 0 var(--sp-sm); padding: var(--sp-xs) var(--sp-sm);
-  border-radius: var(--r-md); background: var(--surface-subtle); color: var(--success-text); font-size: var(--fs-small); font-weight: 600; }
-.cap-status span { flex: 1; }
 .idea-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); grid-auto-flow: row dense;
   gap: var(--sp-md) var(--sp-xs); margin-top: var(--sp-sm); }
 .idea-dot { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: var(--touch); padding: 0;
@@ -299,7 +293,7 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
   color: var(--text-inverse); font-size: 12px; font-weight: 700; }
 .idea-dot__label { font-size: var(--fs-caption); line-height: 1.2; text-align: center; }
 .idea-dot__save { font-size: var(--fs-caption); font-weight: 700; color: var(--success-text); }
-.idea--open { grid-column: 1 / -1; margin: 0; }
+.idea--open, .idea-grid__full { grid-column: 1 / -1; margin: 0; }
 .cap { display: flex; flex-direction: column; gap: var(--sp-sm); padding-top: var(--sp-sm); border-top: 1px solid var(--border); }
 .cap__toggle { margin-inline-start: calc(-1 * var(--sp-sm)); font-weight: 600; }
 .cap-done { width: 100%; max-width: 360px; padding: var(--sp-lg); text-align: center;

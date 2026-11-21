@@ -127,9 +127,8 @@ export default {
   },
   nowShort: 'Actuel',
   saveShort: 'Économie',
-  capStatus: 'Limite jeux activée : {amount} par mois',
-  capChange: 'Modifier',
-  ideasTap: 'Autres idées. Touchez-en une pour en savoir plus.',
+  capStatus: 'Limite {amount}',
+  ideasTap: 'Touchez une idée pour voir comment faire.',
   altShort: {
     zvvPass: 'Abonnement',
     discounter: 'Discounter',

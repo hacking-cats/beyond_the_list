@@ -127,9 +127,8 @@ export default {
   },
   nowShort: 'Зараз',
   saveShort: 'Економія',
-  capStatus: 'Ліміт на ігри ввімкнено: {amount} на місяць',
-  capChange: 'Змінити',
-  ideasTap: 'Інші ідеї. Торкніться однієї, щоб дізнатися більше.',
+  capStatus: 'Ліміт {amount}',
+  ideasTap: 'Торкніться ідеї, щоб побачити, як це працює.',
   altShort: {
     zvvPass: 'Проїзний',
     discounter: 'Дискаунтер',
