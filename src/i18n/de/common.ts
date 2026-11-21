@@ -1,0 +1,14 @@
+export default {
+  appName: 'Beyond the List',
+  menu: 'Menü',
+  language: 'Sprache',
+  sections: 'Bereiche',
+  hi: 'Hallo',
+  leftIn: 'Übrig im',
+  accounts: 'nach den Ausgaben · Privatkonto und Kreditkarte',
+  prototype: 'Prototyp · Demodaten',
+  footer: 'Prototyp mit erfundenen Daten · Allgemeine Infos, keine Finanzberatung',
+  perMonth: '/ Monat',
+  months: 'Monaten',
+  comingSoon: 'Bald verfügbar. Diese Seite ist geplant, aber noch nicht gebaut.',
+};

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klar – Household Money Explainer (prototype)</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Beyond the List: design tokens for the single-file app. Same values as tokens/*.json. */
+:root {
+  --yellow: #FFCC00;  --yellow-dark: #E6B800;   /* primary button background only */
+  --petrol: #005C66;  --petrol-dark: #00474F;   /* links, secondary buttons, chips, marker */
+  --grapefruit: #FF5A36;                         /* action border and icon only, never text */
+  --light-blue: #7FD1E8;                         /* decorative only */
+
+  --surface: #FFFFFF; --surface-subtle: #F5F7F8; --surface-inverse: #0E1A1C;
+  --tint-attention: #FFF6DB; --tint-action: #FFEDE8; --tint-info: #E8F6FB;
+
+  --text: #10201F; --text-secondary: #4A5A5C; --text-muted: #616F70;
+  --text-inverse: #FFFFFF; --text-disabled: #8A9798;
+  --border: #D8DEDF; --border-strong: #616F70;
+
+  --success-text: #1B7F4B; --warning-text: #946219; --error-text: #C0392B;
+  --info-text: #266BC7; --urgent-text: #BC4227;
+
+  --font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fs-title: 22px; --fs-subtitle: 18px; --fs-body: 16px; --fs-small: 14px;
+  --fs-caption: 12px; --fs-wit: 15px; --fs-display: 32px;
+
+  --sp-xs: 4px; --sp-sm: 8px; --sp-md: 12px; --sp-lg: 16px; --sp-xl: 24px; --sp-xxl: 32px;
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-pill: 999px;
+  --shadow-sheet: 0 -4px 24px rgba(0, 0, 0, 0.12);
+
+  --t-fast: 120ms; --t-normal: 200ms; --t-slow: 300ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --touch: 44px; --content-max: 480px;
+}
+.amount { font-variant-numeric: tabular-nums; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* Beyond the List: component classes. Requires tokens.css.
+   Markup for every component: see preview.html. */
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0; font-family: var(--font); font-size: var(--fs-body); line-height: 1.5;
+  color: var(--text); background: var(--surface-subtle); -webkit-font-smoothing: antialiased;
+}
+.app { max-width: var(--content-max); margin: 0 auto; min-height: 100vh; background: var(--surface);
+  padding-bottom: env(safe-area-inset-bottom); }
+:focus-visible { outline: 2px solid var(--petrol); outline-offset: 2px; }
+.icon { width: 24px; height: 24px; flex: none; stroke: currentColor; fill: none;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon--sm { width: 20px; height: 20px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---- Header ------------------------------------------------------------- */
+.app-header { position: sticky; top: 0; z-index: 10; background: var(--surface);
+  border-bottom: 1px solid var(--border); display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--sp-xs) var(--sp-sm);
+  padding: calc(var(--sp-md) + env(safe-area-inset-top)) var(--sp-lg) var(--sp-md); }
+.app-header__title { flex: 1; margin: 0; font-size: var(--fs-title); font-weight: 600; }
+.app-header__date { order: 3; width: 100%; display: flex; align-items: center;
+  justify-content: space-between; gap: var(--sp-sm); white-space: nowrap; font-size: var(--fs-small); color: var(--text-secondary); }
+.chip-proto { font-size: var(--fs-caption); font-weight: 600; color: var(--text-secondary);
+  background: var(--surface-subtle); border: 1px solid var(--border); border-radius: var(--r-pill);
+  padding: 2px 10px; }
+
+/* ---- Statement line -------------------------------------------------------- */
+.statement { list-style: none; margin: 0; padding: 0; }
+.day { margin: 0; padding: var(--sp-xl) var(--sp-lg) var(--sp-sm); font-size: var(--fs-caption);
+  font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+.line { display: flex; align-items: center; gap: var(--sp-md); width: 100%; min-height: 56px;
+  padding: var(--sp-sm) var(--sp-lg); background: none; border: 0; border-bottom: 1px solid var(--border);
+  font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.line:active { background: var(--surface-subtle); }
+.line__main { flex: 1; min-width: 0; }
+.line__merchant, .line__original { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.line__original { font-size: var(--fs-caption); color: var(--text-muted); }
+.line__flag { display: inline-flex; color: var(--petrol); }
+.line__flag--attention { color: var(--warning-text); }
+.line__flag--action { color: var(--grapefruit); }
+.line__amount { white-space: nowrap; font-weight: 600; font-variant-numeric: tabular-nums; }
+.line__amount--in { color: var(--success-text); }
+
+/* ---- Answer sheet ---------------------------------------------------------- */
+.backdrop { position: fixed; inset: 0; z-index: 20; background: rgba(14, 26, 28, 0.45);
+  opacity: 0; pointer-events: none; transition: opacity var(--t-normal) var(--ease); }
+.backdrop.is-open { opacity: 1; pointer-events: auto; }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; margin: 0 auto;
+  max-width: var(--content-max); max-height: 85vh; overflow-y: auto; background: var(--surface);
+  border-radius: var(--r-lg) var(--r-lg) 0 0; box-shadow: var(--shadow-sheet);
+  padding: var(--sp-sm) var(--sp-lg) calc(var(--sp-xl) + env(safe-area-inset-bottom));
+  transform: translateY(100%); transition: transform var(--t-normal) var(--ease); }
+.sheet.is-open { transform: none; }
+.sheet__handle { width: 36px; height: 4px; margin: 0 auto var(--sp-sm); border-radius: var(--r-pill);
+  background: var(--border); }
+.sheet__close { position: absolute; top: var(--sp-sm); right: var(--sp-sm); width: var(--touch);
+  height: var(--touch); display: grid; place-items: center; border: 0; border-radius: var(--r-pill);
+  background: none; color: var(--text-secondary); cursor: pointer; }
+.sheet__head { padding-right: var(--touch); margin-bottom: var(--sp-lg); }
+.sheet__merchant { margin: 0; font-size: var(--fs-subtitle); font-weight: 600; }
+.sheet__amount { margin: var(--sp-xs) 0; font-size: var(--fs-title); font-weight: 600;
+  font-variant-numeric: tabular-nums; }
+.sheet__meta { font-size: var(--fs-caption); color: var(--text-muted); }
+.section { margin-top: var(--sp-lg); }
+.section__title { margin: 0 0 var(--sp-xs); font-size: var(--fs-caption); font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+.section p { margin: 0 0 var(--sp-sm); }
+.worth { display: flex; gap: var(--sp-md); margin-top: var(--sp-lg); padding: var(--sp-md);
+  background: var(--tint-info); border-radius: var(--r-md); }
+.worth > .icon { color: var(--info-text); }
+.worth__title { margin: 0 0 2px; font-size: var(--fs-small); font-weight: 600; color: var(--info-text); }
+.worth p { margin: 0; }
+.wit { margin: var(--sp-lg) 0 0; font-size: var(--fs-wit); font-style: italic; color: var(--text-secondary); }
+
+/* ---- Tone block -------------------------------------------------------------- */
+.tone { display: flex; gap: var(--sp-md); margin-bottom: var(--sp-lg); padding: var(--sp-md);
+  border-radius: var(--r-md); }
+.tone__content { flex: 1; min-width: 0; }
+.tone__title { margin: 0 0 var(--sp-xs); font-weight: 600; }
+.tone__body { margin: 0; }
+.tone--attention { background: var(--tint-attention); }
+.tone--attention > .icon, .tone--attention .tone__title { color: var(--warning-text); }
+.tone--action { background: var(--tint-action); border: 2px solid var(--grapefruit); }
+.tone--action > .icon { color: var(--grapefruit); }
+.tone--action .tone__title { color: var(--urgent-text); }
+.tone__actions { display: flex; flex-wrap: wrap; gap: var(--sp-sm); margin-top: var(--sp-md); }
+.tone__actions .btn { flex: 1 1 140px; }
+.tone__done { margin: var(--sp-md) 0 0; font-weight: 600; }
+
+/* ---- Buttons ----------------------------------------------------------------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-sm);
+  min-height: 48px; padding: 0 var(--sp-lg); border: 1px solid transparent; border-radius: var(--r-md);
+  font: inherit; font-weight: 600; cursor: pointer; }
+.btn--primary { background: var(--yellow); color: var(--text); }
+.btn--primary:active { background: var(--yellow-dark); }
+.btn--secondary { background: var(--surface); color: var(--petrol); border-color: var(--petrol); }
+.btn--secondary:active { background: var(--surface-subtle); }
+.btn--ghost { min-height: var(--touch); padding: 0 var(--sp-sm); background: none; color: var(--petrol); }
+.btn:disabled { background: var(--surface-subtle); border-color: var(--border); color: var(--text-disabled); cursor: default; }
+
+/* ---- Question chips ------------------------------------------------------------ */
+.chips { display: flex; flex-wrap: wrap; gap: var(--sp-sm); margin-top: var(--sp-xl); }
+.chip { min-height: var(--touch); padding: var(--sp-sm) var(--sp-md); border: 1px solid var(--petrol);
+  border-radius: var(--r-pill); background: var(--surface); color: var(--petrol); font: inherit;
+  font-size: var(--fs-small); font-weight: 500; text-align: left; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--petrol); color: var(--text-inverse); }
+.reply { margin: var(--sp-sm) 0 var(--sp-md); padding: var(--sp-md); background: var(--surface-subtle);
+  border-radius: var(--r-md); }
+.reply__q { margin: 0 0 var(--sp-xs); font-weight: 600; }
+.reply p { margin: 0; }
+.reply--loading { color: var(--text-muted); }
+.ask { margin-top: var(--sp-lg); }
+.ask__label { display: block; margin-bottom: var(--sp-xs); font-size: var(--fs-small); color: var(--text-secondary); }
+.ask__row { display: flex; gap: var(--sp-sm); }
+.ask__input { flex: 1; min-width: 0; min-height: var(--touch); padding: 0 var(--sp-md);
+  border: 1px solid var(--border-strong); border-radius: var(--r-md); font: inherit; color: var(--text); }
+.ask__send { width: var(--touch); height: var(--touch); display: grid; place-items: center; border: 0;
+  border-radius: var(--r-md); background: var(--petrol); color: var(--text-inverse); cursor: pointer; }
+
+/* ---- Time jump ------------------------------------------------------------------ */
+.jump { position: fixed; inset: 0; z-index: 50; display: grid; place-content: center; gap: var(--sp-sm);
+  padding: var(--sp-xl); text-align: center; background: var(--petrol); color: var(--text-inverse);
+  opacity: 0; pointer-events: none; transition: opacity var(--t-slow) var(--ease); }
+.jump.is-on { opacity: 1; pointer-events: auto; }
+.jump__date { margin: 0; font-size: var(--fs-display); font-weight: 700; line-height: 1.1; }
+.jump__sub { margin: 0; font-size: var(--fs-subtitle); }
+
+
+/* ---- klar prototype: layout pieces built from the tokens only ---- */
+.lang { display: flex; gap: var(--sp-xs); }
+.lang .chip { min-height: var(--touch); min-width: var(--touch); padding: 0 var(--sp-md); text-align: center; }
+.summary { padding: var(--sp-lg) var(--sp-lg) var(--sp-xl); border-bottom: 1px solid var(--border); }
+.summary__hello { margin: 0; font-size: var(--fs-small); color: var(--text-secondary); }
+.summary__balance { margin: var(--sp-xs) 0; font-size: var(--fs-display); font-weight: 700; line-height: 1.1; }
+.summary__sub { margin: 0; font-size: var(--fs-caption); color: var(--text-muted); }
+.tabs { display: flex; border-bottom: 1px solid var(--border); }
+.tabs button { flex: 1; min-height: var(--touch); padding: var(--sp-md) var(--sp-xs); background: none; border: 0;
+  border-bottom: 2px solid transparent; font: inherit; font-size: var(--fs-small); font-weight: 600;
+  color: var(--text-secondary); cursor: pointer; }
+.tabs button[aria-selected="true"] { color: var(--petrol); border-bottom-color: var(--petrol); }
+.panel { padding: var(--sp-lg); }
+.hint { margin: 0 0 var(--sp-sm); font-size: var(--fs-small); color: var(--text-secondary); }
+.statement--flush { margin: 0 calc(-1 * var(--sp-lg)); }
+.line__new { display: block; font-size: var(--fs-caption); font-weight: 600; color: var(--warning-text); }
+.line-explain { display: none; margin: 0 var(--sp-lg) var(--sp-md); }
+.is-open > .line-explain { display: block; }
+.card { margin-bottom: var(--sp-lg); padding: var(--sp-md); border: 1px solid var(--border); border-radius: var(--r-md);
+  display: flex; gap: var(--sp-md); }
+.card > .icon { color: var(--petrol); }
+.card--plain { background: var(--surface-subtle); border-color: var(--surface-subtle); }
+.card__title { margin: 0 0 var(--sp-xs); font-weight: 600; }
+.tone p, .worth p, .card p { margin: 0 0 var(--sp-sm); }
+.field { display: block; margin-top: var(--sp-md); font-size: var(--fs-small); color: var(--text-secondary); }
+input[type=range] { width: 100%; min-height: var(--touch); accent-color: var(--petrol); }
+.result { display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-sm); margin: var(--sp-sm) 0 var(--sp-md); }
+.result__amount { font-size: var(--fs-title); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.result .amount { white-space: nowrap; }
+.btn--block { width: 100%; }
+.reveal { margin-top: var(--sp-sm); }
+.done { margin: var(--sp-sm) 0 0; font-size: var(--fs-small); font-weight: 600; color: var(--success-text); }
+.tabs { overflow-x: auto; scrollbar-width: none; }
+.tabs button { flex: 1 0 auto; padding: var(--sp-md); }
+.stats { display: flex; gap: var(--sp-sm); margin-bottom: var(--sp-lg); }
+.stat { flex: 1; padding: var(--sp-md); border: 1px solid var(--border); border-radius: var(--r-md); }
+.stat__label { margin: 0; font-size: var(--fs-caption); color: var(--text-muted); }
+.stat__value { margin: var(--sp-xs) 0 0; font-size: var(--fs-subtitle); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stat__sub { margin: 0; font-size: var(--fs-caption); color: var(--text-secondary); }
+.bubbles { display: block; width: 100%; height: auto; margin: var(--sp-sm) 0; }
+.bubble { cursor: pointer; outline: none; }
+.bubble { transition: opacity var(--t-fast) var(--ease); }
+.bubble circle { stroke: var(--surface); stroke-width: 2; }
+.bubble.is-dim { opacity: 0.3; }
+.bubble.is-sel circle { stroke: var(--text); stroke-width: 3; }
+.bubble:focus-visible circle { stroke: var(--petrol); stroke-width: 3; }
+.bubble text { font-family: var(--font); pointer-events: none; text-anchor: middle; }
+.legend { display: flex; flex-wrap: wrap; gap: var(--sp-lg); margin: 0 0 var(--sp-md); padding: 0; list-style: none; font-size: var(--fs-small); color: var(--text-secondary); }
+.legend li { display: flex; align-items: center; gap: var(--sp-sm); }
+.swatch { width: 12px; height: 12px; border-radius: var(--r-pill); flex: none; }
+.sw-need { background: var(--petrol); } .sw-cut { background: var(--grapefruit); }
+.rank { list-style: none; margin: 0; padding: 0; }
+.rank li { display: flex; align-items: center; gap: var(--sp-md); min-height: var(--touch); border-bottom: 1px solid var(--border); font-size: var(--fs-small); }
+.rank__name { flex: 1; min-width: 0; }
+.rank__share { color: var(--text-muted); font-variant-numeric: tabular-nums; width: 3.5em; text-align: right; }
+.app-footer { padding: var(--sp-md) var(--sp-lg) var(--sp-xl); border-top: 1px solid var(--border);
+  font-size: var(--fs-caption); color: var(--text-muted); text-align: center; }
+
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.1V16h5v-.1c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-attention" viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19L12 3.5z"/><path d="M12 10v4.5M12 17.2v.1"/></symbol>
+  <symbol id="i-action" viewBox="0 0 24 24"><path d="M8 2.5h8L21.5 8v8L16 21.5H8L2.5 16V8z"/><path d="M12 7.5v5.5M12 16.2v.1"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.1"/></symbol>
+  <symbol id="i-jump" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M13 8.5l3.5 3.5-3.5 3.5"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-6 16-2.5-6.5z"/><path d="M11.5 13.5 20 4"/></symbol>
+</svg>
+
+<div class="app">
+  <header class="app-header">
+    <h1 class="app-header__title">klar.</h1>
+    <div class="lang" role="group" aria-label="Language">
+      <button class="chip" data-l="en" aria-pressed="true">EN</button>
+      <button class="chip" data-l="de" aria-pressed="false">DE</button>
+    </div>
+  </header>
+  <section class="summary">
+    <p class="summary__hello" data-t="hello"></p>
+    <p class="summary__balance amount" id="balance"></p>
+    <p class="summary__sub" data-t="joint"></p>
+  </section>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="tx" aria-selected="true" data-t="tab1"></button>
+    <button role="tab" data-tab="soon" aria-selected="false" data-t="tab2"></button>
+    <button role="tab" data-tab="me" aria-selected="false" data-t="tab3"></button>
+    <button role="tab" data-tab="goal" aria-selected="false" data-t="tab4"></button>
+    <button role="tab" data-tab="dash" aria-selected="false" data-t="tab5"></button>
+  </nav>
+  <main id="main" class="panel"></main>
+  <footer class="app-footer" data-t="foot"></footer>
+</div>
+<script>
+const T = {
+  en:{
+    hello:"Hi Sara 👋", joint:"Joint household account · Müller family",
+    tab1:"Explained", tab2:"Coming up", tab3:"My future",
+    foot:"Prototype with made-up data · General information, not financial advice",
+    txHint:"Tap any payment to see what it means in plain language.",
+    flag:"New to you?",
+    tx:[
+      {i:"💼",n:"Salary",raw:"LOHN ALPENTECH AG",a:7200,e:"Your partner's monthly salary, after deductions. Pension (AHV) contributions are already taken off. That also counts for you: as a married person without paid work, you are covered as long as your partner pays at least CHF 1,060 a year."},
+      {i:"🧒",n:"Child allowance",raw:"FAMILIENZULAGE",a:230,e:"Switzerland pays a monthly allowance for each child. It usually comes with the salary through the employer. It is taxable income, so it goes on the tax return."},
+      {i:"🏛️",n:"Tax instalment",raw:"STEUERVERWALTUNG KT. BERN PROV.",a:-350,flag:true,e:"This is an advance payment on this year's taxes. In Switzerland, the final bill comes after the year ends, based on your tax return. Paying in instalments means a smaller surprise later, and some cantons pay a little interest on it."},
+      {i:"🩺",n:"Health insurance",raw:"ALPINA KRANKENKASSE",a:-412.6,e:"Health insurance is mandatory and is paid per person, not through the employer. If the household income is low, you may get a premium reduction (Prämienverbilligung), but you usually have to apply for it."},
+      {i:"📺",n:"Media fee",raw:"SERAFE AG",a:-335,flag:true,e:"A yearly fee every household in Switzerland pays for public radio and TV, even if you don't own a TV. It is not a scam, even though it surprises many newcomers."},
+      {i:"🦷",n:"Dentist",raw:"ZAHNARZTPRAXIS LÄNGGASSE",a:-180,e:"Dental care is usually not covered by basic health insurance. Some families take extra dental insurance for children. Medical costs above a threshold can sometimes be deducted from taxes, so keep the receipt."},
+      {i:"🛒",n:"Groceries",raw:"MIGROS BERN WESTSIDE",a:-126.4,e:"Everyday spending. Nothing special to know here."}
+    ],
+    taxH:"Final tax bill 2026", taxP:"Based on last year, we expect about this much when the final bill arrives (usually spring next year).",
+    taxL:"Expected final bill", monthsL:"Months to save", perMonth:"Set aside per month", saveBtn:"Create a savings pot", saved:"✓ Savings pot created (prototype)",
+    kkH:"Health insurance: deadline 30 November",
+    kkP:"To switch basic health insurance for next year, the cancellation must arrive by 30 November. Premiums change every year, so comparing can save money.",
+    kkBtn:"What does 'Franchise' mean?",
+    kkMore:"The Franchise (deductible) is what you pay yourself each year before insurance pays. A higher Franchise means lower monthly premiums but more risk if you get sick.",
+    prH:"You might get a premium reduction",
+    prP:"Households with lower income can get help with health insurance premiums. Each canton has its own rules and application form.",
+    ahvH:"State pension (AHV): covered ✓",
+    ahvP:"You don't earn a salary, but you are covered through your partner this year because their contributions are above CHF 1,060. Years at home with children under 16 also earn parenting credits for your future pension.",
+    ahvBtn:"Order my pension record",
+    ahvMore:"You can ask your compensation office for a free statement of your individual account (IK-Auszug). It shows if any year is missing. Gaps can usually only be paid back for 5 years.",
+    p3H:"Private retirement (pillar 3a): not available",
+    p3P:"Pillar 3a is tax-free saving for retirement, but only people with their own earned income can pay in. This is one reason why parents who stay at home often retire with less money of their own.",
+    indH:"Coming: each spouse files their own taxes",
+    indP:"Swiss voters approved individual taxation in March 2026. It should start by 2032. You will then have your own tax return, so it helps to understand your finances now.",
+    tab5:"Overview",
+    dashH:"Where your money goes", dashP:"Monthly average of the last 3 months. Bigger bubble = more money.",
+    totalL:"Spent per month", flexL:"Could cut back", ofAll:"of your spending",
+    allL:"All", onlyFlexL:"Only what you could cut",
+    needG:"Essentials", cutG:"Could cut back",
+    pickP:"Tap a bubble to see what it is and how much it costs you.",
+    shareL:"of your monthly spending", ideasBtn:"See savings ideas", needNote:"An essential. We don't suggest cutting here.",
+    listH:"All categories",
+    cats:[
+      {k:"rent",s:"Rent",n:"Rent",v:1850,g:"need"},
+      {k:"groceries",s:"Groceries",n:"Groceries",v:920,g:"need"},
+      {k:"insurance",s:"Insurance",n:"Health insurance",v:413,g:"need"},
+      {k:"holiday",s:"Holidays",n:"Holidays and trips",v:300,g:"cut",tip:"Booking 3 months ahead and travelling off-season often costs a third less."},
+      {k:"kids",s:"Kids",n:"Kids and school",v:260,g:"need"},
+      {k:"takeaway",s:"Takeaway",n:"Takeaway and delivery",v:240,g:"cut",tip:"Cooking at home two more evenings a week halves this."},
+      {k:"shop",s:"Shopping",n:"Online shopping",v:185,g:"cut",tip:"Leave things in the basket for 48 hours before buying."},
+      {k:"transport",s:"Transport",n:"Transport",v:180,g:"need"},
+      {k:"fun",s:"Going out",n:"Fun and going out",v:160,g:"cut",tip:"Pick one paid outing a week; many museums and parks are free on some days."},
+      {k:"phone",s:"Phone",n:"Phone plans",v:130,g:"cut",tip:"Budget plans on the same network often cost 20–35 CHF."},
+      {k:"health",s:"Doctor",n:"Doctor and pharmacy",v:95,g:"need"},
+      {k:"coffee",s:"Coffee",n:"Coffee to go",v:68,g:"cut",tip:"A thermos from home on most days."},
+      {k:"stream",s:"Streaming",n:"Streaming",v:52,g:"cut",tip:"Keep one service and switch every few months."}
+    ],
+    tab4:"Savings",
+    goalH:"What are you saving for?",
+    goals:{house:"House",car:"Car",holiday:"Holiday",other:"Something else"},
+    targetL:"Goal amount", savedL:"Already saved", whenL:"Reach it in (months)",
+    needH:"To reach it in time, save per month",
+    habitsH:"Where you could find the money",
+    habitsP:"Based on your last 3 months of spending. Pick the ideas that feel doable. We never suggest cutting essentials like rent, health insurance or food at home.",
+    nowL:"You spend now", saveL:"You could save", addL:"Add to my plan", addedL:"In my plan ✓",
+    perMo:"/ month",
+    planH:"Your plan",
+    planNone:"Pick one or more ideas above to see how fast you get there.",
+    planFound:"Found in your spending", planReach:"At this pace you reach your goal in", monthsW:"months",
+    planOk:"That's enough to reach your goal in time 🎉",
+    planShort:"Still missing per month",
+    startBtn:"Start saving for this goal", started:"✓ Savings goal created (prototype)",
+    habits:[
+      {k:"takeaway",n:"Takeaway and food delivery",d:"11 orders a month on average",now:240,save:120,tip:"Cooking at home two more evenings a week halves this.",wit:"The delivery app will miss you. Your goal won't."},
+      {k:"shop",n:"Small online orders",d:"9 orders under 40 CHF a month",now:185,save:80,tip:"Leave things in the basket for 48 hours. Many of them you won't want any more."},
+      {k:"phone",n:"Mobile phone plans",d:"2 plans at 65 CHF each",now:130,save:60,tip:"Budget plans on the same network often cost 20–35 CHF. Compare before your contract renews."},
+      {k:"coffee",n:"Coffee to go",d:"About 12 coffees a month",now:68,save:45,tip:"A thermos from home on most days, a café treat once a week."},
+      {k:"stream",n:"Streaming subscriptions",d:"3 services running at the same time",now:52,save:33,tip:"Keep one and switch every few months. Shows don't run away."}
+    ]
+  },
+  de:{
+    hello:"Hallo Sara 👋", joint:"Gemeinsames Haushaltskonto · Familie Müller",
+    tab1:"Erklärt", tab2:"Demnächst", tab3:"Meine Zukunft",
+    foot:"Prototyp mit erfundenen Daten · Allgemeine Infos, keine Finanzberatung",
+    txHint:"Tippe auf eine Zahlung, um sie in einfacher Sprache zu verstehen.",
+    flag:"Neu für dich?",
+    tx:[
+      {i:"💼",n:"Lohn",raw:"LOHN ALPENTECH AG",a:7200,e:"Der Monatslohn deines Partners nach Abzügen. AHV-Beiträge sind schon abgezogen. Das zählt auch für dich: Als verheiratete Person ohne Erwerb bist du versichert, solange dein Partner mindestens CHF 1'060 pro Jahr einzahlt."},
+      {i:"🧒",n:"Kinderzulage",raw:"FAMILIENZULAGE",a:230,e:"Für jedes Kind gibt es eine monatliche Zulage, meist über den Arbeitgeber mit dem Lohn. Sie ist steuerbares Einkommen und gehört in die Steuererklärung."},
+      {i:"🏛️",n:"Steuer-Rate",raw:"STEUERVERWALTUNG KT. BERN PROV.",a:-350,flag:true,e:"Eine Vorauszahlung auf die Steuern dieses Jahres. Die definitive Rechnung kommt erst nach Jahresende, basierend auf der Steuererklärung. Raten zahlen heisst: kleinere Überraschung später."},
+      {i:"🩺",n:"Krankenkasse",raw:"ALPINA KRANKENKASSE",a:-412.6,e:"Die Krankenversicherung ist obligatorisch und wird pro Person bezahlt, nicht über den Arbeitgeber. Bei tiefem Einkommen gibt es eventuell Prämienverbilligung – meist muss man sie beantragen."},
+      {i:"📺",n:"Medienabgabe",raw:"SERAFE AG",a:-335,flag:true,e:"Eine jährliche Abgabe, die jeder Haushalt für Radio und TV zahlt, auch ohne Fernseher. Das ist kein Betrug, auch wenn es viele Neuzugezogene überrascht."},
+      {i:"🦷",n:"Zahnarzt",raw:"ZAHNARZTPRAXIS LÄNGGASSE",a:-180,e:"Zahnbehandlungen zahlt die Grundversicherung meist nicht. Hohe Krankheitskosten kann man teilweise von den Steuern abziehen – Beleg aufbewahren."},
+      {i:"🛒",n:"Einkauf",raw:"MIGROS BERN WESTSIDE",a:-126.4,e:"Alltagsausgaben. Hier gibt es nichts Besonderes zu wissen."}
+    ],
+    taxH:"Definitive Steuerrechnung 2026", taxP:"Basierend auf dem Vorjahr erwarten wir ungefähr diesen Betrag, wenn die definitive Rechnung kommt (meist im Frühling).",
+    taxL:"Erwartete Rechnung", monthsL:"Monate zum Sparen", perMonth:"Pro Monat zurücklegen", saveBtn:"Spartopf erstellen", saved:"✓ Spartopf erstellt (Prototyp)",
+    kkH:"Krankenkasse: Frist 30. November",
+    kkP:"Wer die Grundversicherung fürs nächste Jahr wechseln will, muss bis 30. November kündigen. Die Prämien ändern jedes Jahr – vergleichen lohnt sich.",
+    kkBtn:"Was ist die Franchise?",
+    kkMore:"Die Franchise ist der Betrag, den du pro Jahr selbst zahlst, bevor die Versicherung zahlt. Höhere Franchise = tiefere Prämie, aber mehr Risiko bei Krankheit.",
+    prH:"Vielleicht bekommst du Prämienverbilligung",
+    prP:"Haushalte mit tieferem Einkommen bekommen Hilfe bei den Prämien. Jeder Kanton hat eigene Regeln und Formulare.",
+    ahvH:"AHV: versichert ✓",
+    ahvP:"Du hast keinen Lohn, bist aber dieses Jahr über deinen Partner versichert, weil seine Beiträge über CHF 1'060 liegen. Jahre mit Kindern unter 16 geben zudem Erziehungsgutschriften für deine Rente.",
+    ahvBtn:"Meinen AHV-Auszug bestellen",
+    ahvMore:"Bei der Ausgleichskasse kannst du gratis einen Auszug deines individuellen Kontos (IK-Auszug) bestellen. Er zeigt, ob ein Jahr fehlt. Lücken kann man meist nur 5 Jahre zurück nachzahlen.",
+    p3H:"Säule 3a: nicht möglich",
+    p3P:"In die Säule 3a kann nur einzahlen, wer selbst Erwerbseinkommen hat. Darum haben Eltern, die zu Hause bleiben, im Alter oft weniger eigenes Geld.",
+    indH:"Bald: jede Person macht ihre eigene Steuererklärung",
+    indP:"Im März 2026 wurde die Individualbesteuerung angenommen. Sie soll spätestens 2032 starten. Dann hast du eine eigene Steuererklärung – es lohnt sich, die Finanzen jetzt zu verstehen.",
+    tab5:"Übersicht",
+    dashH:"Wohin dein Geld geht", dashP:"Monatlicher Durchschnitt der letzten 3 Monate. Grössere Blase = mehr Geld.",
+    totalL:"Ausgaben pro Monat", flexL:"Könntest du reduzieren", ofAll:"deiner Ausgaben",
+    allL:"Alle", onlyFlexL:"Nur was du reduzieren könntest",
+    needG:"Notwendiges", cutG:"Könntest du reduzieren",
+    pickP:"Tippe auf eine Blase, um zu sehen, was sie ist und was sie dich kostet.",
+    shareL:"deiner monatlichen Ausgaben", ideasBtn:"Sparideen ansehen", needNote:"Notwendig. Hier schlagen wir nicht vor zu sparen.",
+    listH:"Alle Kategorien",
+    cats:[
+      {k:"rent",s:"Miete",n:"Miete",v:1850,g:"need"},
+      {k:"groceries",s:"Essen",n:"Lebensmittel",v:920,g:"need"},
+      {k:"insurance",s:"Krankenkasse",n:"Krankenkasse",v:413,g:"need"},
+      {k:"holiday",s:"Ferien",n:"Ferien und Ausflüge",v:300,g:"cut",tip:"3 Monate im Voraus buchen und ausserhalb der Saison reisen spart oft einen Drittel."},
+      {k:"kids",s:"Kinder",n:"Kinder und Schule",v:260,g:"need"},
+      {k:"takeaway",s:"Take-away",n:"Take-away und Lieferdienste",v:240,g:"cut",tip:"Zwei Abende mehr pro Woche selbst kochen halbiert diesen Betrag."},
+      {k:"shop",s:"Shopping",n:"Online-Shopping",v:185,g:"cut",tip:"Dinge 48 Stunden im Warenkorb lassen, bevor du kaufst."},
+      {k:"transport",s:"Verkehr",n:"Verkehr",v:180,g:"need"},
+      {k:"fun",s:"Ausgang",n:"Freizeit und Ausgang",v:160,g:"cut",tip:"Ein bezahlter Ausflug pro Woche; viele Museen und Parks sind an manchen Tagen gratis."},
+      {k:"phone",s:"Handy",n:"Handy-Abos",v:130,g:"cut",tip:"Günstige Abos im gleichen Netz kosten oft 20–35 CHF."},
+      {k:"health",s:"Arzt",n:"Arzt und Apotheke",v:95,g:"need"},
+      {k:"coffee",s:"Kaffee",n:"Kaffee zum Mitnehmen",v:68,g:"cut",tip:"An den meisten Tagen die Thermosflasche von zu Hause."},
+      {k:"stream",s:"Streaming",n:"Streaming",v:52,g:"cut",tip:"Einen Dienst behalten und alle paar Monate wechseln."}
+    ],
+    tab4:"Sparziel",
+    goalH:"Wofür sparst du?",
+    goals:{house:"Haus",car:"Auto",holiday:"Ferien",other:"Etwas anderes"},
+    targetL:"Zielbetrag", savedL:"Schon gespart", whenL:"Erreichen in (Monaten)",
+    needH:"Damit es rechtzeitig klappt, pro Monat sparen",
+    habitsH:"Wo du das Geld finden könntest",
+    habitsP:"Basierend auf deinen Ausgaben der letzten 3 Monate. Wähle, was machbar ist. Wir schlagen nie vor, bei Wichtigem wie Miete, Krankenkasse oder Essen zu Hause zu sparen.",
+    nowL:"Du gibst aus", saveL:"Du könntest sparen", addL:"In meinen Plan", addedL:"Im Plan ✓",
+    perMo:"/ Monat",
+    planH:"Dein Plan",
+    planNone:"Wähle oben eine oder mehrere Ideen, um zu sehen, wie schnell du ans Ziel kommst.",
+    planFound:"In deinen Ausgaben gefunden", planReach:"So erreichst du dein Ziel in", monthsW:"Monaten",
+    planOk:"Das reicht, um dein Ziel rechtzeitig zu erreichen 🎉",
+    planShort:"Fehlt noch pro Monat",
+    startBtn:"Für dieses Ziel sparen", started:"✓ Sparziel erstellt (Prototyp)",
+    habits:[
+      {k:"takeaway",n:"Take-away und Lieferdienste",d:"Durchschnittlich 11 Bestellungen pro Monat",now:240,save:120,tip:"Zwei Abende mehr pro Woche selbst kochen halbiert diesen Betrag.",wit:"Die Liefer-App wird dich vermissen. Dein Ziel nicht."},
+      {k:"shop",n:"Kleine Online-Bestellungen",d:"9 Bestellungen unter 40 CHF pro Monat",now:185,save:80,tip:"Lass Dinge 48 Stunden im Warenkorb. Vieles willst du danach nicht mehr."},
+      {k:"phone",n:"Handy-Abos",d:"2 Abos zu je 65 CHF",now:130,save:60,tip:"Günstige Abos im gleichen Netz kosten oft 20–35 CHF. Vor der Verlängerung vergleichen."},
+      {k:"coffee",n:"Kaffee zum Mitnehmen",d:"Etwa 12 Kaffees pro Monat",now:68,save:45,tip:"An den meisten Tagen die Thermosflasche von zu Hause, einmal pro Woche das Café."},
+      {k:"stream",n:"Streaming-Abos",d:"3 Dienste gleichzeitig",now:52,save:33,tip:"Eines behalten und alle paar Monate wechseln. Die Serien laufen nicht davon."}
+    ]
+  }
+};
+
+let lang="en", tab="tx", taxAmt=2400, months=4, savedPot=false;
+const GOALS={house:40000,car:15000,holiday:3000,other:5000};
+let goalKey="car", goalAmt=GOALS.car, goalSaved=1200, goalMonths=24, plan=new Set(), goalStarted=false;
+let dashSel=null, dashOnlyCut=false;
+function dashPick(k){dashSel=(dashSel===k?null:k);render();}
+function drawBubbles(t){
+  const svgEl=document.getElementById("bubbles"); if(!svgEl||!window.d3) return;
+  const W=Math.max(280,svgEl.parentElement.clientWidth);
+  const data=t.cats.filter(c=>!dashOnlyCut||c.g==="cut");
+  const root=d3.hierarchy({children:data}).sum(d=>d.v);
+  const H=dashOnlyCut?Math.round(W*0.75):W;
+  d3.pack().size([W,H]).padding(3)(root);
+  const svg=d3.select(svgEl).attr("viewBox",`0 0 ${W} ${H}`);
+  const total=t.cats.reduce((a,c)=>a+c.v,0);
+  const g=svg.selectAll("g").data(root.leaves()).join("g")
+    .attr("class",d=>"bubble"+(dashSel&&dashSel!==d.data.k?" is-dim":"")+(dashSel===d.data.k?" is-sel":""))
+    .attr("transform",d=>`translate(${d.x},${d.y})`)
+    .attr("tabindex",0).attr("role","button")
+    .attr("aria-label",d=>`${d.data.n}: ${chf(d.data.v,0)}, ${Math.round(d.data.v/total*100)}%, ${d.data.g==="cut"?t.cutG:t.needG}`)
+    .on("click",(e,d)=>dashPick(d.data.k))
+    .on("keydown",(e,d)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();dashPick(d.data.k);}});
+  g.append("circle").attr("r",d=>d.r).attr("fill",d=>d.data.g==="cut"?"var(--grapefruit)":"var(--petrol)");
+  const ink=d=>d.data.g==="cut"?"var(--text)":"var(--text-inverse)";
+  const fits=(d=>d.r>=26&&Math.max(d.data.s.length*(d.r>=55?8:7),56)<=2*d.r-12);
+  g.filter(fits).append("text").attr("dy","-0.2em").attr("fill",ink)
+    .attr("font-size",d=>d.r>=55?14:12).attr("font-weight",600)
+    .text(d=>d.data.s);
+  g.filter(fits).append("text").attr("dy","1.1em").attr("fill",ink)
+    .attr("font-size",d=>d.r>=55?14:12).style("font-variant-numeric","tabular-nums")
+    .text(d=>chf(d.data.v,0));
+  g.filter(d=>!fits(d)&&d.r>=14).append("text").attr("dy","0.35em").attr("fill",ink)
+    .attr("font-size",12).attr("font-weight",600).text(d=>d.data.v);
+}
+function pickGoal(k){goalKey=k;goalAmt=GOALS[k];goalStarted=false;render();}
+function togglePlan(k){plan.has(k)?plan.delete(k):plan.add(k);render();}
+const $=s=>document.querySelector(s);
+const chf=(n,dec=2)=>{const p=Math.abs(n).toFixed(dec).split(".");p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,"'");return p.join(".")+" CHF";};
+const fmt=n=>(n<0?"\u2212":"+")+chf(n);
+const ico=(id,label)=>`<svg class="icon icon--sm" ${label?`role="img" aria-label="${label}"`:'aria-hidden="true"'}><use href="#${id}"/></svg>`;
+const big=id=>`<svg class="icon" aria-hidden="true"><use href="#${id}"/></svg>`;
+
+function render(){
+  const t=T[lang];
+  document.documentElement.lang=lang;
+  document.querySelectorAll("[data-t]").forEach(el=>el.textContent=t[el.dataset.t]);
+  const m=$("#main");
+  document.getElementById("balance").textContent=chf(8412.35);
+  if(tab==="tx"){
+    m.innerHTML=`<p class="hint">${t.txHint}</p><ul class="statement statement--flush">`+t.tx.map((x,k)=>`
+      <li id="tx${k}">
+        <button class="line" aria-expanded="false" onclick="const li=document.getElementById('tx${k}');li.classList.toggle('is-open');this.setAttribute('aria-expanded',li.classList.contains('is-open'))">
+          <span class="line__main"><span class="line__merchant">${x.n}</span>${x.flag?`<span class="line__new">${t.flag}</span>`:""}<span class="line__original">${x.raw}</span></span>
+          ${x.flag?`<span class="line__flag line__flag--attention">${ico("i-attention",t.flag)}</span>`:""}
+          <span class="line__amount ${x.a<0?"":"line__amount--in"}">${fmt(x.a)}</span>
+        </button>
+        <div class="line-explain reply"><p>${x.e}</p></div>
+      </li>`).join("")+`</ul>`;
+  } else if(tab==="soon"){
+    const per=Math.ceil(taxAmt/months);
+    m.innerHTML=`
+      <div class="tone tone--attention">${big("i-attention")}<div class="tone__content">
+        <p class="tone__title">${t.taxH}</p><p class="tone__body">${t.taxP}</p>
+        <label class="field">${t.taxL}: <b class="amount">${chf(taxAmt,0)}</b>
+          <input type="range" min="500" max="8000" step="100" value="${taxAmt}" oninput="taxAmt=+this.value;render()"></label>
+        <label class="field">${t.monthsL}: <b>${months}</b>
+          <input type="range" min="1" max="12" value="${months}" oninput="months=+this.value;render()"></label>
+        <div class="result"><span>${t.perMonth}</span><span class="result__amount">${chf(per,0)}</span></div>
+        <button class="btn btn--primary btn--block" onclick="savedPot=true;render()">${t.saveBtn}</button>
+        <p class="done" role="status">${savedPot?t.saved:""}</p>
+      </div></div>
+      <div class="worth">${big("i-info")}<div>
+        <p class="worth__title">${t.kkH}</p><p>${t.kkP}</p>
+        <button class="btn btn--secondary" onclick="this.nextElementSibling.hidden=false;this.remove()">${t.kkBtn}</button>
+        <p class="reveal" hidden>${t.kkMore}</p>
+      </div></div>
+      <div class="card" style="margin-top:var(--sp-lg)">${big("i-bulb")}<div>
+        <p class="card__title">${t.prH}</p><p>${t.prP}</p></div></div>`;
+  } else if(tab==="dash"){
+    const total=t.cats.reduce((a,c)=>a+c.v,0), flex=t.cats.filter(c=>c.g==="cut").reduce((a,c)=>a+c.v,0);
+    const sel=t.cats.find(c=>c.k===dashSel);
+    const ranked=[...t.cats].sort((a,b)=>b.v-a.v);
+    m.innerHTML=`
+      <p class="card__title">${t.dashH}</p>
+      <p class="hint">${t.dashP}</p>
+      <div class="stats">
+        <div class="stat"><p class="stat__label">${t.totalL}</p><p class="stat__value">${chf(total,0)}</p></div>
+        <div class="stat"><p class="stat__label">${t.flexL}</p><p class="stat__value">${chf(flex,0)}</p><p class="stat__sub">${Math.round(flex/total*100)}% ${t.ofAll}</p></div>
+      </div>
+      <div class="chips" style="margin-top:0" role="group">
+        <button class="chip" aria-pressed="${!dashOnlyCut}" onclick="dashOnlyCut=false;render()">${t.allL}</button>
+        <button class="chip" aria-pressed="${dashOnlyCut}" onclick="dashOnlyCut=true;render()">${t.onlyFlexL}</button>
+      </div>
+      <svg id="bubbles" class="bubbles" role="group" aria-label="${t.dashH}"></svg>
+      <ul class="legend"><li><span class="swatch sw-need"></span>${t.needG}</li><li><span class="swatch sw-cut"></span>${t.cutG}</li></ul>
+      ${sel?(sel.g==="cut"
+        ?`<div class="tone tone--attention" role="status">${big("i-attention")}<div class="tone__content">
+            <p class="tone__title">${sel.n} · ${chf(sel.v,0)} ${t.perMo}</p>
+            <p>${Math.round(sel.v/total*100)}% ${t.shareL}.</p><p>${sel.tip}</p>
+            <button class="btn btn--secondary" onclick="tab='goal';render();scrollTo(0,0)">${t.ideasBtn}</button></div></div>`
+        :`<div class="card card--plain" role="status"><div>
+            <p class="card__title">${sel.n} · ${chf(sel.v,0)} ${t.perMo}</p>
+            <p>${Math.round(sel.v/total*100)}% ${t.shareL}.</p><p>${t.needNote}</p></div></div>`)
+        :`<p class="hint" role="status">${t.pickP}</p>`}
+      <div class="section">
+        <p class="section__title">${t.listH}</p>
+        <ul class="rank">${ranked.map(c=>`<li><span class="swatch sw-${c.g}" aria-hidden="true"></span><span class="rank__name">${c.n}<span class="visually-hidden">, ${c.g==="cut"?t.cutG:t.needG}</span></span><span class="amount">${chf(c.v,0)}</span><span class="rank__share">${Math.round(c.v/total*100)}%</span></li>`).join("")}</ul>
+      </div>`;
+    drawBubbles(t);
+  } else if(tab==="goal"){
+    const left=Math.max(goalAmt-goalSaved,0), need=Math.ceil(left/goalMonths);
+    const found=t.habits.filter(h=>plan.has(h.k)).reduce((a,h)=>a+h.save,0);
+    const reach=found?Math.ceil(left/found):0;
+    m.innerHTML=`
+      <p class="card__title">${t.goalH}</p>
+      <div class="chips" style="margin-top:0" role="group" aria-label="${t.goalH}">
+        ${Object.keys(GOALS).map(k=>`<button class="chip" aria-pressed="${k===goalKey}" onclick="pickGoal('${k}')">${t.goals[k]}</button>`).join("")}
+      </div>
+      <label class="field">${t.targetL}: <b class="amount">${chf(goalAmt,0)}</b>
+        <input type="range" min="1000" max="80000" step="500" value="${goalAmt}" oninput="goalAmt=+this.value;render()"></label>
+      <label class="field">${t.savedL}: <b class="amount">${chf(goalSaved,0)}</b>
+        <input type="range" min="0" max="20000" step="100" value="${goalSaved}" oninput="goalSaved=+this.value;render()"></label>
+      <label class="field">${t.whenL}: <b>${goalMonths}</b>
+        <input type="range" min="3" max="60" value="${goalMonths}" oninput="goalMonths=+this.value;render()"></label>
+      <div class="result"><span>${t.needH}</span><span class="result__amount">${chf(need,0)}</span></div>
+
+      <div class="section">
+        <p class="section__title">${t.habitsH}</p>
+        <p class="hint">${t.habitsP}</p>
+        ${t.habits.map(h=>`
+          <div class="card">${big("i-bulb")}<div class="tone__content">
+            <p class="card__title">${h.n}</p>
+            <p class="line__original">${h.d}</p>
+            <div class="result" style="margin:var(--sp-sm) 0"><span>${t.nowL}</span><span class="amount">${chf(h.now,0)} ${t.perMo}</span></div>
+            <div class="result" style="margin:0 0 var(--sp-sm)"><span>${t.saveL}</span><span class="amount line__amount--in">${chf(h.save,0)} ${t.perMo}</span></div>
+            <p>${h.tip}</p>
+            ${h.wit?`<p class="wit" style="margin:0 0 var(--sp-sm)">${h.wit}</p>`:""}
+            <button class="chip" aria-pressed="${plan.has(h.k)}" onclick="togglePlan('${h.k}')">${plan.has(h.k)?t.addedL:t.addL}</button>
+          </div></div>`).join("")}
+      </div>
+
+      <div class="worth" role="status">${big("i-jump")}<div class="tone__content">
+        <p class="worth__title">${t.planH}</p>
+        ${found?`
+          <p style="margin:0">${t.planFound}</p><p class="result__amount" style="margin:0 0 var(--sp-sm)">${chf(found,0)} ${t.perMo}</p>
+          <p>${t.planReach} <b>${reach} ${t.monthsW}</b>.</p>
+          ${found>=need?`<p class="done">${t.planOk}</p>`:`<div class="result" style="margin:0"><span>${t.planShort}</span><span class="amount">${chf(need-found,0)}</span></div>`}
+        `:`<p>${t.planNone}</p>`}
+      </div></div>
+      <button class="btn btn--primary btn--block" style="margin-top:var(--sp-lg)" onclick="goalStarted=true;render()">${t.startBtn}</button>
+      <p class="done" role="status">${goalStarted?t.started:""}</p>`;
+  } else {
+    m.innerHTML=`
+      <div class="card card--plain"><div>
+        <p class="card__title">${t.ahvH}</p><p>${t.ahvP}</p>
+        <button class="btn btn--secondary" onclick="this.nextElementSibling.hidden=false;this.remove()">${t.ahvBtn}</button>
+        <p class="reveal" hidden>${t.ahvMore}</p>
+      </div></div>
+      <div class="tone tone--attention">${big("i-attention")}<div class="tone__content">
+        <p class="tone__title">${t.p3H}</p><p class="tone__body">${t.p3P}</p></div></div>
+      <div class="worth">${big("i-info")}<div>
+        <p class="worth__title">${t.indH}</p><p>${t.indP}</p></div></div>`;
+  }
+  document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===tab));
+  const act=document.querySelector('nav button[aria-selected="true"]'); if(act) act.scrollIntoView({inline:"nearest",block:"nearest"});
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{tab=b.dataset.tab;render()});
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.l;render()});
+render();
+addEventListener("resize",()=>{if(tab==="dash")render();});
+</script>
+</body>
+</html>

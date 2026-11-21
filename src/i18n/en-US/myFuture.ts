@@ -1,0 +1,15 @@
+export default {
+  title: 'My future',
+  ahvEmpH: 'State pension (AHV): paid through your salary ✓',
+  ahvEmpP: 'AHV contributions are taken off every payslip, and your employer pays the same amount again. Each year you work counts for your future pension.',
+  p3EmpH: 'Private retirement (pillar 3a): open to you',
+  p3EmpP: "Because you earn a salary, you can pay into pillar 3a and deduct it from your taxable income. In 2026 the maximum for employees with a pension fund is CHF 7'258.",
+  ahvH: 'State pension (AHV): covered ✓',
+  ahvP: "You don't earn a salary, but you are covered through your partner this year because their contributions are above CHF 1,060. Years at home with children under 16 also earn parenting credits for your future pension.",
+  ahvBtn: 'Order my pension record',
+  ahvMore: 'You can ask your compensation office for a free statement of your individual account (IK-Auszug). It shows if any year is missing. Gaps can usually only be paid back for 5 years.',
+  p3H: 'Private retirement (pillar 3a): not available',
+  p3P: 'Pillar 3a is tax-free saving for retirement, but only people with their own earned income can pay in. This is one reason why parents who stay at home often retire with less money of their own.',
+  indH: 'Coming: each spouse files their own taxes',
+  indP: 'Swiss voters approved individual taxation in March 2026. It should start by 2032. You will then have your own tax return, so it helps to understand your finances now.',
+};

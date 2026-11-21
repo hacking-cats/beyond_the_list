@@ -1,0 +1,17 @@
+export default {
+  title: 'Overview',
+  overviewH: 'Where your money goes',
+  overviewP: 'Monthly average over the last 12 months of your statements. Bigger bubble = more money.',
+  totalL: 'Spent per month',
+  flexL: 'Could cut back',
+  ofAll: 'of your spending',
+  allL: 'All',
+  onlyFlexL: 'Only what you could cut',
+  essential: 'Essentials',
+  flexible: 'Could cut back',
+  pickP: 'Tap a bubble to see what it is and how much it costs you.',
+  shareL: 'of your monthly spending',
+  ideasBtn: 'See savings ideas',
+  essentialNote: "An essential. We don't suggest cutting here.",
+  listH: 'All categories',
+};

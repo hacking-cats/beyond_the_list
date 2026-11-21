@@ -1,0 +1,74 @@
+/**
+ * Material icons (outlined) used in the app, as SVG from @quasar/extras: no icon font,
+ * works offline, only the icons listed here end up in the bundle.
+ * Keys are Material icon names (FeatureEntry.icon uses them). Use with <q-icon :name="icon('savings')" />.
+ */
+import {
+  outlinedAdd,
+  outlinedBeachAccess,
+  outlinedBubbleChart,
+  outlinedCardGiftcard,
+  outlinedCelebration,
+  outlinedChecklist,
+  outlinedChildCare,
+  outlinedClose,
+  outlinedConstruction,
+  outlinedDirectionsCar,
+  outlinedElderly,
+  outlinedEvent,
+  outlinedFavorite,
+  outlinedFlight,
+  outlinedHome,
+  outlinedImage,
+  outlinedLaptop,
+  outlinedLuggage,
+  outlinedMusicNote,
+  outlinedPedalBike,
+  outlinedPets,
+  outlinedPhotoCamera,
+  outlinedReceiptLong,
+  outlinedSavings,
+  outlinedSchool,
+  outlinedSmartphone,
+  outlinedSportsSoccer,
+  outlinedUmbrella,
+  outlinedWeekend,
+} from '@quasar/extras/material-icons-outlined';
+
+const icons: Record<string, string> = {
+  add: outlinedAdd,
+  beach_access: outlinedBeachAccess,
+  bubble_chart: outlinedBubbleChart,
+  card_giftcard: outlinedCardGiftcard,
+  celebration: outlinedCelebration,
+  checklist: outlinedChecklist,
+  child_care: outlinedChildCare,
+  close: outlinedClose,
+  construction: outlinedConstruction,
+  directions_car: outlinedDirectionsCar,
+  elderly: outlinedElderly,
+  event: outlinedEvent,
+  favorite: outlinedFavorite,
+  flight: outlinedFlight,
+  home: outlinedHome,
+  image: outlinedImage,
+  laptop: outlinedLaptop,
+  luggage: outlinedLuggage,
+  music_note: outlinedMusicNote,
+  pedal_bike: outlinedPedalBike,
+  pets: outlinedPets,
+  photo_camera: outlinedPhotoCamera,
+  receipt_long: outlinedReceiptLong,
+  savings: outlinedSavings,
+  school: outlinedSchool,
+  smartphone: outlinedSmartphone,
+  sports_soccer: outlinedSportsSoccer,
+  umbrella: outlinedUmbrella,
+  weekend: outlinedWeekend,
+};
+
+export function icon(name: string): string {
+  return icons[name] ?? outlinedImage;
+}
+
+export const hasIcon = (name: string): boolean => name in icons;

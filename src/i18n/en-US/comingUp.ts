@@ -1,0 +1,16 @@
+export default {
+  title: 'Coming up',
+  taxH: 'Final tax bill 2026',
+  taxP: 'Based on last year, we expect about this much when the final bill arrives (usually spring next year).',
+  taxL: 'Expected final bill',
+  monthsL: 'Months to save',
+  perMonth: 'Set aside per month',
+  saveBtn: 'Create a savings pot',
+  saved: '✓ Savings pot created (prototype)',
+  kkH: 'Health insurance: deadline 30 November',
+  kkP: 'To switch basic health insurance for next year, the cancellation must arrive by 30 November. Premiums change every year, so comparing can save money.',
+  kkBtn: "What does 'Franchise' mean?",
+  kkMore: 'The Franchise (deductible) is what you pay yourself each year before insurance pays. A higher Franchise means lower monthly premiums but more risk if you get sick.',
+  prH: 'You might get a premium reduction',
+  prP: 'Households with lower income can get help with health insurance premiums. Each canton has its own rules and application form.',
+};

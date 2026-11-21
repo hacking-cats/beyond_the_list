@@ -1,0 +1,17 @@
+export default {
+  title: 'Übersicht',
+  overviewH: 'Wohin dein Geld geht',
+  overviewP: 'Monatlicher Durchschnitt der letzten 12 Monate deiner Auszüge. Grössere Blase = mehr Geld.',
+  totalL: 'Ausgaben pro Monat',
+  flexL: 'Könntest du reduzieren',
+  ofAll: 'deiner Ausgaben',
+  allL: 'Alle',
+  onlyFlexL: 'Nur was du reduzieren könntest',
+  essential: 'Notwendiges',
+  flexible: 'Könntest du reduzieren',
+  pickP: 'Tippe auf eine Blase, um zu sehen, was sie ist und was sie dich kostet.',
+  shareL: 'deiner monatlichen Ausgaben',
+  ideasBtn: 'Sparideen ansehen',
+  essentialNote: 'Notwendig. Hier schlagen wir nicht vor zu sparen.',
+  listH: 'Alle Kategorien',
+};

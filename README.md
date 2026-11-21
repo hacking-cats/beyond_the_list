@@ -2,7 +2,7 @@
 
 PostFinance challenge "Beyond the List" by team **hacking-cats**: turn the plain transaction list into insight and guidance for migrants, refugees and people on low incomes in Switzerland. Phone first; web demo on GitHub Pages, then Android (Capacitor).
 
-> Status: **skeleton**. This commit contains only the folder structure and the contracts written in plain text. No app code yet.
+> Status: **first app (V2)**. The Quasar app runs with made-up demo data; contracts are still drafts. V1, the single-page prototype, is kept at `/v1/`. See [decision 0002](docs/architecture/decisions/0002-klar-v2-first-app.md).
 
 ## How we work in this phase
 
@@ -32,7 +32,18 @@ Read [AGENTS.md](AGENTS.md) for the rules every person and AI agent follows.
 
 ## Run
 
-Not runnable yet. The Quasar app (Vue 3 + Quasar v2, Vite, TypeScript strict) is created in the next issue.
+Node 22 or newer.
+
+```
+npm install
+npm run dev        # local dev server
+npm test           # unit tests (engines, money, registry)
+npm run typecheck
+npm run lint
+npm run build      # web build in dist/spa
+```
+
+**Live demo:** GitHub Pages deploys `main` automatically (`.github/workflows/pages.yml`): V2 at `https://hacking-cats.github.io/beyond_the_list/`, V1 at `https://hacking-cats.github.io/beyond_the_list/v1/`.
 
 ## Contributing
 
