@@ -1,4 +1,4 @@
-/* Design system "Beyond the List" (tokens + components), then the klar V1 layout pieces,
+/* Design system "Beyond the List": tokens.css and components.css are copies of docs/design/design-system/ (keep in sync), then the V1 layout pieces,
    copied 1:1 from public/v1/index.html so V2 looks the same. Only token values are used. */
 @import './tokens.css';
 @import './components.css';
