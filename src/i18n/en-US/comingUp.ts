@@ -18,5 +18,5 @@ export default {
   serafeH: 'Serafe bill: comes once a year',
   serafeP: 'Every household pays the Serafe fee for radio and TV. Last year your bill was {amount}. Setting a little aside each month means the bill does not hit a tight month.',
   serafeL: 'Set aside per month',
-  prYou: 'Last year health insurance cost you {amount}, about {share}% of your income. With an income like yours it is worth asking: in the canton of Zurich, the SVA Zürich handles premium reductions.',
+  prYou: 'Last year health insurance cost you {amount}, about {share}% of your income. With an income like yours it is worth asking. Your municipality can tell you which office handles premium reductions in your canton.',
 };

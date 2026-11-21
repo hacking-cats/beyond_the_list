@@ -18,5 +18,5 @@ export default {
   serafeH: 'Serafe-Rechnung: kommt einmal im Jahr',
   serafeP: 'Jeder Haushalt bezahlt die Serafe-Abgabe für Radio und TV. Letztes Jahr war deine Rechnung {amount}. Wenn du jeden Monat etwas zurücklegst, trifft dich die Rechnung nicht in einem knappen Monat.',
   serafeL: 'Pro Monat zurücklegen',
-  prYou: 'Letztes Jahr hat dich die Krankenkasse {amount} gekostet, etwa {share}% deines Einkommens. Bei einem Einkommen wie deinem lohnt es sich nachzufragen: im Kanton Zürich ist die SVA Zürich für die Prämienverbilligung zuständig.',
+  prYou: 'Letztes Jahr hat dich die Krankenkasse {amount} gekostet, etwa {share}% deines Einkommens. Bei einem Einkommen wie deinem lohnt es sich nachzufragen. Deine Gemeinde sagt dir, welche Stelle in deinem Kanton für die Prämienverbilligung zuständig ist.',
 };

@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 import { categoryShares } from '../../engines/insights/categoryShares';
 import { alternativesFor, monthlySpending, shareOfIncome } from '../../shared/statements';
 import { iconOf } from '../../shared/transactions';
-import { formatChf } from '../../shared/money';
+import { displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
 import BubbleChart from './BubbleChart.vue';
@@ -42,7 +42,7 @@ function openIdeas() {
   void router.push({ path: '/savings', query: selected.value ? { cat: selected.value } : {} });
 }
 
-const price = (r: number) => formatChf(r, { decimals: r % 100 === 0 ? 0 : 2 });
+const price = (r: number) => displayChf(r, { decimals: r % 100 === 0 ? 0 : 2 });
 // The biggest cheaper alternative found in this category's payments (same as on the Savings page).
 const selectedAlt = computed(() => (selected.value ? alternativesFor(selected.value)[0] : undefined));
 const altTitle = computed(() => (selectedAlt.value ? t(`features.savings.alt.${selectedAlt.value.key}.title`) : ''));
@@ -51,9 +51,9 @@ const altTip = computed(() => {
   if (!a) return '';
   return t(`features.savings.alt.${a.key}.tip`, {
     count: a.count,
-    now: formatChf(a.nowRappen, { decimals: 0 }),
+    now: displayChf(a.nowRappen, { decimals: 0 }),
     alt: price(a.altRappen),
-    total: formatChf(a.totalRappen, { decimals: 0 }),
+    total: displayChf(a.totalRappen, { decimals: 0 }),
   });
 });
 </script>
@@ -66,11 +66,11 @@ const altTip = computed(() => {
     <div class="stats">
       <div class="stat">
         <p class="stat__label">{{ t('features.dashboard.totalL') }}</p>
-        <p class="stat__value">{{ formatChf(overview.totalRappen, { decimals: 0 }) }}</p>
+        <p class="stat__value">{{ displayChf(overview.totalRappen, { decimals: 0 }) }}</p>
       </div>
       <div class="stat">
         <p class="stat__label">{{ t('features.dashboard.flexL') }}</p>
-        <p class="stat__value">{{ formatChf(overview.flexibleRappen, { decimals: 0 }) }}</p>
+        <p class="stat__value">{{ displayChf(overview.flexibleRappen, { decimals: 0 }) }}</p>
         <p class="stat__sub">{{ overview.flexiblePercent }}% {{ t('features.dashboard.ofAll') }}</p>
       </div>
     </div>
@@ -95,7 +95,7 @@ const altTip = computed(() => {
       <DsIcon name="attention" />
       <div class="tone__content">
         <p class="tone__title">
-          {{ cat(selectedItem.key, 'name') }} · {{ formatChf(selectedItem.amountRappen, { decimals: 0 }) }}
+          {{ cat(selectedItem.key, 'name') }} · {{ displayChf(selectedItem.amountRappen, { decimals: 0 }) }}
           {{ t('common.perMonth') }}
         </p>
         <p>
@@ -115,7 +115,7 @@ const altTip = computed(() => {
     <div v-else-if="selectedItem" class="card card--plain" role="status">
       <div class="card__body">
         <p class="card__title">
-          {{ cat(selectedItem.key, 'name') }} · {{ formatChf(selectedItem.amountRappen, { decimals: 0 }) }}
+          {{ cat(selectedItem.key, 'name') }} · {{ displayChf(selectedItem.amountRappen, { decimals: 0 }) }}
           {{ t('common.perMonth') }}
         </p>
         <p>
@@ -147,7 +147,7 @@ const altTip = computed(() => {
             {{ cat(item.key, 'name') }}
             <span class="visually-hidden">, {{ t(`features.dashboard.${item.kind}`) }}</span>
           </span>
-          <span class="amount">{{ formatChf(item.amountRappen, { decimals: 0 }) }}</span>
+          <span class="amount">{{ displayChf(item.amountRappen, { decimals: 0 }) }}</span>
           <span class="rank__share">{{ item.percent }}%</span>
         </li>
       </ul>

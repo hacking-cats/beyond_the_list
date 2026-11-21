@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { chfToRappen, formatChf } from './money';
+import { chfToRappen, displayChf, formatChf } from './money';
 
 describe('formatChf', () => {
   it('formats Swiss style with an apostrophe and two decimals', () => {
@@ -23,5 +23,12 @@ describe('formatChf', () => {
   });
   it('converts francs to Rappen', () => {
     expect(chfToRappen(2400)).toBe(240000);
+  });
+});
+
+describe('displayChf', () => {
+  it('is formatChf wrapped in invisible left-to-right isolate marks', () => {
+    expect(displayChf(123450)).toBe('⁦' + "1'234.50 CHF" + '⁩');
+    expect(displayChf(-500, { decimals: 0 })).toBe(`⁦${formatChf(-500, { decimals: 0 })}⁩`);
   });
 });
