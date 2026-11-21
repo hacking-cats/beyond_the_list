@@ -4,8 +4,6 @@ export default {
   language: 'اللغة',
   sections: 'الأقسام',
   hi: 'مرحبًا',
-  balanceSince: 'الرصيد منذ',
-  fromStatements: 'محسوب من كشوف حسابك (لا يوجد فيها رصيد افتتاحي)',
   privateAccount: 'الحساب الخاص',
   creditCard: 'بطاقة الائتمان',
   prototype: 'نموذج أولي · بيانات تجريبية',

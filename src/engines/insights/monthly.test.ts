@@ -46,7 +46,7 @@ describe('insights on the dummy year (known answers, checked separately)', () =>
   });
   it('suggests cuts only for flexible spending, biggest first', () => {
     const cuts = suggestCuts(averageMonthlySpending(txs, year, kindOf));
-    expect(cuts.map((c) => c.key)).toEqual(['shop', 'hobbies', 'holiday', 'clothes', 'eatingOut']);
+    expect(cuts.map((c) => c.key)).toEqual(['shop', 'hobbies', 'holiday', 'stream']);
     expect(cuts[0]).toEqual({ key: 'shop', nowRappen: 141446, saveRappen: 70800 });
   });
 });

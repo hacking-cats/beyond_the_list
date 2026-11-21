@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n';
 import type { CategoryShare } from '../../engines/insights/categoryShares';
 import { displayChf } from '../../shared/money';
 import { iconOf } from '../../shared/transactions';
+import { groupOf, type SpendingGroup } from '../../shared/transactions';
 import { iconPaths } from '../../shared/ui/icons';
 import { packCircles } from './packCircles';
 
@@ -47,7 +48,15 @@ const bubbles = computed(() =>
   }),
 );
 const name = (key: string) => t(`categories.${key}.name`);
-const ink = (b: { item: CategoryShare }) => (b.item.kind === 'flexible' ? 'var(--text)' : 'var(--text-inverse)');
+// PostFinance colours per spending group: petrol = essentials, recurring; light petrol =
+// essentials, non-recurring (outlined in petrol); grapefruit = could cut back, the only alert
+// colour. White text on petrol, graphite on the other two.
+const FILL: Record<SpendingGroup, string> = {
+  recurring: 'var(--petrol)',
+  occasional: 'var(--petrol-light)',
+  cutBack: 'var(--grapefruit)',
+};
+const ink = (key: string) => (groupOf(key) === 'recurring' ? 'var(--text-inverse)' : 'var(--text)');
 function onKey(e: KeyboardEvent, key: string) {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
@@ -72,20 +81,20 @@ function onKey(e: KeyboardEvent, key: string) {
         :transform="`translate(${b.x},${b.y})`"
         tabindex="0"
         role="button"
-        :aria-label="`${name(b.item.key)}: ${b.amount}, ${b.item.percent}%, ${t(`features.dashboard.${b.item.kind}`)}`"
+        :aria-label="`${name(b.item.key)}: ${b.amount}, ${b.item.percent}%, ${t(`features.dashboard.groups.${groupOf(b.item.key)}`)}`"
         @click="emit('pick', b.item.key)"
         @keydown="onKey($event, b.item.key)"
       >
-        <circle :r="b.r" :fill="b.item.kind === 'flexible' ? 'var(--grapefruit)' : 'var(--petrol)'" />
+        <circle :r="b.r" :class="`bubble__mark--${groupOf(b.item.key)}`" :fill="FILL[groupOf(b.item.key)]" />
         <g
           v-if="b.showIcon"
           class="bubble__icon"
           aria-hidden="true"
           :transform="`translate(${-b.iconSize / 2},${b.iconY}) scale(${b.iconSize / 24})`"
         >
-          <path v-for="(p, i) in b.paths" :key="i" :d="p.d" :fill="p.hidden ? 'none' : ink(b)" />
+          <path v-for="(p, i) in b.paths" :key="i" :d="p.d" :fill="p.hidden ? 'none' : ink(b.item.key)" />
         </g>
-        <text v-if="b.withAmount" dy="1.1em" :font-size="b.big ? 14 : 12" :fill="ink(b)">{{ b.amount }}</text>
+        <text v-if="b.withAmount" dy="1.1em" :font-size="b.big ? 14 : 12" :fill="ink(b.item.key)">{{ b.amount }}</text>
       </g>
     </svg>
   </div>

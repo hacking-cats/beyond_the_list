@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { enabledFeatures } from '../features/registry';
-import { balances, balanceSince, dayLabel, demoPersonName, hasCreditCard, totalBalanceRappen } from '../shared/statements';
+import { balances, demoPersonName, hasCreditCard, totalBalanceRappen } from '../shared/statements';
 import { displayChf } from '../shared/money';
 import { icon } from '../shared/ui/icons';
 import LanguagePicker from './LanguagePicker.vue';
@@ -14,7 +14,7 @@ import './buddy/buddy.css';
 // One layout for the whole app: header with language switch, greeting and balance, the page,
 // and a bottom tab bar (icons only, each with an accessible name) from the feature registry.
 // Pulling the header down rolls down the finAInce buddy (src/layouts/buddy/).
-const { t, locale } = useI18n();
+const { t } = useI18n();
 const route = useRoute();
 const tabs = enabledFeatures();
 
@@ -43,9 +43,6 @@ function closeBuddy() {
     <section class="summary">
       <p class="summary__hello">{{ t('common.hi') }} {{ demoPersonName }} 👋</p>
       <p class="summary__balance amount">{{ displayChf(totalBalanceRappen) }}</p>
-      <p class="summary__sub">
-        {{ t('common.balanceSince') }} {{ dayLabel(balanceSince, locale) }}, {{ t('common.fromStatements') }}
-      </p>
       <p class="summary__sub">
         {{ t('common.privateAccount') }} <span class="amount">{{ displayChf(balances.privateAccount.balanceRappen) }}</span>
         <template v-if="hasCreditCard">

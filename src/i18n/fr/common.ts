@@ -4,8 +4,6 @@ export default {
   language: 'Langue',
   sections: 'Rubriques',
   hi: 'Bonjour',
-  balanceSince: 'Solde depuis le',
-  fromStatements: 'calculé à partir de vos relevés (ils n’ont pas de solde de départ)',
   privateAccount: 'Compte privé',
   creditCard: 'Carte de crédit',
   prototype: 'Prototype · données de démo',
