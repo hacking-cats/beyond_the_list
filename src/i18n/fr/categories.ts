@@ -29,5 +29,5 @@ export default {
   childcare: { name: 'Garde des enfants', short: 'Garde', explain: 'Frais pour l’école à journée continue (Tagesschule) ou la crèche. Dans beaucoup de communes, le tarif dépend du revenu.' },
   kids: { name: 'Enfants : école et activités', short: 'Enfants', explain: 'Camps scolaires, matériel, clubs, cours et argent de poche.' },
   gifts: { name: 'Cadeaux et anniversaires', short: 'Cadeaux', explain: 'Cadeaux pour les anniversaires et Noël.', tip: 'Fixez un budget cadeau par enfant avant décembre et répartissez les achats sur l’année.' },
-  games: { name: 'Jeux et achats intégrés', short: 'Jeux', explain: 'Achats dans les jeux et les applis, par exemple Roblox, et boutiques de jeux comme le Nintendo eShop.', tip: 'Fixez une limite mensuelle pour les achats intégrés sur les appareils des enfants.' },
+  games: { name: 'Jeux et achats intégrés', short: 'Jeux', explain: 'Achats dans les jeux et les applis, par exemple des Robux dans Roblox, des gemmes dans Brawl Stars ou des FC Points sur la PlayStation. Beaucoup de jeux sont conçus pour qu’on gagne plus vite en payant.', tip: 'Vérifiez sur quels comptes de jeux votre carte est enregistrée, et supprimez-la.' },
 };

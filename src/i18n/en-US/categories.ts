@@ -29,5 +29,5 @@ export default {
   childcare: { name: 'Childcare', short: 'Childcare', explain: 'Fees for the day school (Tagesschule) or daycare. In many places the fee depends on your income.' },
   kids: { name: 'Children: school and activities', short: 'Children', explain: 'School camps, materials, clubs, courses and pocket money.' },
   gifts: { name: 'Gifts and birthdays', short: 'Gifts', explain: 'Presents for birthdays and Christmas.', tip: 'Agree on a gift budget per child before December and spread the shopping over the year.' },
-  games: { name: 'Games and in-app purchases', short: 'Games', explain: 'Purchases inside games and apps, for example Roblox, and game stores like the Nintendo eShop.', tip: 'Set a monthly limit for in-app purchases on the children\'s devices.' },
+  games: { name: 'Games and in-app purchases', short: 'Games', explain: 'Purchases inside games and apps, for example Robux in Roblox, gems in Brawl Stars or FC Points on the PlayStation. Many games are built so that paying helps you win faster.', tip: 'Check which game accounts have your card saved, and remove it there.' },
 };

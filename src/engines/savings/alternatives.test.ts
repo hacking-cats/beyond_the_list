@@ -80,11 +80,15 @@ describe('alternatives for the Jeanine single-mother persona', () => {
 
   it('finds the family ideas, the biggest first', () => {
     expect(ideas.map((i) => i.key)).toEqual([
-      'discounter', 'onlineWait', 'kidsSecondHand', 'budgetPhone', 'inAppLimit', 'cookInstead', 'streamingRotate', 'lateFees', 'postomat',
+      'discounter', 'inAppLimit', 'streamingRotate', 'kidsSecondHand', 'budgetPhone', 'onlineWait', 'cookInstead', 'lateFees', 'postomat',
     ]);
   });
-  it('streaming: Netflix, Disney+ and Spotify every month', () => {
+  it('in-app purchases: the children pay with the saved card, a CHF 30 gift-card budget instead', () => {
+    const g = ideas.find((i) => i.key === 'inAppLimit')!;
+    expect(g).toMatchObject({ count: 150, totalRappen: 201020, saveRappen: 13700 }); // (2010.20 - 12 x 30) / 12 = 137.51
+  });
+  it('streaming: five services and a second Spotify plan, added over the year', () => {
     const s = ideas.find((i) => i.key === 'streamingRotate')!;
-    expect(s).toMatchObject({ count: 36, nowRappen: 5475, saveRappen: 1600 });
+    expect(s).toMatchObject({ count: 55, nowRappen: 7599, saveRappen: 3700 });
   });
 });

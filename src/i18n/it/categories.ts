@@ -29,5 +29,5 @@ export default {
   childcare: { name: 'Custodia dei bambini', short: 'Custodia', explain: 'Rette per la scuola a orario continuato (Tagesschule) o l’asilo nido. In molti luoghi la retta dipende dal reddito.' },
   kids: { name: 'Bambini: scuola e attività', short: 'Bambini', explain: 'Colonie scolastiche, materiale, società sportive, corsi e paghetta.' },
   gifts: { name: 'Regali e compleanni', short: 'Regali', explain: 'Regali per compleanni e Natale.', tip: 'Concorda un budget per i regali per ogni bambino prima di dicembre e distribuisci gli acquisti sull’anno.' },
-  games: { name: 'Giochi e acquisti in-app', short: 'Giochi', explain: 'Acquisti dentro giochi e app, per esempio Roblox, e negozi di giochi come il Nintendo eShop.', tip: 'Imposta un limite mensile per gli acquisti in-app sui dispositivi dei bambini.' },
+  games: { name: 'Giochi e acquisti in-app', short: 'Giochi', explain: 'Acquisti dentro giochi e app, per esempio Robux in Roblox, gemme in Brawl Stars o FC Points sulla PlayStation. Molti giochi sono fatti in modo che pagando si vinca più in fretta.', tip: 'Controlla in quali account di gioco è salvata la tua carta, e rimuovila.' },
 };

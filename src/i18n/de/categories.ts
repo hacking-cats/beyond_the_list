@@ -29,5 +29,5 @@ export default {
   childcare: { name: 'Kinderbetreuung', short: 'Betreuung', explain: 'Gebühren für die Tagesschule oder die Kita. Vielerorts hängen sie vom Einkommen ab.' },
   kids: { name: 'Kinder: Schule und Freizeit', short: 'Kinder', explain: 'Schullager, Schulmaterial, Vereine, Kurse und Sackgeld.' },
   gifts: { name: 'Geschenke und Geburtstage', short: 'Geschenke', explain: 'Geschenke zu Geburtstagen und Weihnachten.', tip: 'Leg vor Dezember ein Geschenkbudget pro Kind fest und verteile die Einkäufe übers Jahr.' },
-  games: { name: 'Games und In-App-Käufe', short: 'Games', explain: 'Käufe in Games und Apps, zum Beispiel Roblox, und in Game-Stores wie dem Nintendo eShop.', tip: 'Setz auf den Geräten der Kinder ein monatliches Limit für In-App-Käufe.' },
+  games: { name: 'Games und In-App-Käufe', short: 'Games', explain: 'Käufe in Games und Apps, zum Beispiel Robux in Roblox, Gems in Brawl Stars oder FC Points auf der PlayStation. Viele Games sind so gebaut, dass man mit Bezahlen schneller gewinnt.', tip: 'Prüf, in welchen Game-Konten deine Karte gespeichert ist, und lösch sie dort.' },
 };

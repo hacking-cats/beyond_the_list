@@ -121,22 +121,27 @@
     "match": [
       "Netflix",
       "Disney Plus",
-      "Spotify"
+      "Spotify",
+      "YouTube Premium",
+      "Crunchyroll"
     ],
     "type": "percent",
-    "percent": 30,
-    "source": "assumption: keeping one video service at a time and switching every few months saves about one subscription"
+    "percent": 50,
+    "source": "assumption: cancelling a duplicate plan and keeping one video service at a time (switching every few months) halves the streaming bill"
   },
   {
     "key": "inAppLimit",
     "category": "games",
     "match": [
       "Apple.com/bill",
-      "Roblox"
+      "Roblox",
+      "Google Play",
+      "PlayStation Store",
+      "Epic Games"
     ],
-    "type": "percent",
-    "percent": 50,
-    "source": "assumption: a fixed monthly limit (Apple Family Sharing 'Ask to Buy' or one gift card a month) halves in-app spending"
+    "type": "flatPerMonth",
+    "source": "assumption: the card removed from the children's accounts and CHF 30 a month in gift cards (App Store, Google Play, PlayStation) for both children together",
+    "altRappen": 3000
   },
   {
     "key": "onlineWait",
