@@ -32,3 +32,11 @@ Read [AGENTS.md](AGENTS.md) for the rules every person and AI agent follows.
 ## Run
 
 Not runnable yet. The Quasar app (Vue 3 + Quasar v2, Vite, TypeScript strict) is created in the next issue.
+
+## Contributing
+
+Every change reaches `main` through a pull request; see the Git rules in [AGENTS.md](AGENTS.md). After cloning, enable the repo's git hooks once:
+
+```
+git config core.hooksPath .githooks
+```

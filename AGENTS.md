@@ -41,9 +41,18 @@ Not available yet (the Quasar app is created in the next issue). Will be: instal
 - Screenshot in the PR for UI changes; label `ai-assisted` if mostly generated.
 - No secrets, no API keys in the app, no real user data. Real challenge CSVs never go into the repo.
 
-## Git rules
+## Git rules (MUST, no exceptions)
 
-One issue, one branch (`feat/<issue>-<slug>`), one pull request to `main`. Never push to `main`. Conventional Commits in English.
+1. **Every change reaches `main` through a pull request.** No direct commits or pushes to `main`, by people or agents, not even for a one-line fix, a README or a merge.
+2. Before the first commit, check the current branch. If it is `main`, create a branch first: `git switch -c feat/<issue>-<slug>`.
+3. One issue, one branch, one pull request to `main`. Conventional Commits in English.
+4. Agents never merge their own pull request; a human reviews and merges.
+5. If a rule above blocks you, stop and ask a human. Never bypass it (no `--no-verify`, no force-push to `main`, no disabling hooks).
+
+How it is enforced:
+- **GitHub branch protection on `main`** (the real enforcement): require a pull request with one approval and passing checks, block force-pushes and deletion. Set in repo Settings → Branches by a repo admin.
+- **Git hook** `.githooks/pre-push` refuses pushes to `main`. Enable once per clone: `git config core.hooksPath .githooks`.
+- **Claude Code hook** in `.claude/settings.json` blocks `git commit` on `main` and `git push` to `main` for Claude sessions.
 
 ## Stop and ask a human when
 

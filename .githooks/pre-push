@@ -1,0 +1,9 @@
+#!/bin/sh
+# Refuse pushes to main: every change goes through a pull request (see AGENTS.md).
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$remote_ref" = "refs/heads/main" ]; then
+    echo "pre-push: pushing to main is not allowed. Push a feat/<issue>-<slug> branch and open a pull request." >&2
+    exit 1
+  fi
+done
+exit 0
