@@ -17,6 +17,7 @@ Read [AGENTS.md](AGENTS.md) for the rules every person and AI agent follows.
 | Folder | What lives there |
 |---|---|
 | `docs/` | Product, design, domain knowledge, architecture decisions, templates |
+| `data/dummy/` | Dummy transaction CSVs in the challenge format (seed data for the data loader) |
 | `content/` | Data, not code: categories, merchant aliases, cheaper alternatives, PostFinance products |
 | `src/contracts/` | Interfaces (specs now, TypeScript later). Integrator owns them |
 | `src/engines/` | Pure functions that compute every number. Plain data in, plain data out |
