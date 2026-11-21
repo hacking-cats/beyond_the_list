@@ -1,59 +1,50 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+/**
+ * Explained tab: shows the "Beyond the List" prototype (public/v2/index.html) in a frame that
+ * fills the space between the header and the tab bar. A stopgap until the prototype is ported
+ * into this folder (ADR 0007, issues #28–#31); the previous per-category list is in git history.
+ */
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Transaction } from '../../engines/ingest/types';
-import { displayChf } from '../../shared/money';
-import { latestTransactions } from '../../shared/statements';
-import DsIcon from '../../shared/ui/DsIcon.vue';
 
 const { t } = useI18n();
-const open = ref(new Set<string>());
-function toggle(id: string) {
-  const next = new Set(open.value);
-  if (next.has(id)) next.delete(id);
-  else next.add(id);
-  open.value = next;
+const src = `${import.meta.env.BASE_URL}v2/index.html`;
+
+const frame = ref<HTMLIFrameElement | null>(null);
+const height = ref('70vh');
+const TABBAR_PX = 56; // .tabbar__tab min-height in src/css/app.css
+
+function fit() {
+  const el = frame.value;
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY;
+  height.value = `${Math.max(320, window.innerHeight - top - TABBAR_PX)}px`;
 }
 
-/** Categories that often surprise newcomers: shown with the attention icon. */
-const NEW_TO_YOU = new Set(['tax', 'insurance', 'utilities']);
-const isNew = (tx: Transaction) => tx.kind === 'expense' && NEW_TO_YOU.has(tx.category ?? '');
-const title = (tx: Transaction) =>
-  tx.kind === 'transfer'
-    ? t('categories.transfer.name')
-    : tx.kind === 'income'
-      ? t(`categories.${tx.category ?? 'income'}.name`)
-      : tx.counterparty;
-const day = (tx: Transaction) => `${tx.date.slice(8, 10)}.${tx.date.slice(5, 7)}.`;
-const explain = (tx: Transaction) =>
-  tx.kind === 'refund'
-    ? `${t('categories.refund.explain')} (${t(`categories.${tx.category ?? 'other'}.name`)})`
-    : t(`categories.${tx.kind === 'expense' || tx.kind === 'income' ? (tx.category ?? tx.kind) : tx.kind}.explain`);
+// Re-fit when anything above the frame changes height (e.g. the buddy intro banner is dismissed).
+let observer: ResizeObserver | undefined;
+onMounted(() => {
+  fit();
+  window.addEventListener('resize', fit);
+  observer = new ResizeObserver(fit);
+  observer.observe(document.body);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', fit);
+  observer?.disconnect();
+});
 </script>
 
 <template>
-  <div>
-    <p class="hint">{{ t('features.movements.hint') }}</p>
-    <ul class="statement statement--flush">
-      <li v-for="tx in latestTransactions" :key="tx.id">
-        <button class="line" :aria-expanded="open.has(tx.id)" @click="toggle(tx.id)">
-          <span class="line__main">
-            <span class="line__merchant">{{ title(tx) }}</span>
-            <span v-if="isNew(tx)" class="line__new">{{ t('features.movements.newToYou') }}</span>
-            <span v-else-if="tx.kind === 'refund'" class="line__new">{{ t('features.movements.refund') }}</span>
-            <span class="line__original">{{ day(tx) }} · {{ tx.originalName }}</span>
-          </span>
-          <span v-if="isNew(tx)" class="line__flag line__flag--attention">
-            <DsIcon name="attention" small :label="t('features.movements.newToYou')" />
-          </span>
-          <span class="line__amount" :class="{ 'line__amount--in': tx.amountRappen > 0 }">
-            {{ displayChf(tx.amountRappen, { sign: true }) }}
-          </span>
-        </button>
-        <div v-if="open.has(tx.id)" class="line-explain reply">
-          <p>{{ explain(tx) }}</p>
-        </div>
-      </li>
-    </ul>
-  </div>
+  <iframe ref="frame" class="explained-frame" :src="src" :title="t('features.movements.title')" :style="{ height }" />
 </template>
+
+<style scoped>
+/* Cancel the panel padding so the prototype uses the full width, like the other tabs' lists. */
+.explained-frame {
+  display: block;
+  width: calc(100% + 2 * var(--sp-lg));
+  margin: calc(-1 * var(--sp-lg));
+  border: 0;
+}
+</style>
