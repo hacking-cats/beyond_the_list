@@ -1,0 +1,31 @@
+/* Beyond the List: design tokens for the single-file app. Same values as tokens/*.json. */
+:root {
+  --yellow: #FFCC00;  --yellow-dark: #E6B800;   /* primary button background only */
+  --petrol: #005C66;  --petrol-dark: #00474F;   /* links, secondary buttons, chips, marker */
+  --grapefruit: #FF5A36;                         /* action border and icon only, never text */
+  --light-blue: #7FD1E8;                         /* decorative only */
+
+  --surface: #FFFFFF; --surface-subtle: #F5F7F8; --surface-inverse: #0E1A1C;
+  --tint-attention: #FFF6DB; --tint-action: #FFEDE8; --tint-info: #E8F6FB;
+
+  --text: #10201F; --text-secondary: #4A5A5C; --text-muted: #616F70;
+  --text-inverse: #FFFFFF; --text-disabled: #8A9798;
+  --border: #D8DEDF; --border-strong: #616F70;
+
+  --success-text: #1B7F4B; --warning-text: #946219; --error-text: #C0392B;
+  --info-text: #266BC7; --urgent-text: #BC4227;
+
+  --font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fs-title: 22px; --fs-subtitle: 18px; --fs-body: 16px; --fs-small: 14px;
+  --fs-caption: 12px; --fs-wit: 15px; --fs-display: 32px;
+
+  --sp-xs: 4px; --sp-sm: 8px; --sp-md: 12px; --sp-lg: 16px; --sp-xl: 24px; --sp-xxl: 32px;
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-pill: 999px;
+  --shadow-sheet: 0 -4px 24px rgba(0, 0, 0, 0.12);
+
+  --t-fast: 120ms; --t-normal: 200ms; --t-slow: 300ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --touch: 44px; --content-max: 480px;
+}
+.amount { font-variant-numeric: tabular-nums; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
