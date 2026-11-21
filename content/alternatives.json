@@ -137,7 +137,10 @@
       "Roblox",
       "Google Play",
       "PlayStation Store",
-      "Epic Games"
+      "Epic Games",
+      "Xbox",
+      "Nintendo eShop",
+      "Steam"
     ],
     "type": "flatPerMonth",
     "source": "assumption: the card removed from the children's accounts and CHF 30 a month in gift cards (App Store, Google Play, PlayStation) for both children together",

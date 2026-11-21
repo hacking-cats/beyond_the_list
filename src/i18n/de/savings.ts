@@ -80,4 +80,12 @@ export default {
     onlineWait: { title: '48 Stunden warten vor einer Temu-Bestellung', tip: 'Du hast in den letzten 12 Monaten {count}-mal bei Temu bestellt ({total}). Leg die Sachen in den Warenkorb und bestell einmal im Monat: viele kleine Dinge fehlen nicht, und billige gehen oft schnell kaputt.' },
     kidsSecondHand: { title: 'Kinderkleider aus zweiter Hand', tip: 'Du gibst bei Zalando etwa {now} pro Monat für Kinderkleider und -schuhe aus. Kinder wachsen schnell: an einer Kinderkleiderbörse, im Brockenhaus, auf Ricardo oder Tutti kostet es meist weniger als die Hälfte.' },
   },
+  capL: 'Game-Käufe begrenzen',
+  capMaxL: 'Höchstens pro Monat',
+  capRec: 'Empfohlen: {amount} im Monat für beide Kinder zusammen.',
+  capDoneH: 'Dein Limit ist aktiv',
+  capDoneP: 'Game- und In-App-Käufe mit deiner Karte sind jetzt auf insgesamt {amount} im Monat begrenzt: App Store, Google Play, PlayStation Store, Xbox und andere Game-Stores. Käufe über dem Limit werden abgelehnt.',
+  capDoneSave: 'Das spart etwa {save} im Monat. Es ist jetzt Teil deines Sparplans.',
+  capProto: 'Prototyp: Auf deiner Karte wird kein echtes Limit gesetzt.',
+  capOk: 'OK',
 };

@@ -458,5 +458,15 @@
     ],
     "name": "Washing machine",
     "category": "household"
+  },
+  {
+    "match": [
+      "Microsoft*Xbox",
+      "Xbox",
+      "Nintendo eShop",
+      "Steam"
+    ],
+    "name": "Game stores",
+    "category": "games"
   }
 ]

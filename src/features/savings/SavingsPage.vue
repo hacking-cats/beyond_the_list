@@ -3,6 +3,7 @@ import { computed, nextTick, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { goalPlan } from '../../engines/savings/goalPlan';
+import { savingWithCap } from '../../engines/savings/alternatives';
 import { paymentsPerMonth } from '../../engines/insights/monthly';
 import { demoNewProjectRappen, demoSavedRappen, projectIcons } from '../../shared/demo-data';
 import { savingsAlternatives, savingsCuts, transactions, yearMonths } from '../../shared/statements';
@@ -128,6 +129,26 @@ function removeCurrent() {
   goalFrancs.value = Math.round(current.value.amountRappen / 100);
 }
 
+// The in-app purchases idea is a spending cap the user switches on (prototype: no real card
+// limit), not a plan chip. The slider starts at the recommended budget from content/alternatives.json.
+const CAP_IDEA = 'alt.inAppLimit';
+const capIdea = savingsAlternatives.find((a) => `alt.${a.key}` === CAP_IDEA);
+const capRecommendedFrancs = Math.round((capIdea?.altRappen ?? 0) / 100);
+const capMaxFrancs = Math.max(capRecommendedFrancs, Math.ceil((capIdea?.nowRappen ?? 0) / 1000) * 10);
+const capFrancs = ref(capRecommendedFrancs);
+const capOn = ref(false);
+const capDialog = ref(false);
+const capSaveRappen = computed(() => savingWithCap(capIdea?.nowRappen ?? 0, chfToRappen(capFrancs.value)));
+const saveOf = (i: Idea) => (i.id === CAP_IDEA ? capSaveRappen.value : i.saveRappen);
+function setCap(on: boolean) {
+  capOn.value = on;
+  const next = new Set(plan.value);
+  if (on) next.add(CAP_IDEA);
+  else next.delete(CAP_IDEA);
+  plan.value = next;
+  capDialog.value = on;
+}
+
 function togglePlan(key: string) {
   const next = new Set(plan.value);
   if (next.has(key)) next.delete(key);
@@ -157,7 +178,7 @@ const result = computed(() =>
     goalRappen: chfToRappen(goalFrancs.value),
     savedRappen: chfToRappen(savedFrancs.value),
     months: months.value,
-    selectedSavingsRappen: ideas.value.filter((i) => plan.value.has(i.id)).map((i) => i.saveRappen),
+    selectedSavingsRappen: ideas.value.filter((i) => plan.value.has(i.id)).map(saveOf),
   }),
 );
 const cat = (key: string, field: 'name' | 'tip' | 'wit') => t(`categories.${key}.${field}`);
@@ -289,11 +310,29 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
           </div>
           <div class="result">
             <span>{{ t('features.savings.saveL') }}</span>
-            <span class="amount positive">{{ chf0(i.saveRappen) }} {{ t('common.perMonth') }}</span>
+            <span class="amount positive">{{ chf0(saveOf(i)) }} {{ t('common.perMonth') }}</span>
           </div>
           <p>{{ i.tip }}</p>
           <p v-if="i.wit" class="wit" style="margin: 0 0 var(--sp-sm)">{{ i.wit }}</p>
-          <button class="chip" :aria-pressed="plan.has(i.id)" @click="togglePlan(i.id)">
+          <div v-if="i.id === CAP_IDEA" class="cap">
+            <q-toggle
+              :model-value="capOn"
+              color="primary"
+              size="lg"
+              class="cap__toggle"
+              :label="t('features.savings.capL')"
+              @update:model-value="setCap"
+            />
+            <label class="field" style="margin-top: 0">
+              {{ t('features.savings.capMaxL') }}:
+              <b class="amount">{{ chf0(chfToRappen(capFrancs)) }} {{ t('common.perMonth') }}</b>
+              <input v-model.number="capFrancs" type="range" min="0" :max="capMaxFrancs" step="5" />
+            </label>
+            <p class="hint" style="margin: 0">
+              {{ t('features.savings.capRec', { amount: chf0(chfToRappen(capRecommendedFrancs)) }) }}
+            </p>
+          </div>
+          <button v-else class="chip" :aria-pressed="plan.has(i.id)" @click="togglePlan(i.id)">
             {{ plan.has(i.id) ? t('features.savings.addedL') : t('features.savings.addL') }}
           </button>
         </div>
@@ -324,5 +363,26 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
     <button class="btn btn--primary btn--block" style="margin-top: var(--sp-lg)" @click="started = true">{{ t('features.savings.startBtn') }}</button>
     <p class="done" role="status">{{ started ? t('features.savings.started') : '' }}</p>
 
+    <q-dialog v-model="capDialog">
+      <div class="cap-done" role="alertdialog" aria-labelledby="cap-done-h" aria-describedby="cap-done-p">
+        <q-icon class="cap-done__icon" :name="icon('task_alt')" size="48px" aria-hidden="true" />
+        <h2 id="cap-done-h" class="cap-done__title">{{ t('features.savings.capDoneH') }}</h2>
+        <p id="cap-done-p">{{ t('features.savings.capDoneP', { amount: chf0(chfToRappen(capFrancs)) }) }}</p>
+        <p>{{ t('features.savings.capDoneSave', { save: chf0(capSaveRappen) }) }}</p>
+        <p class="hint">{{ t('features.savings.capProto') }}</p>
+        <button class="btn btn--primary btn--block" @click="capDialog = false">{{ t('features.savings.capOk') }}</button>
+      </div>
+    </q-dialog>
+
   </div>
 </template>
+
+<style scoped>
+.cap { display: flex; flex-direction: column; gap: var(--sp-sm); padding-top: var(--sp-sm); border-top: 1px solid var(--border); }
+.cap__toggle { margin-inline-start: calc(-1 * var(--sp-sm)); font-weight: 600; }
+.cap-done { width: 100%; max-width: 360px; padding: var(--sp-lg); text-align: center;
+  background: var(--surface); color: var(--text); font-family: var(--font); border-radius: var(--r-lg); }
+.cap-done__icon { color: var(--success-text); }
+.cap-done__title { margin: var(--sp-sm) 0; font-size: var(--fs-subtitle); font-weight: 700; line-height: 1.3; }
+.cap-done p { margin: 0 0 var(--sp-sm); }
+</style>

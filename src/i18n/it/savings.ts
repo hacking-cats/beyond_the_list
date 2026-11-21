@@ -80,4 +80,12 @@ export default {
     onlineWait: { title: 'Aspetta 48 ore prima di un ordine Temu', tip: 'Hai ordinato su Temu {count} volte negli ultimi 12 mesi ({total}). Metti gli articoli nel carrello e ordina una volta al mese: di molte piccole cose non si sente la mancanza, e quelle economiche spesso si rompono presto.' },
     kidsSecondHand: { title: 'Vestiti per bambini di seconda mano', tip: 'Spendi circa {now} al mese per vestiti e scarpe per bambini da Zalando. I bambini crescono in fretta: una borsa dei vestiti per bambini (Kinderkleiderbörse), il Brockenhaus, Ricardo o Tutti di solito costano meno della metà.' },
   },
+  capL: 'Limita gli acquisti di giochi',
+  capMaxL: 'Al massimo al mese',
+  capRec: 'Consigliato: {amount} al mese per entrambi i bambini insieme.',
+  capDoneH: 'Il tuo limite è attivo',
+  capDoneP: 'Gli acquisti di giochi e in-app con la tua carta ora sono limitati a {amount} al mese in totale: App Store, Google Play, PlayStation Store, Xbox e altri negozi di giochi. Gli acquisti oltre il limite vengono rifiutati.',
+  capDoneSave: 'Così risparmi circa {save} al mese. Ora fa parte del tuo piano di risparmio.',
+  capProto: 'Prototipo: sulla tua carta non viene impostato nessun limite reale.',
+  capOk: 'OK',
 };

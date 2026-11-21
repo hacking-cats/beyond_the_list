@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import rulesJson from '../../../content/alternatives.json';
 import type { Transaction } from '../ingest/types';
 import { parseCsv, toTransactions } from '../ingest/ingest';
-import { alternatives, type AlternativeRule } from './alternatives';
+import { alternatives, savingWithCap, type AlternativeRule } from './alternatives';
 
 let n = 0;
 const tx = (originalName: string, chf: number, date = '2025-01-10', kind: Transaction['kind'] = 'expense'): Transaction => ({
@@ -43,6 +43,17 @@ describe('alternatives', () => {
     const txs = [tx('Shop', 10), tx('Kiosk', 40)];
     const keys = alternatives(txs, ['2025-01'], [rule({ key: 'a' }), rule({ key: 'b', match: ['Kiosk'] })]).map((a) => a.key);
     expect(keys).toEqual(['b', 'a']);
+  });
+});
+
+describe('savingWithCap', () => {
+  it('saves what is spent above the cap, in whole francs', () => {
+    expect(savingWithCap(16752, 3000)).toBe(13700);
+    expect(savingWithCap(16752, 0)).toBe(16700);
+  });
+  it('saves nothing when the cap is at or above the spending', () => {
+    expect(savingWithCap(16752, 17000)).toBe(0);
+    expect(savingWithCap(0, 3000)).toBe(0);
   });
 });
 

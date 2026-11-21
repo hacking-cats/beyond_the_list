@@ -60,6 +60,7 @@ import {
   outlinedCasino,
   outlinedVolunteerActivism,
   outlinedSportsEsports,
+  outlinedTaskAlt,
 } from '@quasar/extras/material-icons-outlined';
 
 const icons: Record<string, string> = {
@@ -121,6 +122,7 @@ const icons: Record<string, string> = {
   casino: outlinedCasino,
   volunteer_activism: outlinedVolunteerActivism,
   sports_esports: outlinedSportsEsports,
+  task_alt: outlinedTaskAlt,
 };
 
 export function icon(name: string): string {

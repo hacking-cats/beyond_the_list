@@ -94,3 +94,12 @@ export function alternatives(
     .filter((a) => a.count > 0 && a.saveRappen >= minSaveRappen)
     .sort((a, b) => b.saveRappen - a.saveRappen);
 }
+
+/**
+ * Saving per month when a spending cap of `capRappen` a month is switched on (for example a
+ * limit on the children's in-app purchases): what is spent now above the cap, rounded down to
+ * whole francs. Nothing is saved when the cap is at or above today's spending.
+ */
+export function savingWithCap(nowRappen: number, capRappen: number): number {
+  return Math.max(0, Math.floor((nowRappen - capRappen) / 100) * 100);
+}
