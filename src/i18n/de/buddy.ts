@@ -17,4 +17,6 @@ export default {
   introBody: 'Stell Fragen zu deinem Geld in deinen eigenen Worten. Zieh oben am Bildschirm nach unten, um zu starten.',
   introTry: 'Ausprobieren',
   introDismiss: 'Verstanden',
+  error: 'Entschuldigung, ich erreiche den Server gerade nicht. Bitte versuche es gleich noch einmal.',
+  thinking: 'Ich denke nach…',
 };

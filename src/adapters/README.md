@@ -8,4 +8,4 @@ Implementations of the contracts in `src/contracts/`. Only `src/boot/services.ts
 | `storage/` | Storage | `memory.ts`, `local.ts` | placeholder |
 | `llm/` | LlmProvider | `fake.ts`, `claude.ts`, `local.ts` | placeholder |
 | `notifier/` | Notifier | `console.ts`, `in-app.ts`, `push.ts` | placeholder |
-| `assistant/` | Assistant | `fake.ts`, `llm-backed.ts` | placeholder |
+| `assistant/` | Assistant | `fake.ts`, `http.ts` (finAInce chat backend, `FINAINCE_CHAT_URL`), `llm-backed.ts` (later) | fake + http |
