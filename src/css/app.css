@@ -162,7 +162,7 @@ input[type=range] { width: 100%; min-height: var(--touch); accent-color: var(--p
 .group-title .amount { font-weight: 600; white-space: nowrap; }
 
 /* Advice booking (src/features/savings/AdviceBooking.vue) */
-.advice-card { display: flex; align-items: flex-start; gap: var(--sp-md); margin: var(--sp-xl) 0 var(--sp-sm); padding: var(--sp-lg);
+.advice-card { display: flex; align-items: flex-start; gap: var(--sp-md); margin: var(--sp-md) 0; padding: var(--sp-lg);
   border-radius: var(--r-lg); background: var(--tint-info); }
 .advice-card__icon { width: 44px; height: 44px; flex: none; display: flex; align-items: center; justify-content: center;
   border-radius: var(--r-pill); background: var(--petrol); color: var(--text-inverse); }
