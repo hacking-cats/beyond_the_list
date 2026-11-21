@@ -88,6 +88,8 @@ export default {
   capDoneSave: 'Das spart etwa {save} im Monat. Es ist jetzt Teil deines Sparplans.',
   capProto: 'Prototyp: Auf deiner Karte wird kein echtes Limit gesetzt.',
   capOk: 'OK',
+  planGoal: 'Dein Ziel: {name}, {amount} in {months} Monaten.',
+  changeGoal: 'Ziel ändern',
   advice: {
     cardH: "Mit einer Fachperson von PostFinance sprechen",
     cardP: "Sie wissen nicht, welche Idee zu Ihnen passt? Eine Fachperson schaut Ihren Plan mit Ihnen an. Kostenlos und unverbindlich.",

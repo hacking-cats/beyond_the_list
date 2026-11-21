@@ -88,6 +88,8 @@ export default {
   capDoneSave: 'Cela vous fait économiser environ {save} par mois. C’est maintenant inclus dans votre plan d’épargne.',
   capProto: 'Prototype : aucune limite réelle n’est fixée sur votre carte.',
   capOk: 'OK',
+  planGoal: 'Votre objectif : {name}, {amount} en {months} mois.',
+  changeGoal: 'Changer d’objectif',
   advice: {
     cardH: "Parler à un·e spécialiste PostFinance",
     cardP: "Vous ne savez pas quelle idée vous convient ? Un·e spécialiste peut regarder votre plan avec vous. Gratuit et sans engagement.",

@@ -5,12 +5,11 @@ import { useI18n } from 'vue-i18n';
 import { goalPlan } from '../../engines/savings/goalPlan';
 import { savingWithCap } from '../../engines/savings/alternatives';
 import { paymentsPerMonth } from '../../engines/insights/monthly';
-import { demoNewProjectRappen, demoSavedRappen, projectIcons } from '../../shared/demo-data';
 import { savingsAlternatives, savingsCuts, transactions, yearMonths } from '../../shared/statements';
 import { chfToRappen, displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
-import { addProject, MAX_IMAGE_BYTES, projectsState, removeProject, type SavingsProject } from './projects';
+import { goalState, projectsState, type SavingsProject } from './projects';
 import InvestIdeas from '../invest/InvestIdeas.vue';
 import AdviceBooking from './AdviceBooking.vue';
 
@@ -64,72 +63,8 @@ const current = computed<SavingsProject>(
   () => projectsState.projects.find((p) => p.key === projectsState.selected) ?? projectsState.projects[0]!,
 );
 const projectName = (p: SavingsProject) => (p.preset ? t(`features.savings.goals.${p.key}`) : (p.name ?? ''));
-
-const goalFrancs = ref(Math.round(current.value.amountRappen / 100));
-const savedFrancs = ref(Math.round(demoSavedRappen / 100));
-const months = ref(12);
 const plan = ref(new Set<string>());
 const started = ref(false);
-
-function pickGoal(p: SavingsProject) {
-  projectsState.selected = p.key;
-  goalFrancs.value = Math.round(p.amountRappen / 100);
-  started.value = false;
-  adding.value = false;
-}
-
-// ---- Add a project of your own -------------------------------------------------
-const adding = ref(false);
-const newName = ref('');
-const newIcon = ref(projectIcons[0]!);
-const newImage = ref<string | undefined>(undefined);
-const formError = ref('');
-
-function openForm() {
-  adding.value = true;
-  newName.value = '';
-  newIcon.value = projectIcons[0]!;
-  newImage.value = undefined;
-  formError.value = '';
-}
-function onPhoto(e: Event) {
-  const input = e.target as HTMLInputElement;
-  const file = input.files?.[0];
-  input.value = '';
-  if (!file) return;
-  if (!file.type.startsWith('image/')) {
-    formError.value = t('features.savings.photoWrongType');
-    return;
-  }
-  if (file.size > MAX_IMAGE_BYTES) {
-    formError.value = t('features.savings.photoTooBig');
-    return;
-  }
-  const reader = new FileReader();
-  reader.onload = () => {
-    if (typeof reader.result === 'string') newImage.value = reader.result;
-    formError.value = '';
-  };
-  reader.readAsDataURL(file);
-}
-function create() {
-  const name = newName.value.trim();
-  if (!name) {
-    formError.value = t('features.savings.nameRequired');
-    return;
-  }
-  const project = addProject({
-    name,
-    icon: newIcon.value,
-    ...(newImage.value ? { image: newImage.value } : {}),
-    amountRappen: demoNewProjectRappen,
-  });
-  pickGoal(project);
-}
-function removeCurrent() {
-  removeProject(current.value.key);
-  goalFrancs.value = Math.round(current.value.amountRappen / 100);
-}
 
 // The in-app purchases idea is a spending cap the user switches on (prototype: no real card
 // limit), not a plan chip. The slider starts at the recommended budget from content/alternatives.json.
@@ -164,8 +99,13 @@ const router = useRouter();
 const focus = computed(() => (typeof route.query.cat === 'string' ? route.query.cat : ''));
 const focusName = computed(() => (focus.value ? t(`categories.${focus.value}.name`) : ''));
 const focusHits = computed(() => ideas.value.filter((i) => i.category === focus.value));
+// Without a focus, the game-purchase cap comes first so it is the first thing on the Savings tab.
+const capFirst = computed(() => [
+  ...ideas.value.filter((i) => i.id === CAP_IDEA),
+  ...ideas.value.filter((i) => i.id !== CAP_IDEA),
+]);
 const shownIdeas = computed(() =>
-  focusHits.value.length ? [...focusHits.value, ...ideas.value.filter((i) => i.category !== focus.value)] : ideas.value,
+  focusHits.value.length ? [...focusHits.value, ...ideas.value.filter((i) => i.category !== focus.value)] : capFirst.value,
 );
 const ideasSection = ref<HTMLElement | null>(null);
 onMounted(() => {
@@ -177,9 +117,9 @@ function showAll() {
 
 const result = computed(() =>
   goalPlan({
-    goalRappen: chfToRappen(goalFrancs.value),
-    savedRappen: chfToRappen(savedFrancs.value),
-    months: months.value,
+    goalRappen: chfToRappen(goalState.goalFrancs),
+    savedRappen: chfToRappen(goalState.savedFrancs),
+    months: goalState.months,
     selectedSavingsRappen: ideas.value.filter((i) => plan.value.has(i.id)).map(saveOf),
   }),
 );
@@ -192,105 +132,6 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 
 <template>
   <div>
-    <p class="card__title">{{ t('features.savings.goalH') }}</p>
-    <div class="goals" role="group" :aria-label="t('features.savings.goalH')">
-      <button
-        v-for="p in projectsState.projects"
-        :key="p.key"
-        class="goal"
-        :aria-pressed="p.key === projectsState.selected"
-        :aria-label="projectName(p)"
-        :title="projectName(p)"
-        @click="pickGoal(p)"
-      >
-        <img v-if="p.image" :src="p.image" alt="" />
-        <q-icon v-else :name="icon(p.icon)" size="26px" aria-hidden="true" />
-      </button>
-      <button
-        class="goal goal--add"
-        :aria-pressed="adding"
-        :aria-label="t('features.savings.addNew')"
-        :title="t('features.savings.addNew')"
-        @click="adding ? (adding = false) : openForm()"
-      >
-        <q-icon :name="icon('add')" size="26px" aria-hidden="true" />
-      </button>
-    </div>
-
-    <form v-if="adding" class="card card--plain new-project" @submit.prevent="create">
-      <p class="card__title">{{ t('features.savings.newH') }}</p>
-      <label class="ask__label" for="project-name">{{ t('features.savings.nameL') }}</label>
-      <input
-        id="project-name"
-        v-model="newName"
-        class="ask__input"
-        maxlength="40"
-        autocomplete="off"
-        :placeholder="t('features.savings.namePh')"
-      />
-      <p class="ask__label">{{ t('features.savings.iconL') }}</p>
-      <div class="goals" role="radiogroup" :aria-label="t('features.savings.iconL')">
-        <button
-          v-for="name in projectIcons"
-          :key="name"
-          type="button"
-          class="goal goal--sm"
-          role="radio"
-          :aria-checked="!newImage && name === newIcon"
-          :aria-pressed="!newImage && name === newIcon"
-          :aria-label="t(`features.savings.icons.${name}`)"
-          :title="t(`features.savings.icons.${name}`)"
-          @click="newIcon = name; newImage = undefined"
-        >
-          <q-icon :name="icon(name)" size="22px" aria-hidden="true" />
-        </button>
-      </div>
-      <p class="ask__label">{{ t('features.savings.photoL') }}</p>
-      <div class="photo-row">
-        <img v-if="newImage" :src="newImage" alt="" class="photo-preview" />
-        <label class="btn btn--secondary">
-          <q-icon :name="icon('photo_camera')" size="20px" aria-hidden="true" />
-          {{ t('features.savings.photoBtn') }}
-          <input type="file" accept="image/*" class="visually-hidden" @change="onPhoto" />
-        </label>
-        <button v-if="newImage" type="button" class="btn btn--ghost" @click="newImage = undefined">
-          {{ t('features.savings.photoRemove') }}
-        </button>
-      </div>
-      <p class="hint" style="margin: 0">{{ t('features.savings.photoNote') }}</p>
-      <p v-if="formError" class="form-error" role="alert">{{ formError }}</p>
-      <div class="form-actions">
-        <button type="submit" class="btn btn--primary">{{ t('features.savings.createBtn') }}</button>
-        <button type="button" class="btn btn--secondary" @click="adding = false">
-          {{ t('features.savings.cancelBtn') }}
-        </button>
-      </div>
-    </form>
-
-    <p class="goal-name">
-      <span>{{ t('features.savings.savingFor') }}: <b>{{ projectName(current) }}</b></span>
-      <button v-if="!current.preset" class="btn btn--ghost" @click="removeCurrent">
-        {{ t('features.savings.removeBtn') }}
-      </button>
-    </p>
-
-    <label class="field">
-      {{ t('features.savings.targetL') }}: <b class="amount">{{ chf0(chfToRappen(goalFrancs)) }}</b>
-      <input v-model.number="goalFrancs" type="range" min="200" max="30000" step="100" />
-    </label>
-    <label class="field">
-      {{ t('features.savings.savedL') }}: <b class="amount">{{ chf0(chfToRappen(savedFrancs)) }}</b>
-      <input v-model.number="savedFrancs" type="range" min="0" max="5000" step="50" />
-    </label>
-    <label class="field">
-      {{ t('features.savings.whenL') }}: <b>{{ months }}</b>
-      <input v-model.number="months" type="range" min="3" max="60" />
-    </label>
-    <div class="result">
-      <span>{{ t('features.savings.needH') }}</span>
-      <span class="result__amount">{{ chf0(result.neededPerMonthRappen) }}</span>
-    </div>
-
     <div ref="ideasSection" class="section">
       <p class="section__title">{{ t('features.savings.ideasH') }}</p>
       <div v-if="focus" style="display: flex; align-items: center; justify-content: space-between; gap: var(--sp-sm); margin-bottom: var(--sp-sm)">
@@ -345,6 +186,10 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
       <DsIcon name="jump" />
       <div class="card__body">
         <p class="worth__title">{{ t('features.savings.planH') }}</p>
+        <p style="margin: 0 0 var(--sp-sm)">
+          {{ t('features.savings.planGoal', { name: projectName(current), amount: chf0(chfToRappen(goalState.goalFrancs)), months: goalState.months }) }}
+          <RouterLink to="/coming-up">{{ t('features.savings.changeGoal') }}</RouterLink>
+        </p>
         <template v-if="result.monthsAtFoundPace !== null">
           <p style="margin: 0">{{ t('features.savings.planFound') }}</p>
           <p class="result__amount" style="margin: 0 0 var(--sp-sm)">
