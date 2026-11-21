@@ -1,7 +1,7 @@
 # Feature: Dashboard (tab "Overview")
 
 - **Route:** `/dashboard`
-- **Status:** fake (demo data from `src/shared/demo-data.ts`)
+- **Status:** real (dummy CSVs in `data/dummy/`, via `src/shared/statements.ts`; decision 0004)
 - **Services used (via useServices()):** none yet; planned: transactions, storage, assistant, notifier
 - **Engines used:** insights (`categoryShares`)
 - **Decisions:** [0002](../../../docs/architecture/decisions/0002-klar-v2-first-app.md)

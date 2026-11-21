@@ -1,5 +1,9 @@
 export default {
   title: 'My future',
+  ahvEmpH: 'State pension (AHV): paid through your salary ✓',
+  ahvEmpP: 'AHV contributions are taken off every payslip, and your employer pays the same amount again. Each year you work counts for your future pension.',
+  p3EmpH: 'Private retirement (pillar 3a): open to you',
+  p3EmpP: "Because you earn a salary, you can pay into pillar 3a and deduct it from your taxable income. In 2026 the maximum for employees with a pension fund is CHF 7'258.",
   ahvH: 'State pension (AHV): covered ✓',
   ahvP: "You don't earn a salary, but you are covered through your partner this year because their contributions are above CHF 1,060. Years at home with children under 16 also earn parenting credits for your future pension.",
   ahvBtn: 'Order my pension record',

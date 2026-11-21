@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { categoryShares } from '../../engines/insights/categoryShares';
-import { demoSpending } from '../../shared/demo-data';
+import { monthlySpending } from '../../shared/statements';
 import { formatChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import BubbleChart from './BubbleChart.vue';
@@ -13,7 +13,7 @@ const router = useRouter();
 
 const onlyFlexible = ref(false);
 const selected = ref<string | null>(null);
-const overview = computed(() => categoryShares(demoSpending));
+const overview = computed(() => categoryShares(monthlySpending));
 const shown = computed(() =>
   overview.value.items.filter((i) => !onlyFlexible.value || i.kind === 'flexible'),
 );
@@ -21,7 +21,7 @@ const selectedItem = computed(() => overview.value.items.find((i) => i.key === s
 function pick(key: string) {
   selected.value = selected.value === key ? null : key;
 }
-const cat = (key: string, field: 'name' | 'tip') => t(`features.dashboard.cats.${key}.${field}`);
+const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field}`);
 </script>
 
 <template>

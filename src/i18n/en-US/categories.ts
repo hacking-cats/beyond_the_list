@@ -1,0 +1,20 @@
+// Spending categories (keys from content/categories.json), shared by all pages.
+export default {
+  rent: { name: 'Rent', short: 'Rent', explain: 'Your monthly rent. In Switzerland rent is usually paid in advance, at the start of each month.' },
+  insurance: { name: 'Health insurance', short: 'Insurance', explain: 'Basic health insurance is mandatory for everyone living in Switzerland and is paid per person, not through the employer. If your income is low, you may get a premium reduction (Prämienverbilligung), but you usually have to apply for it.' },
+  utilities: { name: 'Electricity', short: 'Electricity', explain: 'An advance payment (Akonto) for electricity. The energy company charges an estimate during the year and settles the real amount at the end.' },
+  tax: { name: 'Taxes', short: 'Taxes', explain: 'A tax instalment (Steuerrate). The canton asks for advance payments during the year; the final bill comes after your tax return.' },
+  transport: { name: 'Transport', short: 'Transport', explain: 'Public transport, petrol, a taxi or the motorway vignette. The Halbtax card halves most train and bus tickets.' },
+  health: { name: 'Health', short: 'Health', explain: 'Costs like glasses or the dentist are often not covered by basic health insurance. Keep the receipt: high medical costs can be deducted from taxes.' },
+  other: { name: 'Other', short: 'Other', explain: 'A payment we could not sort into a category yet.' },
+  eatingOut: { name: 'Eating out and lunch', short: 'Eating out', explain: 'Meals at the canteen or in a restaurant.', tip: 'Bringing lunch from home two or three days a week cuts this by about half.', wit: "Your lunchbox won't send you a bill." },
+  shop: { name: 'Online shopping', short: 'Shopping', explain: 'An order from an online shop or a payment through PayPal.', tip: "Leave things in the basket for 48 hours before buying. Many of them you won't want any more." },
+  clothes: { name: 'Clothes', short: 'Clothes', explain: 'Clothes or shoes. Items you send back come back as a refund (a plus amount).', tip: 'Keep a wish list and buy clothes once a month instead of whenever something catches your eye.' },
+  holiday: { name: 'Holidays and travel', short: 'Holidays', explain: 'Flights, hotels and other travel costs.', tip: 'Booking 3 months ahead and travelling off-season often costs a third less.' },
+  hobbies: { name: 'Hobbies, books and events', short: 'Hobbies', explain: 'Books, sport, events and hobbies.', tip: 'Set a monthly hobby budget. Big items like a new bike are easier as a savings goal.' },
+  stream: { name: 'Streaming and apps', short: 'Streaming', explain: 'Subscriptions for films, music or apps. Small amounts add up over a year.', tip: 'Keep one service and switch every few months.' },
+  phone: { name: 'Phone plan', short: 'Phone', explain: 'Your monthly mobile phone subscription.', tip: 'Budget plans on the same network often cost 20–35 CHF.' },
+  transfer: { name: 'Credit card bill', short: 'Card bill', explain: 'You paid your credit card bill from your private account. This is not new spending: the purchases are already listed on the card.' },
+  income: { name: 'Salary', short: 'Salary', explain: 'Your salary, after deductions. AHV (state pension) contributions are already taken off, and your employer pays the same amount again. In December many employers also pay a 13th monthly salary.' },
+  refund: { explain: 'Money back from a shop, for example after you returned something. It lowers your spending in that category.' },
+};

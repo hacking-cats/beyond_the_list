@@ -2,12 +2,12 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { setAsidePerMonth } from '../../engines/savings/goalPlan';
-import { demoTaxBillRappen } from '../../shared/demo-data';
+import { taxPaidLastYear } from '../../shared/statements';
 import { chfToRappen, formatChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 
 const { t } = useI18n();
-const taxFrancs = ref(Math.round(demoTaxBillRappen / 100));
+const taxFrancs = ref(Math.max(500, Math.round(taxPaidLastYear / 100)));
 const months = ref(4);
 const perMonth = computed(() => setAsidePerMonth(chfToRappen(taxFrancs.value), months.value));
 const potCreated = ref(false);

@@ -1,19 +1,19 @@
 # Feature: Movements (tab "Explained")
 
 - **Route:** `/movements`
-- **Status:** fake (demo data from `src/shared/demo-data.ts`)
+- **Status:** real (dummy CSVs in `data/dummy/`, via `src/shared/statements.ts`; decision 0004)
 - **Services used (via useServices()):** none yet; planned: transactions
 - **Engines used:** none yet; planned: categorize
 - **Decisions:** [0002](../../../docs/architecture/decisions/0002-klar-v2-first-app.md)
 
 ## What the user can do
-See the statement; tap a line to read what it means in plain language. Lines that are often new to newcomers (tax instalment, Serafe) carry the attention icon and "New to you?".
+See the payments of the newest month in the statements (both accounts); tap a line to read what its category means in plain language. Taxes, health insurance and electricity advance payments carry the attention icon and "New to you?"; refunds are marked.
 
 ## How to test
 Visual: `npm run dev`, open `#/movements`, tap a line.
 
 ## Known gaps
-- Explanations are fixed texts in `src/i18n/*/movements.ts`, one per demo line.
+- Explanations are per category (`src/i18n/*/categories.ts`), not per payment. Only the newest month is shown; no filters yet.
 
 ## Requirements to fill in
 - [ ] Which filters, and their defaults.

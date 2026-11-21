@@ -1,5 +1,9 @@
 export default {
   title: 'Meine Zukunft',
+  ahvEmpH: 'AHV: über deinen Lohn bezahlt ✓',
+  ahvEmpP: 'Die AHV-Beiträge werden von jedem Lohn abgezogen, und dein Arbeitgeber zahlt nochmals gleich viel. Jedes Arbeitsjahr zählt für deine Rente.',
+  p3EmpH: 'Säule 3a: für dich möglich',
+  p3EmpP: "Weil du einen Lohn hast, kannst du in die Säule 3a einzahlen und den Betrag vom steuerbaren Einkommen abziehen. 2026 sind es für Angestellte mit Pensionskasse maximal CHF 7'258.",
   ahvH: 'AHV: versichert ✓',
   ahvP: "Du hast keinen Lohn, bist aber dieses Jahr über deinen Partner versichert, weil seine Beiträge über CHF 1'060 liegen. Jahre mit Kindern unter 16 geben zudem Erziehungsgutschriften für deine Rente.",
   ahvBtn: 'Meinen AHV-Auszug bestellen',

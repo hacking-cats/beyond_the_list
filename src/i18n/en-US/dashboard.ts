@@ -1,7 +1,7 @@
 export default {
   title: 'Overview',
   overviewH: 'Where your money goes',
-  overviewP: 'Monthly average of the last 3 months. Bigger bubble = more money.',
+  overviewP: 'Monthly average over the last 12 months of your statements. Bigger bubble = more money.',
   totalL: 'Spent per month',
   flexL: 'Could cut back',
   ofAll: 'of your spending',
@@ -14,19 +14,4 @@ export default {
   ideasBtn: 'See savings ideas',
   essentialNote: "An essential. We don't suggest cutting here.",
   listH: 'All categories',
-  cats: {
-    rent: { name: 'Rent', short: 'Rent' },
-    groceries: { name: 'Groceries', short: 'Groceries' },
-    insurance: { name: 'Health insurance', short: 'Insurance' },
-    holiday: { name: 'Holidays and trips', short: 'Holidays', tip: 'Booking 3 months ahead and travelling off-season often costs a third less.' },
-    kids: { name: 'Kids and school', short: 'Kids' },
-    takeaway: { name: 'Takeaway and delivery', short: 'Takeaway', tip: 'Cooking at home two more evenings a week halves this.' },
-    shop: { name: 'Online shopping', short: 'Shopping', tip: 'Leave things in the basket for 48 hours before buying.' },
-    transport: { name: 'Transport', short: 'Transport' },
-    fun: { name: 'Fun and going out', short: 'Going out', tip: 'Pick one paid outing a week; many museums and parks are free on some days.' },
-    phone: { name: 'Phone plans', short: 'Phone', tip: 'Budget plans on the same network often cost 20–35 CHF.' },
-    health: { name: 'Doctor and pharmacy', short: 'Doctor' },
-    coffee: { name: 'Coffee to go', short: 'Coffee', tip: 'A thermos from home on most days.' },
-    stream: { name: 'Streaming', short: 'Streaming', tip: 'Keep one service and switch every few months.' },
-  },
 };

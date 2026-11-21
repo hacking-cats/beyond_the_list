@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { enabledFeatures } from '../features/registry';
-import { demoAccount } from '../shared/demo-data';
+import { demoPersonName, latestSummary, monthLabel } from '../shared/statements';
 import { formatChf } from '../shared/money';
 import { icon } from '../shared/ui/icons';
 
@@ -37,9 +37,11 @@ const languages = [
     </header>
 
     <section class="summary">
-      <p class="summary__hello">{{ t('common.hello') }}</p>
-      <p class="summary__balance amount">{{ formatChf(demoAccount.balanceRappen) }}</p>
-      <p class="summary__sub">{{ t('common.jointAccount') }}</p>
+      <p class="summary__hello">{{ t('common.hi') }} {{ demoPersonName }} 👋</p>
+      <p class="summary__balance amount">{{ formatChf(latestSummary.leftRappen) }}</p>
+      <p class="summary__sub">
+        {{ t('common.leftIn') }} {{ monthLabel(latestSummary.month, locale) }} {{ t('common.accounts') }}
+      </p>
     </section>
 
     <main class="panel">

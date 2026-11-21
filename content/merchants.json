@@ -1,1 +1,235 @@
-[]
+[
+  {
+    "match": [
+      "Rent"
+    ],
+    "name": "Rent",
+    "category": "rent"
+  },
+  {
+    "match": [
+      "Krankenkasse"
+    ],
+    "name": "Health insurance",
+    "category": "insurance"
+  },
+  {
+    "match": [
+      "BKW"
+    ],
+    "name": "BKW (electricity)",
+    "category": "utilities"
+  },
+  {
+    "match": [
+      "Steuerverwaltung"
+    ],
+    "name": "Tax office",
+    "category": "tax"
+  },
+  {
+    "match": [
+      "Libero"
+    ],
+    "name": "Libero (public transport pass)",
+    "category": "transport"
+  },
+  {
+    "match": [
+      "Schweizerische Bundesbahnen",
+      "SBB CFF FSS",
+      "Halbtax"
+    ],
+    "name": "SBB",
+    "category": "transport"
+  },
+  {
+    "match": [
+      "Coop Tankstelle",
+      "Benzin"
+    ],
+    "name": "Coop petrol station",
+    "category": "transport"
+  },
+  {
+    "match": [
+      "BAZG",
+      "Autobahnvignette"
+    ],
+    "name": "Motorway vignette",
+    "category": "transport"
+  },
+  {
+    "match": [
+      "Taxi"
+    ],
+    "name": "Taxi",
+    "category": "transport"
+  },
+  {
+    "match": [
+      "Hügi Optik"
+    ],
+    "name": "Hügi Optik",
+    "category": "health"
+  },
+  {
+    "match": [
+      "Mobile Provider",
+      "Mobile Subscription"
+    ],
+    "name": "Mobile provider",
+    "category": "phone"
+  },
+  {
+    "match": [
+      "Kantine"
+    ],
+    "name": "Kantine AG (canteen)",
+    "category": "eatingOut"
+  },
+  {
+    "match": [
+      "Pizzeria",
+      "Ristorante",
+      "Molino",
+      "Carlton"
+    ],
+    "name": "Restaurant",
+    "category": "eatingOut"
+  },
+  {
+    "match": [
+      "Netflix"
+    ],
+    "name": "Netflix",
+    "category": "stream"
+  },
+  {
+    "match": [
+      "Spotify"
+    ],
+    "name": "Spotify",
+    "category": "stream"
+  },
+  {
+    "match": [
+      "iTunes"
+    ],
+    "name": "iTunes",
+    "category": "stream"
+  },
+  {
+    "match": [
+      "Teleboy"
+    ],
+    "name": "Teleboy",
+    "category": "stream"
+  },
+  {
+    "match": [
+      "Orell F"
+    ],
+    "name": "Orell Füssli",
+    "category": "hobbies"
+  },
+  {
+    "match": [
+      "Gurten"
+    ],
+    "name": "Gurten Festival",
+    "category": "hobbies"
+  },
+  {
+    "match": [
+      "Veloshop"
+    ],
+    "name": "Veloshop",
+    "category": "hobbies"
+  },
+  {
+    "match": [
+      "ochsner-sport"
+    ],
+    "name": "Ochsner Sport",
+    "category": "hobbies"
+  },
+  {
+    "match": [
+      "Mika Timing"
+    ],
+    "name": "Mika Timing",
+    "category": "hobbies"
+  },
+  {
+    "match": [
+      "petcenter"
+    ],
+    "name": "petcenter.ch",
+    "category": "hobbies"
+  },
+  {
+    "match": [
+      "Swiss Intl",
+      "SWISS International",
+      "Lufthansa",
+      "Lufhansa"
+    ],
+    "name": "Airline",
+    "category": "holiday"
+  },
+  {
+    "match": [
+      "Mondrian",
+      "Mandarin Oriental",
+      "Hotel Waldhof",
+      "AirBnB",
+      "Yellowstone",
+      "VisitBritain",
+      "La Salle",
+      "WH Smith",
+      "Kopenhagen"
+    ],
+    "name": "Travel",
+    "category": "holiday"
+  },
+  {
+    "match": [
+      "Abercrombie",
+      "Aebercrombie",
+      "H&M",
+      "Tommy Hilfiger",
+      "Thommy Hilfiger",
+      "Superdry",
+      "Nike",
+      "Zalando",
+      "Mango",
+      "Tally Weijl",
+      "s.Oliver",
+      "s-Oliver",
+      "Companys"
+    ],
+    "name": "Clothes shop",
+    "category": "clothes"
+  },
+  {
+    "match": [
+      "Digitec",
+      "Galaxus",
+      "Amazon",
+      "Paypal",
+      "Apple Online Store",
+      "Microsoft",
+      "Mediamarkt",
+      "Mouser",
+      "Omni Development",
+      "unitedprint",
+      "Cairo",
+      "Globus",
+      "Manor",
+      "heinigerag"
+    ],
+    "name": "Online shop",
+    "category": "shop"
+  }
+]
