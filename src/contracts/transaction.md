@@ -52,7 +52,11 @@ One CSV per account and year, 15 columns, every amount positive.
 3. Refunds are matched by merchant and a date window, not by exact amount.
 4. Identical rows on the same day are kept (they can be real), each with its own id.
 5. Two rows with same date, amount and payer but different name (salary and 13th salary) are both kept.
-6. Balances are never computed by summing rows.
+6. The balance of an account is its **opening balance plus the sum of its settled rows** (`amountRappen`) from the opening date up to the day shown:
+   - It is computed per account, from that account's own rows, so a transfer between our accounts counts on both sides (minus on the private account, plus on the card) and cancels out in a total over all accounts.
+   - Pending rows are left out of the balance and may be shown separately as "pending".
+   - The opening balance comes from the source. When it is unknown (the challenge CSVs have none), it is `0` on the first day of the data, and the app says so ("since 1 January 2025"), never presenting it as the bank's balance.
+   - A credit card balance below zero is the amount still owed on the card.
 
 ## Fake behaviour
 Not applicable (data type). The fake `TransactionSource` returns made-up transactions in this shape.
@@ -62,12 +66,14 @@ Not applicable (data type). The fake `TransactionSource` returns made-up transac
 - Fixture: a card payment present in both files is counted once as transfer.
 - Fixture: an EUR row with rate 1.0 carries `dataIssues: ["eur-rate-1"]`.
 - Fixture: a pending row is excluded from totals.
+- Fixture: opening balance + settled rows gives the balance per account; a transfer between own accounts leaves the total over all accounts unchanged; a pending row does not change the balance.
 
 ## Requirements to fill in
 - [ ] Final list of categories (keys) the app uses.
 - [ ] Date window for refund matching (days).
 - [ ] Do we need more `kind` values (e.g. `cash`, `fee`)?
 - [ ] Which fields may the AI ever see? (Default: none of `id`, `accountId`.)
+- [ ] Where a real opening balance comes from (user input, the bank export, a later API), and its date.
 
 ## Open questions (for PostFinance mentors)
 - Which exchange rate applies to EUR rows shown with rate 1.0?
