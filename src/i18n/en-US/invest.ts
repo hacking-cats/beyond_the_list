@@ -1,3 +1,21 @@
 export default {
   title: 'Investment ideas',
+  sectionH: 'Want your savings to grow?',
+  intro: 'Ways to invest with PostFinance, explained simply. Some start from a few francs a month.',
+  noteTitle: 'Ideas, not advice.',
+  noteBody: 'Investments can lose value. Keep money for emergencies first, and read the details on postfinance.ch before you decide.',
+  listH: 'Start small with a saving plan',
+  easiestStart: 'Easiest start',
+  fromL: 'From',
+  feesL: 'Fees',
+  linkBtn: 'See on postfinance.ch',
+  opensSite: 'opens the PostFinance website',
+  compareLink: 'Compare all saving plans on postfinance.ch',
+  checked: 'Facts from postfinance.ch, checked 21 November 2026. Prices and conditions can change.',
+  products: {
+    fundSavingPlan: { name: 'Fund saving plan', what: 'Pick funds yourself and pay in a fixed amount regularly.', fees: 'issue commission 0.5–⁠0.75% + custody 0.15%' },
+    retirement3a: { name: 'Retirement funds (pillar 3a)', what: 'Save for retirement and pay less tax. Only with your own earned income.', fees: 'no custody fees' },
+    etfSavingPlan: { name: 'ETF saving plan (e-trading)', what: 'Buy ETFs automatically every week or month. You choose and manage them yourself.', fees: 'CHF 18 per quarter + 1% per purchase' },
+    eAssetManagement: { name: 'E-asset management', what: 'PostFinance experts invest for you. For larger amounts.', fees: '0.75% per year' },
+  },
 };

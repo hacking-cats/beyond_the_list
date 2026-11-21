@@ -12,7 +12,7 @@ Pure functions: plain data in, plain data out. Money in integer Rappen.
 Match the user's surplus and goals to PostFinance products listed in `content/invest-products.json`.
 
 ## Functions
-- **matchProducts(surplusRappen, goal, products) -> ProductMatch[]**
+- **matchProducts(facts, products, locale) -> ProductIdea[]** (`src/engines/invest/matchProducts.ts`): `facts.hasEarnedIncome` from the statements; `locale` picks the postfinance.ch page language (en, de, fr, it; others get en).
 
 ## Rules
 1. Only products from `content/invest-products.json`; never invented.
@@ -21,8 +21,11 @@ Match the user's surplus and goals to PostFinance products listed in `content/in
 ## Examples (become unit tests)
 | Input | Expected output |
 |---|---|
-| TBD | TBD |
+| salary, 4 products, en-US | fundSavingPlan, retirement3a, etfSavingPlan, eAssetManagement (easiest start first, then smallest minimum) |
+| no salary | same without retirement3a (pillar 3a needs own earned income) |
+| locale fr / ar | French pages / English pages |
+| no products | empty list |
 
 ## Requirements to fill in
-- [ ] Product list with official links (domain expert).
+- [x] Product list with official links (from postfinance.ch, 21 Nov 2026; domain expert to confirm).
 - [ ] Minimum surplus before any idea is shown.

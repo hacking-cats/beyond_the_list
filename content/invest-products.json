@@ -1,1 +1,54 @@
-[]
+[
+  {
+    "key": "fundSavingPlan",
+    "icon": "savings",
+    "minRappen": 2000,
+    "needsEarnedIncome": false,
+    "easiestStart": true,
+    "urls": {
+      "en": "https://www.postfinance.ch/en/private/investing/investments/funds/fund-self-service.html",
+      "de": "https://www.postfinance.ch/de/privat/anlegen/moeglichkeiten/fonds/selfservice-fonds.html",
+      "fr": "https://www.postfinance.ch/fr/particuliers/placements/possibilites/fonds-de-placements/fonds-self-service.html",
+      "it": "https://www.postfinance.ch/it/privati/investimenti/possibilita/fondi/fondi-self-service.html"
+    }
+  },
+  {
+    "key": "retirement3a",
+    "icon": "elderly",
+    "minRappen": 100,
+    "needsEarnedIncome": true,
+    "easiestStart": false,
+    "urls": {
+      "en": "https://www.postfinance.ch/en/private/retirement-planning/retirement-savings-account-3a.html",
+      "de": "https://www.postfinance.ch/de/privat/vorsorgen/vorsorgekonto-3a.html",
+      "fr": "https://www.postfinance.ch/fr/particuliers/prevoyance/compte-prevoyance-3a.html",
+      "it": "https://www.postfinance.ch/it/privati/previdenza/conto-previdenza-3a.html"
+    }
+  },
+  {
+    "key": "etfSavingPlan",
+    "icon": "show_chart",
+    "minRappen": 100,
+    "needsEarnedIncome": false,
+    "easiestStart": false,
+    "urls": {
+      "en": "https://www.postfinance.ch/en/private/investing/investments/etf/etf-saving-plan.html",
+      "de": "https://www.postfinance.ch/de/privat/anlegen/moeglichkeiten/etf/etf-sparplan.html",
+      "fr": "https://www.postfinance.ch/fr/particuliers/placements/possibilites/etf/plan-epargne-etf.html",
+      "it": "https://www.postfinance.ch/it/privati/investimenti/possibilita/etf/piano-risparmio-etf.html"
+    }
+  },
+  {
+    "key": "eAssetManagement",
+    "icon": "handshake",
+    "minRappen": 500000,
+    "needsEarnedIncome": false,
+    "easiestStart": false,
+    "urls": {
+      "en": "https://www.postfinance.ch/en/private/investing/solutions/asset-management.html",
+      "de": "https://www.postfinance.ch/de/privat/anlegen/loesungen/vermoegensverwaltung/e-vermoegensverwaltung.html",
+      "fr": "https://www.postfinance.ch/fr/particuliers/placements/solutions/gestion-patrimoine/e-gestion-patrimoine.html",
+      "it": "https://www.postfinance.ch/it/privati/investimenti/soluzioni/gestione-patrimoniale/e-gestione-patrimoniale.html"
+    }
+  }
+]

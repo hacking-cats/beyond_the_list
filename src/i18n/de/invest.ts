@@ -1,3 +1,21 @@
 export default {
   title: 'Anlageideen',
+  sectionH: 'Soll Ihr Erspartes wachsen?',
+  intro: 'Wege, mit PostFinance anzulegen, einfach erklärt. Manche starten mit wenigen Franken pro Monat.',
+  noteTitle: 'Ideen, keine Beratung.',
+  noteBody: 'Anlagen können an Wert verlieren. Legen Sie zuerst Geld für Notfälle zur Seite und lesen Sie die Details auf postfinance.ch, bevor Sie entscheiden.',
+  listH: 'Klein starten mit einem Sparplan',
+  easiestStart: 'Einfachster Start',
+  fromL: 'Ab',
+  feesL: 'Gebühren',
+  linkBtn: 'Auf postfinance.ch ansehen',
+  opensSite: 'öffnet die Website von PostFinance',
+  compareLink: 'Alle Sparpläne auf postfinance.ch vergleichen',
+  checked: 'Angaben von postfinance.ch, geprüft am 21. November 2026. Preise und Bedingungen können sich ändern.',
+  products: {
+    fundSavingPlan: { name: 'Fondssparplan', what: 'Wählen Sie Fonds selbst und zahlen Sie regelmässig einen festen Betrag ein.', fees: 'Ausgabekommission 0,5–⁠0,75 % + Depot 0,15 %' },
+    retirement3a: { name: 'Vorsorgefonds (Säule 3a)', what: 'Fürs Alter sparen und weniger Steuern zahlen. Nur mit eigenem Erwerbseinkommen.', fees: 'keine Depotgebühren' },
+    etfSavingPlan: { name: 'ETF-Sparplan (E-Trading)', what: 'Kaufen Sie jede Woche oder jeden Monat automatisch ETFs. Sie wählen und verwalten selbst.', fees: 'CHF 18 pro Quartal + 1 % pro Kauf' },
+    eAssetManagement: { name: 'E-Vermögensverwaltung', what: 'Fachleute von PostFinance legen für Sie an. Für grössere Beträge.', fees: '0,75 % pro Jahr' },
+  },
 };

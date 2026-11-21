@@ -4,9 +4,10 @@
  * Transaction contracts are still draft. Once frozen, pages get transactions through
  * useServices() instead of importing this file.
  */
-// Demo persona: Jeanine as a single mother of two on a low wage (see data/dummy/README.md),
-// with a private account and a credit card. Other personas in data/dummy/: the original
-// jeanine_2025 files and andres_2025 (private account only).
+// Source of truth for the app: Jeanine as a single mother of two on a low wage, whose children
+// use her saved credit card (jeanine_singlemom_2025_*, see data/dummy/README.md). Every screen
+// reads these two files. Other files in data/dummy/ (the original jeanine_2025 sample,
+// andres_2025) are only used by tests.
 import accountCsv from '../../data/dummy/jeanine_singlemom_2025_Account1_2025.csv?raw';
 import cardCsv from '../../data/dummy/jeanine_singlemom_2025_Account3_2025.csv?raw';
 import categoriesJson from '../../content/categories.json';
