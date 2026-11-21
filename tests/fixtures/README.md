@@ -1,3 +1,3 @@
 # Fixtures
 
-Small, made-up or anonymised CSV slices with known answers. **Never commit the real challenge CSVs** or any real bank export.
+Small, made-up or anonymised CSV slices with known answers. Full-year dummy CSVs in the challenge format live in [`data/dummy/`](../../data/dummy/). **Never commit a real bank export.**

@@ -3,6 +3,8 @@ dist/
 .quasar/
 .env*
 !.env.example
-# Real challenge data never goes into the repo
+# CSVs stay out of the repo, except dummy data in challenge format (data/dummy/)
+# and small test fixtures. Real bank exports never go into the repo.
 *.csv
+!data/dummy/*.csv
 !tests/fixtures/**/*.csv

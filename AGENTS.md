@@ -39,7 +39,7 @@ Not available yet (the Quasar app is created in the next issue). Will be: instal
 - New strings exist in `en-US` and `de`.
 - The module README is updated (see `docs/templates/module-readme.md`).
 - Screenshot in the PR for UI changes; label `ai-assisted` if mostly generated.
-- No secrets, no API keys in the app, no real user data. Real challenge CSVs never go into the repo.
+- No secrets, no API keys in the app, no real user data. Dummy CSVs in the challenge format live only in `data/dummy/` (see its README); every other CSV stays git-ignored, and real bank exports never go into the repo.
 
 ## Git rules (MUST, no exceptions)
 

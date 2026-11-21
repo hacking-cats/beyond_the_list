@@ -26,5 +26,5 @@ Turn the rows of the challenge CSVs into `Transaction[]` following the data cont
 | TBD | TBD |
 
 ## Requirements to fill in
-- [ ] Anonymised fixtures in `tests/fixtures/` with known answers (never real CSVs).
+- [ ] Anonymised fixtures in `tests/fixtures/` with known answers (never real bank exports). Full-year dummy input is in `data/dummy/`.
 - [ ] Separator and encoding of the challenge files.
