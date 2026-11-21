@@ -6,7 +6,7 @@ export default {
   flexL: 'Could cut back',
   ofAll: 'of your spending',
   allL: 'All',
-  onlyFlexL: 'Only what you could cut',
+  onlyFlexL: 'Recommended savings',
   essential: 'Essentials',
   flexible: 'Could cut back',
   pickP: 'Tap a bubble to see what it is and how much it costs you.',

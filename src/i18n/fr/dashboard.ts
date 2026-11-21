@@ -6,7 +6,7 @@ export default {
   flexL: 'Possible de réduire',
   ofAll: 'de vos dépenses',
   allL: 'Tout',
-  onlyFlexL: 'Seulement ce que vous pourriez réduire',
+  onlyFlexL: 'Économies recommandées',
   essential: 'Essentiel',
   flexible: 'Possible de réduire',
   pickP: 'Touchez une bulle pour voir ce que c’est et combien cela vous coûte.',

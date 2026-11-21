@@ -14,7 +14,8 @@ const i18n = useI18n();
 const { t } = i18n;
 const router = useRouter();
 
-const onlyFlexible = ref(false);
+// Opens on the recommended savings (spending that could be cut back); 'All' shows every bubble.
+const onlyFlexible = ref(true);
 const selected = ref<string | null>(null);
 const overview = computed(() => categoryShares(monthlySpending));
 const shown = computed(() =>
@@ -85,11 +86,11 @@ const grouped = computed(() =>
     </div>
 
     <div class="chips" style="margin-top: 0" role="group">
-      <button class="chip" :aria-pressed="!onlyFlexible" @click="onlyFlexible = false">
-        {{ t('features.dashboard.allL') }}
-      </button>
       <button class="chip" :aria-pressed="onlyFlexible" @click="onlyFlexible = true">
         {{ t('features.dashboard.onlyFlexL') }}
+      </button>
+      <button class="chip" :aria-pressed="!onlyFlexible" @click="onlyFlexible = false">
+        {{ t('features.dashboard.allL') }}
       </button>
     </div>
 
