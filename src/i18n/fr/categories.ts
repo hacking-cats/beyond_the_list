@@ -1,0 +1,20 @@
+// Catégories de dépenses (clés de content/categories.json), pour toutes les pages.
+export default {
+  rent: { name: 'Loyer', short: 'Loyer', explain: 'Votre loyer mensuel. En Suisse, le loyer se paie en général d’avance, au début de chaque mois.' },
+  insurance: { name: 'Assurance maladie', short: 'Assurance', explain: 'L’assurance maladie de base est obligatoire pour toute personne qui vit en Suisse et se paie par personne, pas par l’employeur. Si votre revenu est bas, vous pouvez recevoir une réduction de primes, mais en général il faut la demander.' },
+  utilities: { name: 'Électricité', short: 'Électricité', explain: 'Un acompte pour l’électricité. Le fournisseur facture une estimation pendant l’année et fait le décompte réel à la fin.' },
+  tax: { name: 'Impôts', short: 'Impôts', explain: 'Un acompte d’impôts (tranche). Le canton demande des paiements d’avance pendant l’année ; la facture finale arrive après votre déclaration d’impôts.' },
+  transport: { name: 'Transports', short: 'Transports', explain: 'Transports publics, essence, taxi ou vignette autoroutière. L’abonnement demi-tarif réduit de moitié la plupart des billets de train et de bus.' },
+  health: { name: 'Santé', short: 'Santé', explain: 'Des frais comme les lunettes ou le dentiste ne sont souvent pas couverts par l’assurance de base. Gardez le justificatif : des frais médicaux élevés peuvent être déduits des impôts.' },
+  other: { name: 'Autre', short: 'Autre', explain: 'Un paiement que nous n’avons pas encore pu classer.' },
+  eatingOut: { name: 'Restaurant et repas de midi', short: 'Restaurant', explain: 'Repas à la cantine ou au restaurant.', tip: 'Apporter son repas de la maison deux ou trois jours par semaine réduit ce montant d’environ la moitié.', wit: 'Votre boîte à lunch ne vous enverra pas de facture.' },
+  shop: { name: 'Achats en ligne', short: 'Achats', explain: 'Une commande dans une boutique en ligne ou un paiement via PayPal.', tip: 'Laissez les articles 48 heures dans le panier avant d’acheter. Souvent, vous n’en voudrez plus.' },
+  clothes: { name: 'Vêtements', short: 'Vêtements', explain: 'Vêtements ou chaussures. Les articles renvoyés reviennent comme remboursement (un montant positif).', tip: 'Tenez une liste d’envies et achetez des vêtements une fois par mois plutôt que dès que quelque chose vous plaît.' },
+  holiday: { name: 'Vacances et voyages', short: 'Vacances', explain: 'Vols, hôtels et autres frais de voyage.', tip: 'Réserver 3 mois à l’avance et voyager hors saison coûte souvent un tiers de moins.' },
+  hobbies: { name: 'Loisirs, livres et événements', short: 'Loisirs', explain: 'Livres, sport, événements et loisirs.', tip: 'Fixez un budget loisirs par mois. Les gros achats comme un nouveau vélo sont plus faciles comme objectif d’épargne.' },
+  stream: { name: 'Streaming et applis', short: 'Streaming', explain: 'Abonnements pour films, musique ou applis. De petits montants s’additionnent sur une année.', tip: 'Gardez un seul service et changez tous les quelques mois.' },
+  phone: { name: 'Abonnement de téléphone', short: 'Téléphone', explain: 'Votre abonnement mensuel de téléphone mobile.', tip: 'Des offres bon marché sur le même réseau coûtent souvent 20 à 35 CHF.' },
+  transfer: { name: 'Facture de carte de crédit', short: 'Facture carte', explain: 'Vous avez payé la facture de votre carte de crédit depuis votre compte privé. Ce n’est pas une nouvelle dépense : les achats figurent déjà sur la carte.' },
+  income: { name: 'Salaire', short: 'Salaire', explain: 'Votre salaire, après déductions. Les cotisations AVS (rente de l’État) sont déjà déduites, et votre employeur paie encore le même montant. En décembre, beaucoup d’employeurs versent aussi un 13e salaire.' },
+  refund: { explain: 'De l’argent rendu par un magasin, par exemple après un retour. Cela réduit vos dépenses dans cette catégorie.' },
+};

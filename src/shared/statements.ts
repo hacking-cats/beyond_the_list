@@ -6,6 +6,7 @@ import { balance, unknownOpening } from '../engines/insights/balance';
 import { averageMonthlySpending, categoryTotal, lastMonths, monthSummary, monthsWithData } from '../engines/insights/monthly';
 import { suggestCuts } from '../engines/savings/suggestCuts';
 import { accountTransactions, kindOf, transactions } from './transactions';
+import { intlLocale } from '../i18n/languages';
 
 export { transactions, kindOf, demoPersonName } from './transactions';
 
@@ -44,7 +45,7 @@ export const hasSalary = transactions.some((t) => t.kind === 'income');
 export function dayLabel(date: string, locale: string): string {
   const [y, m, d] = date.split('-').map(Number);
   if (!y || !m || !d) return date;
-  return new Intl.DateTimeFormat(locale === 'de' ? 'de-CH' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(
+  return new Intl.DateTimeFormat(intlLocale(locale), { day: 'numeric', month: 'long', year: 'numeric' }).format(
     new Date(Date.UTC(y, m - 1, d)),
   );
 }
@@ -52,7 +53,7 @@ export function dayLabel(date: string, locale: string): string {
 export function monthLabel(month: string, locale: string): string {
   const [y, m] = month.split('-').map(Number);
   if (!y || !m) return month;
-  return new Intl.DateTimeFormat(locale === 'de' ? 'de-CH' : 'en-GB', { month: 'long', year: 'numeric' }).format(
+  return new Intl.DateTimeFormat(intlLocale(locale), { month: 'long', year: 'numeric' }).format(
     new Date(Date.UTC(y, m - 1, 1)),
   );
 }

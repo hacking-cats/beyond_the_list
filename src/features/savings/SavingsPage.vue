@@ -5,7 +5,7 @@ import { goalPlan } from '../../engines/savings/goalPlan';
 import { paymentsPerMonth } from '../../engines/insights/monthly';
 import { demoNewProjectRappen, demoSavedRappen, projectIcons } from '../../shared/demo-data';
 import { savingsCuts, transactions, yearMonths } from '../../shared/statements';
-import { chfToRappen, formatChf } from '../../shared/money';
+import { chfToRappen, displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
 import { addProject, MAX_IMAGE_BYTES, projectsState, removeProject, type SavingsProject } from './projects';
@@ -106,7 +106,7 @@ const cat = (key: string, field: 'name' | 'tip' | 'wit') => t(`categories.${key}
 const hasWit = (key: string) => i18n.te(`categories.${key}.wit`);
 const detail = (n: number) =>
   n >= 1 ? `${n} ${t('features.savings.paymentsPerMonth')}` : t('features.savings.nowAndThen');
-const chf0 = (r: number) => formatChf(r, { decimals: 0 });
+const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 </script>
 
 <template>

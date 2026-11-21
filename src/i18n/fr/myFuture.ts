@@ -1,0 +1,15 @@
+export default {
+  title: 'Mon avenir',
+  ahvEmpH: 'Rente de l’État (AVS) : payée par votre salaire ✓',
+  ahvEmpP: 'Les cotisations AVS sont déduites de chaque fiche de salaire, et votre employeur paie encore le même montant. Chaque année de travail compte pour votre future rente.',
+  p3EmpH: 'Prévoyance privée (pilier 3a) : possible pour vous',
+  p3EmpP: "Comme vous touchez un salaire, vous pouvez verser dans le pilier 3a et le déduire de votre revenu imposable. En 2026, le maximum pour les salariés affiliés à une caisse de pension est de CHF 7'258.",
+  ahvH: 'Rente de l’État (AVS) : couvert ✓',
+  ahvP: "Vous ne touchez pas de salaire, mais vous êtes couvert par votre partenaire cette année, car ses cotisations dépassent CHF 1'060. Les années à la maison avec des enfants de moins de 16 ans donnent aussi des bonifications pour tâches éducatives pour votre future rente.",
+  ahvBtn: 'Commander mon extrait de compte',
+  ahvMore: 'Vous pouvez demander gratuitement à votre caisse de compensation un extrait de votre compte individuel (extrait CI). Il montre s’il manque une année. Les lacunes ne peuvent en général être comblées que pour les 5 dernières années.',
+  p3H: 'Prévoyance privée (pilier 3a) : pas possible',
+  p3P: 'Le pilier 3a est une épargne retraite sans impôts, mais seules les personnes avec leur propre revenu du travail peuvent y verser. C’est une des raisons pour lesquelles les parents qui restent à la maison ont souvent moins d’argent à eux à la retraite.',
+  indH: 'Bientôt : chaque conjoint déclare ses propres impôts',
+  indP: 'Les Suisses ont accepté l’imposition individuelle en mars 2026. Elle devrait commencer d’ici 2032. Vous aurez alors votre propre déclaration d’impôts : il est utile de comprendre vos finances dès maintenant.',
+};

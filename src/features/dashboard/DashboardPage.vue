@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 import { categoryShares } from '../../engines/insights/categoryShares';
 import { monthlySpending } from '../../shared/statements';
 import { iconOf } from '../../shared/transactions';
-import { formatChf } from '../../shared/money';
+import { displayChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 import { icon } from '../../shared/ui/icons';
 import BubbleChart from './BubbleChart.vue';
@@ -34,11 +34,11 @@ const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field
     <div class="stats">
       <div class="stat">
         <p class="stat__label">{{ t('features.dashboard.totalL') }}</p>
-        <p class="stat__value">{{ formatChf(overview.totalRappen, { decimals: 0 }) }}</p>
+        <p class="stat__value">{{ displayChf(overview.totalRappen, { decimals: 0 }) }}</p>
       </div>
       <div class="stat">
         <p class="stat__label">{{ t('features.dashboard.flexL') }}</p>
-        <p class="stat__value">{{ formatChf(overview.flexibleRappen, { decimals: 0 }) }}</p>
+        <p class="stat__value">{{ displayChf(overview.flexibleRappen, { decimals: 0 }) }}</p>
         <p class="stat__sub">{{ overview.flexiblePercent }}% {{ t('features.dashboard.ofAll') }}</p>
       </div>
     </div>
@@ -63,7 +63,7 @@ const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field
       <DsIcon name="attention" />
       <div class="tone__content">
         <p class="tone__title">
-          {{ cat(selectedItem.key, 'name') }} · {{ formatChf(selectedItem.amountRappen, { decimals: 0 }) }}
+          {{ cat(selectedItem.key, 'name') }} · {{ displayChf(selectedItem.amountRappen, { decimals: 0 }) }}
           {{ t('common.perMonth') }}
         </p>
         <p>{{ selectedItem.percent }}% {{ t('features.dashboard.shareL') }}.</p>
@@ -76,7 +76,7 @@ const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field
     <div v-else-if="selectedItem" class="card card--plain" role="status">
       <div class="card__body">
         <p class="card__title">
-          {{ cat(selectedItem.key, 'name') }} · {{ formatChf(selectedItem.amountRappen, { decimals: 0 }) }}
+          {{ cat(selectedItem.key, 'name') }} · {{ displayChf(selectedItem.amountRappen, { decimals: 0 }) }}
           {{ t('common.perMonth') }}
         </p>
         <p>{{ selectedItem.percent }}% {{ t('features.dashboard.shareL') }}.</p>
@@ -96,7 +96,7 @@ const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field
             {{ cat(item.key, 'name') }}
             <span class="visually-hidden">, {{ t(`features.dashboard.${item.kind}`) }}</span>
           </span>
-          <span class="amount">{{ formatChf(item.amountRappen, { decimals: 0 }) }}</span>
+          <span class="amount">{{ displayChf(item.amountRappen, { decimals: 0 }) }}</span>
           <span class="rank__share">{{ item.percent }}%</span>
         </li>
       </ul>

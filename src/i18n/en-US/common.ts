@@ -13,4 +13,13 @@ export default {
   perMonth: '/ month',
   months: 'months',
   comingSoon: 'Coming soon. This page is planned but not built yet.',
+  langOther: 'Other language…',
+  langOtherHint: 'Arabic, Ukrainian, Tigrinya, Turkish and more',
+  langSearch: 'Search a language',
+  langAutoNote: 'These languages are translated automatically. Some words may be wrong.',
+  langRtl: 'right to left',
+  langSoon: 'coming soon',
+  langNone: 'No language found.',
+  close: 'Close',
+  back: 'Back',
 };

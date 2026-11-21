@@ -1,0 +1,16 @@
+export default {
+  title: 'In arrivo',
+  taxH: 'Conguaglio delle imposte 2026',
+  taxP: 'In base all’anno scorso, ci aspettiamo circa questo importo quando arriva il conguaglio (di solito la primavera successiva).',
+  taxL: 'Conguaglio previsto',
+  monthsL: 'Mesi per risparmiare',
+  perMonth: 'Da mettere da parte al mese',
+  saveBtn: 'Crea un salvadanaio',
+  saved: '✓ Salvadanaio creato (prototipo)',
+  kkH: 'Cassa malati: scadenza 30 novembre',
+  kkP: 'Per cambiare l’assicurazione di base per l’anno prossimo, la disdetta deve arrivare entro il 30 novembre. I premi cambiano ogni anno, quindi confrontare può far risparmiare.',
+  kkBtn: 'Cosa significa «franchigia»?',
+  kkMore: 'La franchigia è quanto paghi tu ogni anno prima che paghi l’assicurazione. Una franchigia più alta significa premi mensili più bassi, ma più rischio se ti ammali.',
+  prH: 'Potresti ricevere una riduzione dei premi',
+  prP: 'Le economie domestiche con reddito più basso possono ricevere un aiuto per i premi della cassa malati. Ogni cantone ha le sue regole e il suo modulo di richiesta.',
+};

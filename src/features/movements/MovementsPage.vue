@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { Transaction } from '../../engines/ingest/types';
-import { formatChf } from '../../shared/money';
+import { displayChf } from '../../shared/money';
 import { latestTransactions } from '../../shared/statements';
 import DsIcon from '../../shared/ui/DsIcon.vue';
 
@@ -43,7 +43,7 @@ const explain = (tx: Transaction) =>
             <DsIcon name="attention" small :label="t('features.movements.newToYou')" />
           </span>
           <span class="line__amount" :class="{ 'line__amount--in': tx.amountRappen > 0 }">
-            {{ formatChf(tx.amountRappen, { sign: true }) }}
+            {{ displayChf(tx.amountRappen, { sign: true }) }}
           </span>
         </button>
         <div v-if="open.has(tx.id)" class="line-explain reply">

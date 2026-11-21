@@ -1,0 +1,17 @@
+export default {
+  title: 'Aperçu',
+  overviewH: 'Où va votre argent',
+  overviewP: 'Moyenne mensuelle des 12 derniers mois de vos relevés. Plus la bulle est grande, plus il y a d’argent.',
+  totalL: 'Dépensé par mois',
+  flexL: 'Possible de réduire',
+  ofAll: 'de vos dépenses',
+  allL: 'Tout',
+  onlyFlexL: 'Seulement ce que vous pourriez réduire',
+  essential: 'Essentiel',
+  flexible: 'Possible de réduire',
+  pickP: 'Touchez une bulle pour voir ce que c’est et combien cela vous coûte.',
+  shareL: 'de vos dépenses mensuelles',
+  ideasBtn: 'Voir des idées d’économies',
+  essentialNote: 'Une dépense essentielle. Nous ne proposons pas de réduire ici.',
+  listH: 'Toutes les catégories',
+};

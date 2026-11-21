@@ -1,0 +1,16 @@
+export default {
+  title: 'À venir',
+  taxH: 'Facture finale d’impôts 2026',
+  taxP: 'D’après l’année dernière, nous attendons environ ce montant quand la facture finale arrive (en général au printemps suivant).',
+  taxL: 'Facture finale attendue',
+  monthsL: 'Mois pour épargner',
+  perMonth: 'À mettre de côté par mois',
+  saveBtn: 'Créer une cagnotte',
+  saved: '✓ Cagnotte créée (prototype)',
+  kkH: 'Assurance maladie : délai au 30 novembre',
+  kkP: 'Pour changer d’assurance de base l’année prochaine, la résiliation doit arriver au plus tard le 30 novembre. Les primes changent chaque année : comparer peut faire économiser de l’argent.',
+  kkBtn: 'Que veut dire « franchise » ?',
+  kkMore: 'La franchise est le montant que vous payez vous-même chaque année avant que l’assurance paie. Une franchise plus élevée signifie des primes mensuelles plus basses, mais plus de risque si vous tombez malade.',
+  prH: 'Vous pourriez avoir droit à une réduction de primes',
+  prP: 'Les ménages à revenu modeste peuvent recevoir une aide pour les primes d’assurance maladie. Chaque canton a ses propres règles et son propre formulaire de demande.',
+};

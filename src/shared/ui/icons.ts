@@ -46,6 +46,11 @@ import {
   outlinedRestaurant,
   outlinedShoppingBag,
   outlinedTrain,
+  outlinedArrowBack,
+  outlinedChevronRight,
+  outlinedExpandMore,
+  outlinedLanguage,
+  outlinedSearch,
 } from '@quasar/extras/material-icons-outlined';
 
 const icons: Record<string, string> = {
@@ -92,6 +97,12 @@ const icons: Record<string, string> = {
   restaurant: outlinedRestaurant,
   shopping_bag: outlinedShoppingBag,
   train: outlinedTrain,
+  // Language picker
+  arrow_back: outlinedArrowBack,
+  chevron_right: outlinedChevronRight,
+  expand_more: outlinedExpandMore,
+  language: outlinedLanguage,
+  search: outlinedSearch,
 };
 
 export function icon(name: string): string {
