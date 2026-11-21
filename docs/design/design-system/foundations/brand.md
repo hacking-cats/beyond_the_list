@@ -18,3 +18,5 @@ The product should feel trustworthy, calm, clear and human. It explains money wi
 - **Graphite:** all body text.
 
 No logos, product names or brand assets of any bank. The header shows a "Prototype · demo data" chip.
+
+Exception (Alvaro, 2026-11-21): for the PostFinance challenge demo, the favicon and app icons use the PostFinance mark supplied by the team, and the logo files live in `public/brand/`. Inside the app screens the rule above still holds.

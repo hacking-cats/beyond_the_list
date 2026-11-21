@@ -9,10 +9,12 @@ import dataGenerator from './dataGenerator';
 import comingUp from './comingUp';
 import myFuture from './myFuture';
 import categories from './categories';
+import buddy from './buddy';
 
 export default {
   common,
   categories,
+  buddy,
   features: {
     dashboard,
     movements,

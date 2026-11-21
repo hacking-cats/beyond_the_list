@@ -1,0 +1,98 @@
+/* finAInce buddy: pull-down hint on the header, first-visit banner and the pale yellow chat sheet.
+   Only design-system tokens (brand yellow, petrol, tint.attention). Animations move transform and opacity only, so older Android phones stay smooth.
+   prefers-reduced-motion switches every animation off (tokens.css and the rule at the end). */
+
+.buddy-pull { touch-action: pan-x; user-select: none; cursor: grab; }
+.buddy-pull.is-pulling { cursor: grabbing; }
+
+/* "Listening" glow along the top edge of the header: a soft wave that drifts and breathes. */
+.buddy-glow { position: absolute; left: 0; right: 0; top: 0; height: 3px; overflow: hidden; pointer-events: none; }
+.buddy-glow__wave { position: absolute; inset: 0 auto 0 0; width: 200%;
+  background: linear-gradient(90deg, var(--petrol), var(--light-blue), var(--yellow), var(--light-blue), var(--petrol),
+    var(--light-blue), var(--yellow), var(--light-blue), var(--petrol));
+  animation: buddy-drift 4s linear infinite, buddy-glow 2.8s var(--ease) infinite; will-change: transform; }
+
+/* Little pull tab under the header that bobs down, like a menu you can pull. */
+.buddy-nub { position: absolute; left: 50%; bottom: -10px; width: 36px; height: 4px; margin-left: -18px;
+  border-radius: var(--r-pill); background: var(--petrol); opacity: 0.55; pointer-events: none;
+  animation: buddy-bob 2.8s var(--ease) infinite; }
+
+.buddy-pull.is-pulling .buddy-glow__wave,
+.buddy-pull.is-pulling .buddy-nub,
+.buddy-pull.is-open .buddy-glow__wave,
+.buddy-pull.is-open .buddy-nub { animation-play-state: paused; }
+
+@keyframes buddy-drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+@keyframes buddy-glow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+@keyframes buddy-bob { 0%, 60%, 100% { transform: translate3d(0, 0, 0); } 30% { transform: translate3d(0, 5px, 0); } }
+@keyframes buddy-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+/* ---- First-visit banner ------------------------------------------------------------ */
+.buddy-intro.q-banner { margin: var(--sp-md) var(--sp-lg) 0; padding: var(--sp-md); border-radius: var(--r-md);
+  background: var(--tint-info); color: var(--text); }
+.buddy-intro__spark { width: 40px; height: 40px; display: grid; place-items: center; border-radius: var(--r-pill);
+  background: var(--surface-inverse); color: var(--yellow); }
+.buddy-intro__title { margin: 0 0 var(--sp-xs); font-weight: 600; color: var(--info-text); }
+.buddy-intro__body { margin: 0; font-size: var(--fs-small); color: var(--text-secondary); }
+.buddy-intro .q-banner__actions { gap: var(--sp-sm); }
+.buddy-intro-enter-active, .buddy-intro-leave-active { transition: opacity var(--t-normal) var(--ease), transform var(--t-normal) var(--ease); }
+.buddy-intro-enter-from, .buddy-intro-leave-to { opacity: 0; transform: translate3d(0, -8px, 0); }
+
+/* ---- The sheet: pale yellow (tint.attention) with the brand yellow and petrol ---------- */
+.buddy { position: fixed; top: 0; left: 0; right: 0; z-index: 40; height: 100vh; height: 100dvh;
+  max-width: var(--content-max); margin: 0 auto; display: flex; flex-direction: column;
+  background: var(--tint-attention); color: var(--text);
+  border-radius: 0 0 var(--r-lg) var(--r-lg); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  padding-top: env(safe-area-inset-top);
+  transition: transform var(--t-slow) var(--ease), visibility 0s; will-change: transform; }
+.buddy.is-dragging { transition: none; }
+.buddy.is-hidden { visibility: hidden; transition: transform var(--t-slow) var(--ease), visibility 0s var(--t-slow); }
+/* Decorative brand-yellow glow at the top of the sheet, static so it costs nothing per frame. */
+.buddy::before { content: ''; position: absolute; inset: 0 0 auto; height: 45%; pointer-events: none;
+  border-radius: inherit; opacity: 0.45;
+  background: radial-gradient(ellipse at 50% 0%, var(--yellow), transparent 70%); }
+
+.buddy__top { position: relative; display: flex; align-items: center; gap: var(--sp-sm); padding: var(--sp-sm) var(--sp-md); }
+.buddy__close { width: var(--touch); height: var(--touch); display: grid; place-items: center; padding: 0;
+  border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--surface); color: var(--text); cursor: pointer; }
+.buddy__name { font-weight: 600; font-size: var(--fs-subtitle); color: var(--petrol); }
+
+.buddy__body { position: relative; flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column;
+  padding: 0 var(--sp-xl) var(--sp-md); overscroll-behavior: contain; }
+.buddy__spacer { flex: 1; min-height: var(--sp-xl); }
+.buddy__heading { margin: 0 0 var(--sp-xl); font-size: var(--fs-display); font-weight: 600; line-height: 1.2;
+  letter-spacing: normal; color: var(--text); }
+.buddy__heading:focus { outline: none; }
+.buddy__suggest { list-style: none; margin: 0 0 var(--sp-md); padding: 0; }
+.buddy__chip { display: flex; align-items: flex-start; gap: var(--sp-md); width: 100%; min-height: var(--touch);
+  padding: var(--sp-sm) 0; border: 0; background: none; color: var(--text); font: inherit;
+  font-size: var(--fs-body); text-align: left; cursor: pointer; }
+.buddy__chip .q-icon { margin-top: 2px; color: var(--petrol); }
+.buddy__chip:active { opacity: 0.7; }
+
+.buddy__msg { max-width: 85%; margin: var(--sp-xs) 0; padding: var(--sp-sm) var(--sp-md); border-radius: var(--r-lg);
+  font-size: var(--fs-body); }
+.buddy__msg--user { align-self: flex-end; background: var(--petrol); color: var(--text-inverse); border-bottom-right-radius: var(--r-sm); }
+.buddy__msg--buddy { align-self: flex-start; background: var(--surface); color: var(--text-secondary);
+  border: 1px solid var(--border); border-bottom-left-radius: var(--r-sm); }
+
+.buddy__ask { position: relative; display: flex; align-items: center; gap: var(--sp-sm);
+  margin: 0 var(--sp-lg) var(--sp-sm); padding: var(--sp-xs) var(--sp-xs) var(--sp-xs) var(--sp-lg);
+  border: 1px solid var(--border-strong); border-radius: var(--r-pill); background: var(--surface); }
+.buddy__input { flex: 1; min-width: 0; min-height: var(--touch); border: 0; background: none; outline: none;
+  color: var(--text); font: inherit; }
+.buddy__input::placeholder { color: var(--text-muted); }
+.buddy__ask:focus-within { border-color: var(--petrol); box-shadow: 0 0 0 1px var(--petrol); }
+.buddy__send { width: var(--touch); height: var(--touch); flex: none; display: grid; place-items: center; padding: 0;
+  border: 0; border-radius: var(--r-pill); background: var(--yellow); color: var(--text); cursor: pointer; }
+.buddy__send:disabled { background: var(--surface-subtle); color: var(--text-disabled); cursor: default; }
+
+.buddy__grab { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: var(--sp-xs) 0 calc(var(--sp-md) + env(safe-area-inset-bottom)); color: var(--petrol);
+  touch-action: pan-x; cursor: grab; user-select: none; }
+.buddy__handle { width: 120px; height: 5px; border-radius: var(--r-pill); background: var(--petrol); opacity: 0.6; }
+
+@media (prefers-reduced-motion: reduce) {
+  .buddy, .buddy.is-hidden, .buddy-glow__wave, .buddy-nub { transition: none; animation: none; }
+  .buddy-glow__wave { opacity: 1; }
+}
