@@ -124,5 +124,12 @@ export default {
     openAdvice: "Open PostFinance advice",
     call: "Call",
     nothingSent: "Nothing is sent to PostFinance from this app.",
+    calH: "Add to my calendar",
+    calFile: "Calendar file",
+    calGoogle: "Google Calendar",
+    calHint: "For Apple, Outlook and Android calendars. The entry says it is a sample time, not a booked appointment.",
+    calSaved: "Calendar file downloaded. Open it to add the time to your calendar.",
+    calTitle: "PostFinance appointment (sample, not booked): {topic}",
+    calDesc: "Sample time from the Beyond the List prototype. This appointment is NOT booked. Book for real in the PostFinance App, in e-finance or by phone: {phone}.",
   },
 };

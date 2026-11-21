@@ -124,5 +124,12 @@ export default {
     openAdvice: "Ouvrir le conseil PostFinance",
     call: "Appeler",
     nothingSent: "Cette app n’envoie rien à PostFinance.",
+    calH: "Ajouter à mon agenda",
+    calFile: "Fichier agenda",
+    calGoogle: "Google Agenda",
+    calHint: "Pour les agendas Apple, Outlook et Android. L’entrée indique qu’il s’agit d’un horaire d’exemple, pas d’un rendez-vous réservé.",
+    calSaved: "Fichier agenda téléchargé. Ouvrez-le pour ajouter l’horaire à votre agenda.",
+    calTitle: "Rendez-vous PostFinance (exemple, non réservé) : {topic}",
+    calDesc: "Horaire d’exemple du prototype Beyond the List. Ce rendez-vous n’est PAS réservé. Réservez vraiment dans la PostFinance App, dans e-finance ou par téléphone : {phone}.",
   },
 };
