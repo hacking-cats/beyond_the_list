@@ -52,3 +52,5 @@ Every change reaches `main` through a pull request; see the Git rules in [AGENTS
 ```
 git config core.hooksPath .githooks
 ```
+
+marianne was here
