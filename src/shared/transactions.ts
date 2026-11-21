@@ -21,8 +21,14 @@ function load(text: string, accountId: string): Transaction[] {
   return toTransactions(rows, accountId, OWN_ACCOUNTS);
 }
 
+/** Each account's own rows, before merging (needed for balances: transfers count on both sides). */
+export const accountTransactions: Transaction[] = [load(accountCsv, 'Account1'), load(cardCsv, 'Account3')].flat();
+
 export const transactions: Transaction[] = categorizeAll(
-  mergeAccounts([load(accountCsv, 'Account1'), load(cardCsv, 'Account3')]),
+  mergeAccounts([
+    accountTransactions.filter((t) => t.accountId === 'Account1'),
+    accountTransactions.filter((t) => t.accountId === 'Account3'),
+  ]),
   merchantsJson,
 );
 
