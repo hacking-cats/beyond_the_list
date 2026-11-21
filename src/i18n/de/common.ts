@@ -1,5 +1,5 @@
 export default {
-  appName: 'klar.',
+  appName: 'Beyond the List',
   menu: 'Menü',
   language: 'Sprache',
   hello: 'Hallo Sara 👋',
