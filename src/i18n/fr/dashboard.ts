@@ -34,4 +34,9 @@ export default {
     cash: 'Retraits d’espèces. Un Postomat de PostFinance est gratuit ; les distributeurs d’autres banques peuvent coûter des frais.',
     other: 'Paiements que nous n’avons pas encore pu classer.',
   },
+  groups: {
+    recurring: 'Essentiel - récurrent',
+    occasional: 'Essentiel - non récurrent',
+    cutBack: 'Possible de réduire',
+  },
 };

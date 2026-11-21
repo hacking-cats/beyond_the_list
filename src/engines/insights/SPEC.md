@@ -22,7 +22,7 @@ Compute the numbers behind the dashboard: totals per month and category, trends,
 1. Transfers and pending rows are excluded from spending.
 2. Refunds are netted against their merchant.
 3. If safe to spend is negative, return it as is; the UI shows a calm warning.
-4. Balance = opening balance + settled rows of that account from the opening date to `asOf` (Transaction contract, rule 6). Unknown opening balance: `0` on the first day of the data; the UI shows "since <date>".
+4. Balance = opening balance + settled rows of that account from the opening date to `asOf` (Transaction contract, rule 6). Unknown opening balance: `0` on the first day of the data; `sinceDate` returns that date (the header does not show it, decision 0006).
 
 ## Examples (become unit tests)
 | Input | Expected output |

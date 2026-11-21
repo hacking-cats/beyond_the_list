@@ -4,8 +4,6 @@ export default {
   language: 'Language',
   sections: 'Sections',
   hi: 'Hi',
-  balanceSince: 'Balance since',
-  fromStatements: 'counted from your statements (they have no starting balance)',
   privateAccount: 'Private account',
   creditCard: 'Credit card',
   prototype: 'Prototype · demo data',

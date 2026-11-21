@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import categories from '../../../content/categories.json';
 import merchants from '../../../content/merchants.json';
 import type { Transaction } from '../ingest/types';
 import { categorize, type MerchantRule } from './categorize';
@@ -31,5 +32,22 @@ describe('categorize', () => {
   it('transfers and salary have their own categories', () => {
     expect(categorize(tx('KK-Konto', 'Kreditkarten-Zahlung', 'transfer'), rules).category).toBe('transfer');
     expect(categorize(tx('Employer AG', 'Salärzahlung', 'income'), rules).category).toBe('income');
+  });
+});
+
+describe('content/categories.json', () => {
+  it('puts every category in one of the three groups, and only "could cut back" is flexible', () => {
+    for (const c of categories as { key: string; group: string; kind: string }[]) {
+      expect(['recurring', 'occasional', 'cutBack'], c.key).toContain(c.group);
+      expect(c.kind, c.key).toBe(c.group === 'cutBack' ? 'flexible' : 'essential');
+    }
+  });
+  it('matches the agreed grouping', () => {
+    const by = (g: string) => (categories as { key: string; group: string }[]).filter((c) => c.group === g).map((c) => c.key).sort();
+    expect(by('recurring')).toEqual(['childcare', 'insurance', 'moneyHome', 'phone', 'rent', 'tax', 'utilities']);
+    expect(by('occasional')).toEqual(
+      ['cash', 'clothes', 'eatingOut', 'familyHelp', 'groceries', 'health', 'household', 'kids', 'official', 'other', 'transport'],
+    );
+    expect(by('cutBack')).toEqual(['coffee', 'fees', 'games', 'gifts', 'hobbies', 'holiday', 'lottery', 'shop', 'stream']);
   });
 });

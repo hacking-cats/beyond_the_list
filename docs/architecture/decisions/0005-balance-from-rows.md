@@ -1,7 +1,7 @@
 # 0005. Compute the balance from the payments
 
 - **Date:** 2026-11-21
-- **Status:** proposed
+- **Status:** accepted; the "since <date>" label is replaced by decision 0006
 
 ## Context
 The Transaction contract said "Balances are never computed by summing rows", so the header shows "money left over this month" (income minus spending) instead of a balance. Users expect to see how much money they have. The challenge CSVs list payments but contain no balance and no opening balance.

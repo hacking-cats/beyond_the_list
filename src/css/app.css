@@ -85,13 +85,14 @@ input[type=range] { width: 100%; min-height: var(--touch); accent-color: var(--p
 .legend { display: flex; flex-wrap: wrap; gap: var(--sp-lg); margin: 0 0 var(--sp-md); padding: 0; list-style: none; font-size: var(--fs-small); color: var(--text-secondary); }
 .legend li { display: flex; align-items: center; gap: var(--sp-sm); }
 .swatch { width: 12px; height: 12px; border-radius: var(--r-pill); flex: none; }
-.sw-essential { background: var(--petrol); } .sw-flexible { background: var(--grapefruit); }
+.sw-recurring { background: var(--petrol); } .sw-occasional { background: var(--petrol-light); box-shadow: inset 0 0 0 1px var(--petrol); } .sw-cutBack { background: var(--grapefruit); }
 .rank { list-style: none; margin: 0; padding: 0; }
 .rank li { display: flex; align-items: center; gap: var(--sp-md); min-height: var(--touch); border-bottom: 1px solid var(--border); font-size: var(--fs-small); }
 .rank__name { flex: 1; min-width: 0; }
 .cat-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--r-pill); flex: none; }
-.cat-badge--essential { background: var(--petrol); color: var(--text-inverse); }
-.cat-badge--flexible { background: var(--grapefruit); color: var(--text); }
+.cat-badge--recurring { background: var(--petrol); color: var(--text-inverse); }
+.cat-badge--occasional { background: var(--petrol-light); color: var(--petrol); box-shadow: inset 0 0 0 1px var(--petrol); }
+.cat-badge--cutBack { background: var(--grapefruit); color: var(--text); }
 .rank__share { color: var(--text-muted); font-variant-numeric: tabular-nums; width: 3.5em; text-align: right; }
 .app-footer { padding: var(--sp-md) var(--sp-lg) var(--sp-xl); border-top: 1px solid var(--border);
   font-size: var(--fs-caption); color: var(--text-muted); text-align: center; }
@@ -153,6 +154,12 @@ input[type=range] { width: 100%; min-height: var(--touch); accent-color: var(--p
 .invest__all .q-icon { margin-inline-start: 4px; vertical-align: -3px; }
 .invest__checked { margin: var(--sp-xs) 0 0; color: var(--text-muted); font-size: var(--fs-caption); }
 [dir='rtl'] .invest__link .q-icon, [dir='rtl'] .invest__all .q-icon { transform: scaleX(-1); }
+/* Spending groups (PostFinance colours): petrol = recurring, light petrol = non-recurring
+   (outlined in petrol so it stays visible on white), grapefruit = could cut back. */
+.bubble circle.bubble__mark--occasional { stroke: var(--petrol); stroke-width: 1; }
+.bubble.is-sel circle { stroke: var(--text); stroke-width: 3; }
+.group-title { display: flex; justify-content: space-between; gap: var(--sp-sm); }
+.group-title .amount { font-weight: 600; white-space: nowrap; }
 
 /* Advice booking (src/features/savings/AdviceBooking.vue) */
 .advice-card { display: flex; align-items: flex-start; gap: var(--sp-md); margin: var(--sp-xl) 0 var(--sp-sm); padding: var(--sp-lg);
