@@ -142,8 +142,7 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
         <button class="btn btn--ghost" @click="showAll">{{ t('features.dashboard.focusAll') }}</button>
       </div>
       <p class="hint">{{ t('features.savings.ideasP') }}</p>
-      <template v-for="(i, index) in shownIdeas" :key="i.id">
-      <div class="card">
+      <div v-for="i in shownIdeas" :key="i.id" class="card">
         <DsIcon name="bulb" />
         <div class="card__body">
           <p class="card__title">{{ i.title }}</p>
@@ -181,10 +180,6 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
           </button>
         </div>
       </div>
-      <!-- Talk to a specialist: right after the first savings idea -->
-      <AdviceBooking v-if="index === 0" />
-      </template>
-      <AdviceBooking v-if="!shownIdeas.length" />
     </div>
 
     <div class="worth" role="status">
@@ -214,6 +209,8 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
     </div>
     <button class="btn btn--primary btn--block" style="margin-top: var(--sp-lg)" @click="started = true">{{ t('features.savings.startBtn') }}</button>
     <p class="done" role="status">{{ started ? t('features.savings.started') : '' }}</p>
+
+    <AdviceBooking />
 
     <InvestIdeas class="section" />
 
