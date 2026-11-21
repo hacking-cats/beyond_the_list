@@ -28,6 +28,10 @@ export default defineConfig((ctx) => {
       // Android (Capacitor) and local builds keep '/'.
       publicPath: process.env.PUBLIC_PATH || '/',
 
+      // Keep the quotes around attribute values in index.html: some link-preview crawlers
+      // (WhatsApp, Messenger) read the og: meta tags with simple parsers.
+      htmlMinifyOptions: { removeAttributeQuotes: false },
+
       // finAInce chat backend (src/adapters/assistant/http.ts), read as import.meta.env.FINAINCE_CHAT_URL.
       // Override with FINAINCE_CHAT_URL=<url>; FINAINCE_CHAT_URL= (empty) uses the offline fake.
       defineEnv: {
