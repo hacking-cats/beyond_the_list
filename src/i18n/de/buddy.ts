@@ -1,6 +1,5 @@
 export default {
   name: 'finAInce',
-  open: 'finAInce öffnen',
   close: 'Schliessen',
   pullHint: 'Nach unten ziehen, um mit finAInce zu sprechen',
   pushHint: 'Nach oben schieben zum Schliessen',
@@ -15,7 +14,7 @@ export default {
   you: 'Du',
   notConnected: 'Dein Buddy ist noch nicht verbunden. Bald antwortet er hier mit deinen eigenen Zahlen.',
   introTitle: 'Neu: finAInce, dein Geld-Buddy',
-  introBody: 'Stell Fragen zu deinem Geld in deinen eigenen Worten. Zieh oben am Bildschirm nach unten oder tipp auf das Funkeln, um zu starten.',
+  introBody: 'Stell Fragen zu deinem Geld in deinen eigenen Worten. Zieh oben am Bildschirm nach unten, um zu starten.',
   introTry: 'Ausprobieren',
   introDismiss: 'Verstanden',
 };

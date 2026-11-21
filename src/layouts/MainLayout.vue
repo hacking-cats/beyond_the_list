@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { enabledFeatures } from '../features/registry';
@@ -23,11 +22,8 @@ const languages = [
 ] as const;
 
 const buddy = useBuddyPull();
-const buddyButton = ref<HTMLButtonElement | null>(null);
-
 function closeBuddy() {
   buddy.setOpen(false);
-  buddyButton.value?.focus();
 }
 </script>
 
@@ -40,16 +36,6 @@ function closeBuddy() {
       :title="t('buddy.pullHint')"
     >
       <h1 class="app-header__title">{{ t('common.appName') }}</h1>
-      <button
-        ref="buddyButton"
-        type="button"
-        class="buddy-btn"
-        :aria-label="t('buddy.open')"
-        :aria-expanded="buddy.open.value"
-        @click="buddy.setOpen(true)"
-      >
-        <q-icon :name="icon('auto_awesome')" size="22px" aria-hidden="true" />
-      </button>
       <div class="lang" role="group" :aria-label="t('common.language')">
         <button
           v-for="l in languages"

@@ -1,6 +1,5 @@
 export default {
   name: 'finAInce',
-  open: 'Open finAInce',
   close: 'Close',
   pullHint: 'Pull down to talk to finAInce',
   pushHint: 'Push up to close',
@@ -15,7 +14,7 @@ export default {
   you: 'You',
   notConnected: 'Your buddy is not connected yet. Soon it will answer here using your own numbers.',
   introTitle: 'New: meet finAInce, your money buddy',
-  introBody: 'Ask questions about your money in your own words. Pull down from the top of the screen, or tap the sparkle, to start.',
+  introBody: 'Ask questions about your money in your own words. Pull down from the top of the screen to start.',
   introTry: 'Try it',
   introDismiss: 'Got it',
 };

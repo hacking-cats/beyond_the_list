@@ -5,13 +5,8 @@
 .buddy-pull { touch-action: pan-x; user-select: none; cursor: grab; }
 .buddy-pull.is-pulling { cursor: grabbing; }
 
-/* Tap alternative to the gesture: the sparkle button in the header. */
-.buddy-btn { width: var(--touch); height: var(--touch); display: grid; place-items: center; padding: 0;
-  border: 0; border-radius: var(--r-pill); background: var(--surface-subtle); color: var(--petrol); cursor: pointer;
-  animation: buddy-breathe 2.8s var(--ease) infinite; }
-
-/* "Listening" glow along the bottom edge of the header: a soft wave that drifts and breathes. */
-.buddy-glow { position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; overflow: hidden; pointer-events: none; }
+/* "Listening" glow along the top edge of the header: a soft wave that drifts and breathes. */
+.buddy-glow { position: absolute; left: 0; right: 0; top: 0; height: 3px; overflow: hidden; pointer-events: none; }
 .buddy-glow__wave { position: absolute; inset: 0 auto 0 0; width: 200%;
   background: linear-gradient(90deg, var(--petrol), var(--light-blue), var(--yellow), var(--light-blue), var(--petrol),
     var(--light-blue), var(--yellow), var(--light-blue), var(--petrol));
@@ -25,8 +20,7 @@
 .buddy-pull.is-pulling .buddy-glow__wave,
 .buddy-pull.is-pulling .buddy-nub,
 .buddy-pull.is-open .buddy-glow__wave,
-.buddy-pull.is-open .buddy-nub,
-.buddy-pull.is-open .buddy-btn { animation-play-state: paused; }
+.buddy-pull.is-open .buddy-nub { animation-play-state: paused; }
 
 @keyframes buddy-drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 @keyframes buddy-glow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
@@ -99,6 +93,6 @@
 .buddy__handle { width: 120px; height: 5px; border-radius: var(--r-pill); background: var(--petrol); opacity: 0.6; }
 
 @media (prefers-reduced-motion: reduce) {
-  .buddy, .buddy.is-hidden, .buddy-btn, .buddy-glow__wave, .buddy-nub { transition: none; animation: none; }
+  .buddy, .buddy.is-hidden, .buddy-glow__wave, .buddy-nub { transition: none; animation: none; }
   .buddy-glow__wave { opacity: 1; }
 }
