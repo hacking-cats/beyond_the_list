@@ -92,3 +92,4 @@ input[type=range] { width: 100%; min-height: var(--touch); accent-color: var(--p
 .form-error { margin: 0; font-size: var(--fs-small); color: var(--error-text); }
 .form-actions { display: flex; gap: var(--sp-sm); margin-top: var(--sp-md); }
 .form-actions .btn { flex: 1; }
+.summary__sub .amount { white-space: nowrap; }

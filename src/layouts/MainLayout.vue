@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { enabledFeatures } from '../features/registry';
-import { demoPersonName, latestSummary, monthLabel } from '../shared/statements';
+import { balances, balanceSince, dayLabel, demoPersonName, totalBalanceRappen } from '../shared/statements';
 import { formatChf } from '../shared/money';
 import { icon } from '../shared/ui/icons';
 
@@ -38,9 +38,13 @@ const languages = [
 
     <section class="summary">
       <p class="summary__hello">{{ t('common.hi') }} {{ demoPersonName }} 👋</p>
-      <p class="summary__balance amount">{{ formatChf(latestSummary.leftRappen) }}</p>
+      <p class="summary__balance amount">{{ formatChf(totalBalanceRappen) }}</p>
       <p class="summary__sub">
-        {{ t('common.leftIn') }} {{ monthLabel(latestSummary.month, locale) }} {{ t('common.accounts') }}
+        {{ t('common.balanceSince') }} {{ dayLabel(balanceSince, locale) }}, {{ t('common.fromStatements') }}
+      </p>
+      <p class="summary__sub">
+        {{ t('common.privateAccount') }} <span class="amount">{{ formatChf(balances.privateAccount.balanceRappen) }}</span>
+        · {{ t('common.creditCard') }} <span class="amount">{{ formatChf(balances.creditCard.balanceRappen) }}</span>
       </p>
     </section>
 
