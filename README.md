@@ -24,7 +24,7 @@ Read [AGENTS.md](AGENTS.md) for the rules every person and AI agent follows.
 | `src/adapters/` | Implementations of the contracts. Every contract has a `fake` one |
 | `src/agent/` | Prompts, tools and the approval queue for the in-app AI |
 | `src/features/` | One folder per page, each declares itself in the feature registry |
-| `src/layouts/` | The single main layout (header, hamburger, drawer from the registry) |
+| `src/layouts/` | The single main layout (header, page, bottom tab bar from the registry) |
 | `src/boot/services.ts` | Composition root: picks one implementation per contract |
 | `src/i18n/` | English and German strings |
 | `proxy/` | One serverless function that holds the LLM key |

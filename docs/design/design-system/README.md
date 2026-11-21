@@ -37,7 +37,7 @@ All of it goes into the one HTML file: CSS inside `<style>`, the icons at the to
 
 The structure, the layout rules and the accessibility rules of v1 are kept. Changes:
 
-- **Scope:** the product shrank to one scenario, so the components are the ones that scenario needs (statement line, answer sheet, tone block, question chips, time jump). Inputs, forms, bottom navigation, snackbar, empty and skeleton states are out.
+- **Scope:** the product shrank to one scenario, so the components are the ones that scenario needs (statement line, answer sheet, tone block, question chips, time jump). Inputs, forms, snackbar, empty and skeleton states are out. Navigation is a bottom tab bar with icons (decision 0003).
 - **Contrast:** the palette is kept; four text colours were darkened slightly so that every text colour meets WCAG 2.2 AA (measured values in `foundations/accessibility.md`). Yellow, grapefruit and light blue are never used for text.
 - **One typeface:** Inter with a system fallback. The mono font was only for IBANs and IDs, which we don't show.
 - **Tokens for the app:** `tokens.css` holds the same values as CSS variables, because the app is plain HTML.

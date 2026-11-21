@@ -11,4 +11,4 @@ Sketch exactly these screens, mobile width 360px, with the tokens in `tokens/col
 3. Answer sheet, action tone: four identical airline charges of 1'766.50 CHF, with the two buttons.
 4. Time-jump screen: "23 December 2025 · Three months later".
 
-Rules: one typeface (Inter), yellow only as primary button background, grapefruit only for the action tone border and icon, no bottom navigation, no other screens, no bank names or logos. Use the texts from `review_2025-09-23.md`; do not invent explanations.
+Rules: one typeface (Inter), yellow only as primary button background, grapefruit only for the action tone border and icon, navigation only through the bottom tab bar with icons (no hamburger menu), no bank names or logos. Use the texts from `review_2025-09-23.md`; do not invent explanations.

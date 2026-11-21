@@ -9,5 +9,5 @@
 - Invent colours, fonts or spacing values.
 - Use yellow, grapefruit or light blue for text.
 - Show the action tone without its icon and heading.
-- Add screens, navigation or charts beyond the decisions (B5).
+- Add screens, navigation or charts beyond the decisions (B5). Navigation is the bottom tab bar (decision 0003); no hamburger menu or drawer.
 - Use any bank's logo or name.

@@ -23,4 +23,4 @@ Copy the markup of each component from `preview.html`. Every class used there is
 - Time jump: show `.jump.is-on` for 1.5 s or until tapped, then switch data and the header date.
 
 ## Don't
-Add colours, fonts, spacing values, screens, navigation or charts. Use any bank's name or logo.
+Add colours, fonts, spacing values, screens or charts. Navigation is the bottom tab bar only (decision 0003); no hamburger menu or drawer. Use any bank's name or logo.
