@@ -17,7 +17,9 @@ const mainLanguages = languages.filter((l) => l.group === 'main');
 const otherLanguages = languages.filter((l) => l.group === 'other');
 const otherSelected = computed(() => current.value?.group === 'other');
 /** Short label on the header button: the language code, e.g. EN, DE, FR, AR. */
-const shortLabel = computed(() => locale.value.split('-')[0]!.toUpperCase());
+// UA instead of UK for Ukrainian, so it is not read as "United Kingdom".
+const shortOverrides: Record<string, string> = { uk: 'UA' };
+const shortLabel = computed(() => shortOverrides[locale.value] ?? locale.value.split('-')[0]!.toUpperCase());
 const shownOther = computed(() => searchLanguages(otherLanguages, query.value));
 
 function show() {
