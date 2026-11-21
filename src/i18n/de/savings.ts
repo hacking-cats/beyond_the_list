@@ -124,5 +124,12 @@ export default {
     openAdvice: "Beratung von PostFinance öffnen",
     call: "Anrufen",
     nothingSent: "Diese App sendet nichts an PostFinance.",
+    calH: "In meinen Kalender eintragen",
+    calFile: "Kalenderdatei",
+    calGoogle: "Google Kalender",
+    calHint: "Für Apple-, Outlook- und Android-Kalender. Der Eintrag sagt, dass es eine Beispielzeit ist, kein gebuchter Termin.",
+    calSaved: "Kalenderdatei heruntergeladen. Öffnen Sie sie, um die Zeit in Ihren Kalender einzutragen.",
+    calTitle: "Termin PostFinance (Beispiel, nicht gebucht): {topic}",
+    calDesc: "Beispielzeit aus dem Prototyp Beyond the List. Dieser Termin ist NICHT gebucht. Wirklich buchen in der PostFinance App, in E-Finance oder per Telefon: {phone}.",
   },
 };

@@ -215,4 +215,10 @@ input[type=range] { width: 100%; min-height: var(--touch); accent-color: var(--p
 .advice-done__real ul { margin: var(--sp-xs) 0 0; padding-inline-start: 1.2em; }
 .advice-done__link { display: flex; align-items: center; justify-content: center; gap: var(--sp-sm); margin-top: var(--sp-sm); text-decoration: none; }
 .advice-phone { white-space: nowrap; unicode-bidi: isolate; }
+.advice-cal { margin: var(--sp-md) 0; padding: var(--sp-md); border: 1px solid var(--border); border-radius: var(--r-md); text-align: start; }
+.advice-cal__title { display: flex; align-items: center; gap: var(--sp-sm); margin: 0 0 var(--sp-sm); font-weight: 700; }
+.advice-cal__title .q-icon { color: var(--petrol); }
+.advice-cal__buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-sm); }
+.advice-cal__btn { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: var(--touch);
+  padding-inline: var(--sp-sm); text-align: center; text-decoration: none; line-height: 1.2; }
 
