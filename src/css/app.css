@@ -14,7 +14,7 @@ body { font-family: var(--font); }
 .lang-btn { display: inline-flex; align-items: center; gap: 6px; min-height: var(--touch); padding-block: 0; padding-inline: 10px var(--sp-md);
   border: 1.5px solid var(--petrol); border-radius: var(--r-pill); background: var(--surface); color: var(--petrol);
   font: 600 15px var(--font); cursor: pointer; white-space: nowrap; }
-.lang-sheet { width: 100%; max-width: 560px; max-height: 88vh; display: flex; flex-direction: column; overflow: hidden;
+.lang-sheet { width: 100%; max-width: var(--content-max); max-height: 88vh; display: flex; flex-direction: column; overflow: hidden;
   background: var(--surface); color: var(--text); font-family: var(--font); border-radius: var(--r-lg) var(--r-lg) 0 0; }
 .lang-sheet__grab { width: 40px; height: 4px; margin: var(--sp-sm) auto 0; border-radius: 2px; background: var(--border); }
 .lang-sheet__head { display: flex; align-items: center; gap: var(--sp-sm); padding-block: var(--sp-md) var(--sp-sm); padding-inline: var(--sp-lg) var(--sp-sm); }
@@ -44,6 +44,8 @@ body { font-family: var(--font); }
 .lang-opt[aria-disabled='true'] .lang-opt__tag { background: var(--surface-subtle); color: var(--text-muted); }
 .lang-opt__chev { color: var(--text-muted); }
 [dir='rtl'] .flip-rtl { transform: scaleX(-1); }
+/* Never wider than the main window; beats Quasar's .q-dialog__inner--minimized > div { max-width: 560px }. */
+.q-dialog__inner > .lang-sheet { max-width: var(--content-max); }
 .summary { padding: var(--sp-lg) var(--sp-lg) var(--sp-xl); border-bottom: 1px solid var(--border); }
 .summary__hello { margin: 0; font-size: var(--fs-small); color: var(--text-secondary); }
 .summary__balance { margin: var(--sp-xs) 0; font-size: var(--fs-display); font-weight: 700; line-height: 1.1; }

@@ -16,6 +16,8 @@ const current = computed(() => findLanguage(locale.value));
 const mainLanguages = languages.filter((l) => l.group === 'main');
 const otherLanguages = languages.filter((l) => l.group === 'other');
 const otherSelected = computed(() => current.value?.group === 'other');
+/** Short label on the header button: the language code, e.g. EN, DE, FR, AR. */
+const shortLabel = computed(() => locale.value.split('-')[0]!.toUpperCase());
 const shownOther = computed(() => searchLanguages(otherLanguages, query.value));
 
 function show() {
@@ -39,7 +41,7 @@ function pick(code: string) {
     @click="show"
   >
     <q-icon :name="icon('language')" size="22px" aria-hidden="true" />
-    <span dir="auto">{{ current?.native }}</span>
+    <span>{{ shortLabel }}</span>
     <q-icon :name="icon('expand_more')" size="20px" aria-hidden="true" />
   </button>
 
