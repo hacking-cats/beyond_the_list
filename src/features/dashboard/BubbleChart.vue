@@ -3,6 +3,8 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { CategoryShare } from '../../engines/insights/categoryShares';
 import { formatChf } from '../../shared/money';
+import { iconOf } from '../../shared/transactions';
+import { iconPaths } from '../../shared/ui/icons';
 import { packCircles } from './packCircles';
 
 const props = defineProps<{ items: CategoryShare[]; selected: string | null; label: string }>();
@@ -26,13 +28,26 @@ const packing = computed(() => packCircles(props.items.map((i) => i.amountRappen
 const bubbles = computed(() =>
   packing.value.circles.map((c) => {
     const item = props.items[c.index]!;
-    const short = t(`categories.${item.key}.short`);
     const big = c.r >= 55;
-    const fits = c.r >= 26 && Math.max(short.length * (big ? 8 : 7), 56) <= 2 * c.r - 12;
-    return { ...c, item, short, fits, big, francs: Math.round(item.amountRappen / 100) };
+    const amount = formatChf(item.amountRappen, { decimals: 0 });
+    // Icon above the amount when both fit; otherwise the icon alone (the amount is in the list).
+    const withAmount = c.r >= 30 && amount.length * (big ? 8 : 7) <= 2 * c.r - 10;
+    const iconSize = withAmount ? (big ? 30 : 24) : Math.round(Math.min(24, Math.max(12, c.r * 1.1)));
+    return {
+      ...c,
+      item,
+      big,
+      amount,
+      withAmount,
+      showIcon: c.r >= 9,
+      iconSize,
+      iconY: withAmount ? -iconSize + 2 : -iconSize / 2,
+      paths: iconPaths(iconOf(item.key)),
+    };
   }),
 );
 const name = (key: string) => t(`categories.${key}.name`);
+const ink = (b: { item: CategoryShare }) => (b.item.kind === 'flexible' ? 'var(--text)' : 'var(--text-inverse)');
 function onKey(e: KeyboardEvent, key: string) {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
@@ -57,31 +72,20 @@ function onKey(e: KeyboardEvent, key: string) {
         :transform="`translate(${b.x},${b.y})`"
         tabindex="0"
         role="button"
-        :aria-label="`${name(b.item.key)}: ${formatChf(b.item.amountRappen, { decimals: 0 })}, ${b.item.percent}%, ${t(`features.dashboard.${b.item.kind}`)}`"
+        :aria-label="`${name(b.item.key)}: ${b.amount}, ${b.item.percent}%, ${t(`features.dashboard.${b.item.kind}`)}`"
         @click="emit('pick', b.item.key)"
         @keydown="onKey($event, b.item.key)"
       >
         <circle :r="b.r" :fill="b.item.kind === 'flexible' ? 'var(--grapefruit)' : 'var(--petrol)'" />
-        <template v-if="b.fits">
-          <text
-            dy="-0.2em"
-            :font-size="b.big ? 14 : 12"
-            font-weight="600"
-            :fill="b.item.kind === 'flexible' ? 'var(--text)' : 'var(--text-inverse)'"
-          >{{ b.short }}</text>
-          <text
-            dy="1.1em"
-            :font-size="b.big ? 14 : 12"
-            :fill="b.item.kind === 'flexible' ? 'var(--text)' : 'var(--text-inverse)'"
-          >{{ formatChf(b.item.amountRappen, { decimals: 0 }) }}</text>
-        </template>
-        <text
-          v-else-if="b.r >= 14"
-          dy="0.35em"
-          font-size="12"
-          font-weight="600"
-          :fill="b.item.kind === 'flexible' ? 'var(--text)' : 'var(--text-inverse)'"
-        >{{ b.francs }}</text>
+        <g
+          v-if="b.showIcon"
+          class="bubble__icon"
+          aria-hidden="true"
+          :transform="`translate(${-b.iconSize / 2},${b.iconY}) scale(${b.iconSize / 24})`"
+        >
+          <path v-for="(p, i) in b.paths" :key="i" :d="p.d" :fill="p.hidden ? 'none' : ink(b)" />
+        </g>
+        <text v-if="b.withAmount" dy="1.1em" :font-size="b.big ? 14 : 12" :fill="ink(b)">{{ b.amount }}</text>
       </g>
     </svg>
   </div>

@@ -29,5 +29,9 @@ export const transactions: Transaction[] = categorizeAll(
 const kinds = new Map((categoriesJson as { key: string; kind: SpendingKind }[]).map((c) => [c.key, c.kind]));
 export const kindOf = (category: string): SpendingKind => kinds.get(category) ?? 'essential';
 
+const categoryIcons = new Map((categoriesJson as { key: string; icon: string }[]).map((c) => [c.key, c.icon]));
+/** Material icon name of a category (see src/shared/ui/icons.ts). */
+export const iconOf = (category: string): string => categoryIcons.get(category) ?? 'help_outline';
+
 /** Name of the person in the demo data (from the file names). */
 export const demoPersonName = 'Jeanine';

@@ -4,8 +4,10 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { categoryShares } from '../../engines/insights/categoryShares';
 import { monthlySpending } from '../../shared/statements';
+import { iconOf } from '../../shared/transactions';
 import { formatChf } from '../../shared/money';
 import DsIcon from '../../shared/ui/DsIcon.vue';
+import { icon } from '../../shared/ui/icons';
 import BubbleChart from './BubbleChart.vue';
 
 const { t } = useI18n();
@@ -87,7 +89,9 @@ const cat = (key: string, field: 'name' | 'tip') => t(`categories.${key}.${field
       <p class="section__title">{{ t('features.dashboard.listH') }}</p>
       <ul class="rank">
         <li v-for="item in overview.items" :key="item.key">
-          <span class="swatch" :class="`sw-${item.kind}`" aria-hidden="true"></span>
+          <span class="cat-badge" :class="`cat-badge--${item.kind}`" aria-hidden="true">
+            <q-icon :name="icon(iconOf(item.key))" size="20px" />
+          </span>
           <span class="rank__name">
             {{ cat(item.key, 'name') }}
             <span class="visually-hidden">, {{ t(`features.dashboard.${item.kind}`) }}</span>
