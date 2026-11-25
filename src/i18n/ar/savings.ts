@@ -1,5 +1,5 @@
 export default {
-  title: 'التوفير',
+  title: 'التوفير المُوصى به',
   goalH: 'لماذا تدّخر؟',
   goals: {
     house: 'منزل',

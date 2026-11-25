@@ -1,5 +1,5 @@
 export default {
-  title: 'In arrivo',
+  title: 'Pianificare',
   taxH: 'Conguaglio delle imposte 2026',
   taxP: 'In base all’anno scorso, ci aspettiamo circa questo importo quando arriva il conguaglio (di solito la primavera successiva).',
   taxL: 'Conguaglio previsto',

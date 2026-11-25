@@ -1,5 +1,5 @@
 export default {
-  title: 'Risparmio',
+  title: 'Risparmi consigliati',
   goalH: 'Per cosa stai risparmiando?',
   goals: {
     house: 'Casa',

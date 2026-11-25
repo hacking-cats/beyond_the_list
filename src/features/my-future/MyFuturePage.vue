@@ -12,6 +12,7 @@ const showAhv = ref(false);
 
 <template>
   <div>
+    <h2 class="page-heading">{{ t('features.myFuture.title') }}</h2>
     <div class="card card--plain">
       <div>
         <p class="card__title">{{ hasSalary ? t('features.myFuture.ahvEmpH') : t('features.myFuture.ahvH') }}</p>
