@@ -154,6 +154,7 @@ const dotSub = (i: Idea) =>
 
 <template>
   <div>
+    <h2 class="page-heading">{{ t('features.savings.title') }}</h2>
     <div ref="ideasSection" class="section">
       <p class="section__title">{{ t('features.savings.ideasH') }}</p>
       <div v-if="focus" style="display: flex; align-items: center; justify-content: space-between; gap: var(--sp-sm); margin-bottom: var(--sp-sm)">

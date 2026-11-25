@@ -24,6 +24,7 @@ const chf0 = (r: number) => displayChf(r, { decimals: 0 });
 
 <template>
   <div>
+    <h2 class="page-heading">{{ t('features.comingUp.title') }}</h2>
     <SavingsGoal style="margin-bottom: var(--sp-lg)" />
 
     <div v-if="!paysTaxBills" class="worth">

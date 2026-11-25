@@ -1,5 +1,5 @@
 export default {
-  title: 'Sparziel',
+  title: 'Empfohlene Einsparungen',
   goalH: 'Wofür sparst du?',
   goals: {
     house: 'Haus',

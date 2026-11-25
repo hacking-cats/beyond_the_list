@@ -1,5 +1,5 @@
 export default {
-  title: 'Coming up',
+  title: 'Plan ahead',
   taxH: 'Final tax bill 2026',
   taxP: 'Based on last year, we expect about this much when the final bill arrives (usually spring next year).',
   taxL: 'Expected final bill',

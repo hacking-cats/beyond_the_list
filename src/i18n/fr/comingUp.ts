@@ -1,5 +1,5 @@
 export default {
-  title: 'À venir',
+  title: 'Planifier',
   taxH: 'Facture finale d’impôts 2026',
   taxP: 'D’après l’année dernière, nous attendons environ ce montant quand la facture finale arrive (en général au printemps suivant).',
   taxL: 'Facture finale attendue',

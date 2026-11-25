@@ -1,5 +1,5 @@
 export default {
-  title: 'Demnächst',
+  title: 'Vorausplanen',
   taxH: 'Definitive Steuerrechnung 2026',
   taxP: 'Basierend auf dem Vorjahr erwarten wir ungefähr diesen Betrag, wenn die definitive Rechnung kommt (meist im Frühling).',
   taxL: 'Erwartete Rechnung',
