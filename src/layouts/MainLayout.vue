@@ -36,7 +36,7 @@ function closeBuddy() {
       :class="{ 'is-pulling': buddy.dragging.value, 'is-open': buddy.open.value }"
       :title="t('buddy.pullHint')"
     >
-      <h1 class="app-header__title">{{ t('common.appName') }}</h1>
+      <h1 class="app-header__title app-header__title--logo"><img class="app-header__logo" src="brand/postfinance-logo-600.png" alt="PostFinance" width="138" height="40" /><span class="visually-hidden">{{ t('common.appName') }}</span></h1>
       <LanguagePicker />
       <span class="buddy-glow" aria-hidden="true"><span class="buddy-glow__wave" /></span>
       <span class="buddy-nub" aria-hidden="true" />

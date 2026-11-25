@@ -1,13 +1,14 @@
 /* Beyond the List: design tokens for the single-file app. Same values as tokens/*.json. */
 :root {
   --yellow: #FFCC00;  --yellow-dark: #E6B800;   /* primary button background only */
-  --petrol: #005C66;  --petrol-dark: #00474F;   /* links, secondary buttons, chips, marker */
+  --petrol: #004B5A;  --petrol-dark: #00373D;   /* links, secondary buttons, chips, marker */
   --grapefruit: #FF5A36;                         /* action border and icon only, never text */
   --light-blue: #7FD1E8;                         /* decorative only */
-  --petrol-light: #CCDBDE;                       /* light petrol: non-recurring essentials in spending charts; never text */
+  --red: #D80A09;                                /* PostFinance alert red: could-cut-back spending */
+  --petrol-light: #70BFC2;                       /* light teal: non-recurring essentials in spending charts; never text */
 
-  --surface: #FFFFFF; --surface-subtle: #F5F7F8; --surface-inverse: #0E1A1C;
-  --tint-attention: #FFF6DB; --tint-action: #FFEDE8; --tint-info: #E8F6FB;
+  --surface: #FFFFFF; --surface-subtle: #EEF6F6; --surface-inverse: #0E1A1C;
+  --tint-attention: #FFF6DB; --tint-action: #FFEDE8; --tint-info: #D6EBEB;
 
   --text: #10201F; --text-secondary: #4A5A5C; --text-muted: #616F70;
   --text-inverse: #FFFFFF; --text-disabled: #8A9798;

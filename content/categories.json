@@ -2,189 +2,189 @@
   {
     "key": "rent",
     "icon": "home",
-    "color": "#005C66",
+    "color": "#004B5A",
     "kind": "essential",
     "group": "recurring"
   },
   {
     "key": "insurance",
     "icon": "health_and_safety",
-    "color": "#005C66",
+    "color": "#004B5A",
     "kind": "essential",
     "group": "recurring"
   },
   {
     "key": "utilities",
     "icon": "bolt",
-    "color": "#005C66",
+    "color": "#004B5A",
     "kind": "essential",
     "group": "recurring"
   },
   {
     "key": "tax",
     "icon": "account_balance",
-    "color": "#005C66",
+    "color": "#004B5A",
     "kind": "essential",
     "group": "recurring"
   },
   {
     "key": "transport",
     "icon": "train",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "health",
     "icon": "medical_services",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "other",
     "icon": "help_outline",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "eatingOut",
     "icon": "restaurant",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "shop",
     "icon": "shopping_bag",
-    "color": "#FF5A36",
+    "color": "#D80A09",
     "kind": "flexible",
     "group": "cutBack"
   },
   {
     "key": "clothes",
     "icon": "checkroom",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "holiday",
     "icon": "flight",
-    "color": "#FF5A36",
+    "color": "#D80A09",
     "kind": "flexible",
     "group": "cutBack"
   },
   {
     "key": "hobbies",
     "icon": "pedal_bike",
-    "color": "#FF5A36",
+    "color": "#D80A09",
     "kind": "flexible",
     "group": "cutBack"
   },
   {
     "key": "stream",
     "icon": "live_tv",
-    "color": "#FF5A36",
+    "color": "#D80A09",
     "kind": "flexible",
     "group": "cutBack"
   },
   {
     "key": "phone",
     "icon": "smartphone",
-    "color": "#005C66",
+    "color": "#004B5A",
     "kind": "essential",
     "group": "recurring"
   },
   {
     "key": "groceries",
     "icon": "shopping_cart",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "moneyHome",
     "icon": "currency_exchange",
-    "color": "#005C66",
+    "color": "#004B5A",
     "kind": "essential",
     "group": "recurring"
   },
   {
     "key": "household",
     "icon": "cottage",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "official",
     "icon": "badge",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "cash",
     "icon": "local_atm",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "coffee",
     "icon": "local_cafe",
-    "color": "#FF5A36",
+    "color": "#D80A09",
     "kind": "flexible",
     "group": "cutBack"
   },
   {
     "key": "fees",
     "icon": "receipt_long",
-    "color": "#FF5A36",
+    "color": "#D80A09",
     "kind": "flexible",
     "group": "cutBack"
   },
   {
     "key": "lottery",
     "icon": "casino",
-    "color": "#FF5A36",
+    "color": "#D80A09",
     "kind": "flexible",
     "group": "cutBack"
   },
   {
     "key": "familyHelp",
     "icon": "volunteer_activism",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "childcare",
     "icon": "child_care",
-    "color": "#005C66",
+    "color": "#004B5A",
     "kind": "essential",
     "group": "recurring"
   },
   {
     "key": "kids",
     "icon": "school",
-    "color": "#CCDBDE",
+    "color": "#70BFC2",
     "kind": "essential",
     "group": "occasional"
   },
   {
     "key": "gifts",
     "icon": "card_giftcard",
-    "color": "#FF5A36",
+    "color": "#D80A09",
     "kind": "flexible",
     "group": "cutBack"
   },
   {
     "key": "games",
     "icon": "sports_esports",
-    "color": "#FF5A36",
+    "color": "#D80A09",
     "kind": "flexible",
     "group": "cutBack"
   }

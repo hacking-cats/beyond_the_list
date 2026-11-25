@@ -53,8 +53,8 @@ export default defineConfig((ctx) => {
       config: {
         // Brand colours from the design system (src/css/tokens.css).
         brand: {
-          primary: '#005C66',
-          secondary: '#00474F',
+          primary: '#004B5A',
+          secondary: '#00373D',
           accent: '#FF5A36',
           dark: '#0E1A1C',
           'dark-page': '#0E1A1C',

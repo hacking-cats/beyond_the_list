@@ -3,18 +3,18 @@
     "brand": {
       "yellow": {
         "value": "#FFCC00",
-        "use": "primary button background only (with text.primary, 11.1:1). Never text, never an icon on white."
+        "use": "primary button background and the app header behind the PostFinance logo (with text.primary, 11.1:1). Never text, never an icon on white."
       },
       "yellowDark": {
         "value": "#E6B800",
         "use": "primary button pressed state"
       },
       "petrol": {
-        "value": "#005C66",
-        "use": "links, secondary buttons, chips, marker icon, time-jump background (7.7:1 on white)"
+        "value": "#004B5A",
+        "use": "links, secondary buttons, chips, marker icon, time-jump background (9.7:1 on white)"
       },
       "petrolDark": {
-        "value": "#00474F",
+        "value": "#00373D",
         "use": "pressed states"
       },
       "grapefruit": {
@@ -26,17 +26,21 @@
         "use": "decorative only, never text"
       },
       "petrolLight": {
-        "value": "#CCDBDE",
-        "use": "light petrol: non-recurring essentials in spending charts, with a 1px petrol outline (1.4:1 on white). Never text."
+        "value": "#70BFC2",
+        "use": "light teal: non-recurring essentials in spending charts, with a 1px petrol outline (2.1:1 on white). Never text."
+      },
+      "red": {
+        "value": "#D80A09",
+        "use": "PostFinance alert red: could-cut-back spending in charts, with white text or icons (5.3:1)."
       }
     },
     "surface": {
       "base": "#FFFFFF",
-      "subtle": "#F5F7F8",
+      "subtle": "#EEF6F6",
       "inverse": "#0E1A1C",
       "tintAttention": "#FFF6DB",
       "tintAction": "#FFEDE8",
-      "tintInfo": "#E8F6FB"
+      "tintInfo": "#D6EBEB"
     },
     "text": {
       "primary": "#10201F",
