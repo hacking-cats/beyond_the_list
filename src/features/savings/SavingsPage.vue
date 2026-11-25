@@ -282,7 +282,7 @@ const dotSub = (i: Idea) =>
   border: 0; background: none; color: var(--text); font: inherit; cursor: pointer; }
 .idea-dot__circle { position: relative; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%;
   transition: box-shadow 0.15s; }
-.idea-dot--cutBack .idea-dot__circle { background: var(--grapefruit); color: var(--text); }
+.idea-dot--cutBack .idea-dot__circle { background: var(--red); color: var(--text-inverse); }
 .idea-dot--recurring .idea-dot__circle { background: var(--petrol); color: var(--text-inverse); }
 .idea-dot--occasional .idea-dot__circle { background: var(--petrol-light); color: var(--petrol); box-shadow: inset 0 0 0 1px var(--petrol); }
 .idea-dot[aria-expanded='true'] .idea-dot__circle { box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--petrol); }

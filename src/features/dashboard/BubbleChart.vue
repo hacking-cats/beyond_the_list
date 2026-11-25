@@ -48,15 +48,15 @@ const bubbles = computed(() =>
   }),
 );
 const name = (key: string) => t(`categories.${key}.name`);
-// PostFinance colours per spending group: petrol = essentials, recurring; light petrol =
-// essentials, non-recurring (outlined in petrol); grapefruit = could cut back, the only alert
-// colour. White text on petrol, graphite on the other two.
+// PostFinance colours per spending group: petrol = essentials, recurring; light teal =
+// essentials, non-recurring (outlined in petrol); PostFinance red = could cut back, the only
+// alert colour. White text on petrol and red, graphite on light teal.
 const FILL: Record<SpendingGroup, string> = {
   recurring: 'var(--petrol)',
   occasional: 'var(--petrol-light)',
-  cutBack: 'var(--grapefruit)',
+  cutBack: 'var(--red)',
 };
-const ink = (key: string) => (groupOf(key) === 'recurring' ? 'var(--text-inverse)' : 'var(--text)');
+const ink = (key: string) => (groupOf(key) === 'occasional' ? 'var(--text)' : 'var(--text-inverse)');
 function onKey(e: KeyboardEvent, key: string) {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
