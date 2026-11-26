@@ -216,14 +216,8 @@ const dotSub = (i: Idea) =>
               </button>
             </div>
           </div>
-          <!-- Talk to a specialist: right after the game-purchase limit card -->
-          <template v-if="i.id === CAP_IDEA && capOpenTop">
-            <div class="idea-grid__full"><AdviceBooking /></div>
-            <p class="hint idea-grid__full" style="margin: 0">{{ t('features.savings.ideasTap') }}</p>
-          </template>
+          <p v-if="i.id === CAP_IDEA && capOpenTop" class="hint idea-grid__full" style="margin: 0">{{ t('features.savings.ideasTap') }}</p>
         </template>
-        <!-- Once the limit is a round button: the specialist follows the ideas -->
-        <div v-if="!capOpenTop" class="idea-grid__full"><AdviceBooking /></div>
       </div>
     </div>
 
@@ -256,6 +250,9 @@ const dotSub = (i: Idea) =>
     <p class="done" role="status">{{ started ? t('features.savings.started') : '' }}</p>
 
     <InvestIdeas class="section" />
+
+    <!-- Talk to a specialist: at the end of the page, after "Compare all saving plans" -->
+    <div class="section"><AdviceBooking /></div>
 
     <q-dialog v-model="capDialog" @hide="onCapDialogHide">
       <div class="cap-done" role="alertdialog" aria-labelledby="cap-done-h" aria-describedby="cap-done-p">
